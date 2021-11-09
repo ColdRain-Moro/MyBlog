@@ -1,0 +1,1259 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="了解了一下Kotlin的协程, ColdRain&#39;s Blog">
+    <meta name="description" content="简单的了解了一下协程，写了篇比较浅薄的协程笔记">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>了解了一下Kotlin的协程 | ColdRain&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">ColdRain&#39;s Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">ColdRain&#39;s Blog</div>
+        <div class="logo-desc">
+            
+            不妨喝杯热茶，暖和暖和身子再上路吧~
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">了解了一下Kotlin的协程</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Kotlin/">
+                                <span class="chip bg-color">Kotlin</span>
+                            </a>
+                        
+                            <a href="/tags/Coroutine/">
+                                <span class="chip bg-color">Coroutine</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
+                                笔记
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-08-15
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2021-11-09
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.8k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    10 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="了解了一下Kotlin的协程"><a href="#了解了一下Kotlin的协程" class="headerlink" title="了解了一下Kotlin的协程"></a>了解了一下Kotlin的协程</h1><p>确实非常舒服，个人感觉比CompletableFuture方便</p>
+<p>所以我想把今天学到的协程相关的知识都记录下来</p>
+<h2 id="协程是什么？能做什么-跟多线程有什么不一样"><a href="#协程是什么？能做什么-跟多线程有什么不一样" class="headerlink" title="协程是什么？能做什么? 跟多线程有什么不一样?"></a>协程是什么？能做什么? 跟多线程有什么不一样?</h2><h3 id="摘自简书"><a href="#摘自简书" class="headerlink" title="摘自简书"></a>摘自简书</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/76d2f47b900d">原地址</a></p>
+<blockquote>
+<p><strong><a target="_blank" rel="noopener" href="https://coldrain-moro.github.io/content.html?id=8">协程</a></strong> - 也叫微线程，是一种新的多任务并发的操作手段(也不是很新，概念早就有了)</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>特征：协程是运行在单线程中的并发程序</li>
+<li>优点：省去了传统 Thread 多线程并发机制中切换线程时带来的线程上下文切换、线程状态切&gt; &gt; 换、Thread 初始化上的性能损耗，能大幅度唐提高并发性能</li>
+<li>漫画版概念解释：<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://www.sohu.com/a/236536167_684445">漫画：什么是协程？</a></li>
+<li>简单理解：在单线程上由程序员自己调度运行的并行计算</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>下面是关于协程这个概念的一些描述：</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>协程的开发人员 Roman Elizarov 是这样描述协程的：协程就像非常轻量级的线程。线程是由系统调度的，线程切换或线程阻塞的开销都比较大。而协程依赖于线程，但是协程挂起时不需要阻塞线程，几乎是无代价的，协程是由开发者控制的。所以协程也像用户态的线程，非常轻量级，一个线程中可以创建任意个协程。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Coroutine，翻译成”协程“，初始碰到的人马上就会跟进程和线程两个概念联系起来。直接先说区别，Coroutine是编译器级的，Process和Thread是操作系统级的。Coroutine的实现，通常是对某个语言做相应的提议，然后通过后成编译器标准，然后编译器厂商来实现该机制。Process和Thread看起来也在语言层次，但是内生原理却是操作系统先有这个东西，然后通过一定的API暴露给用户使用，两者在这里有不同。Process和Thread是os通过调度算法，保存当前的上下文，然后从上次暂停的地方再次开始计算，重新开始的地方不可预期，每次CPU计算的指令数量和代码跑过的CPU时间是相关的，跑到os分配的cpu时间到达后就会被os强制挂起。Coroutine是编译器的魔术，通过插入相关的代码使得代码段能够实现分段式的执行，重新开始的地方是yield关键字指定的，一次一定会跑到一个yield对应的地方</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>对于多线程应用，CPU通过切片的方式来切换线程间的执行，线程切换时需要耗时（保存状态，下次继续）。协程，则只使用一个线程，在一个线程中规定某个代码块执行顺序。协程能保留上一次调用时的状态，不需要像线程一样用回调函数，所以性能上会有提升。缺点是本质是个单线程，不能利用到单个CPU的多个核</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p><strong><a target="_blank" rel="noopener" href="https://coldrain-moro.github.io/content.html?id=8">协程和线程的对比：</a></strong></p>
+</blockquote>
+<blockquote>
+<ul>
+<li><strong><a target="_blank" rel="noopener" href="https://coldrain-moro.github.io/content.html?id=8">Thread</a></strong> - 线程拥有独立的栈、局部变量，基于进程的共享内存，因此数据共享比较容易，但是多线程时需要加锁来进行访问控制，不加锁就容易导致数据错误，但加锁过多又容易出现死锁。线程之间的调度由内核控制(时间片竞争机制)，程序员无法介入控制(<code>即便我们拥有sleep、yield这样的API，这些API只是看起来像，但本质还是交给内核去控制，我们最多就是加上几个条件控制罢了</code>)，线程之间的切换需要深入到内核级别，因此线程的切换代价比较大，表现在：<br>* 线程对象的创建和初始化<br>* 线程上下文切换<br>* 线程状态的切换由系统内核完成<br>* 对变量的操作需要加锁</li>
+</ul>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://coldrain-moro.github.io/content.html?id=8"><img src="https://coldrain-moro.github.io/content.html?id=8" alt="img"></a></p>
+<blockquote>
+<ul>
+<li><strong><a target="_blank" rel="noopener" href="https://coldrain-moro.github.io/content.html?id=8">Coroutine</a></strong> 协程是跑在线程上的优化产物，被称为轻量级 Thread，拥有自己的栈内存和局部变量，共享成员变量。传统 Thread 执行的核心是一个while(true) 的函数，本质就是一个耗时函数，Coroutine 可以用来直接标记方法，由程序员自己实现切换，调度，不再采用传统的时间段竞争机制。在一个线程上可以同时跑多个协程，同一时间只有一个协程被执行，在单线程上模拟多线程并发，协程何时运行，何时暂停，都是有程序员自己决定的，使用： <code>yield/resume</code> API，优势如下：</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>因为在同一个线程里，协程之间的切换不涉及线程上下文的切换和线程状态的改变，不存在资源、数据并发，所以不用加锁，只需要判断状态就OK，所以执行效率比多线程高很多</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>协程是非阻塞式的(也有阻塞API)，一个协程在进入阻塞后不会阻塞当前线程，当前线程会去执行其他协程任务</li>
+</ul>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">![img](https:////upload-images.jianshu.io/upload_images/1785445-57bc06c143e5fcc9.jpeg?imageMogr2/auto-orient/strip|imageView2/2/w/724/format/webp)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>程序员能够控制协程的切换，是通过<code>yield</code> API 让协程在空闲时（比如等待io，网络数据未到达）放弃执行权，然后在合适的时机再通过<code>resume</code> API 唤醒协程继续运行。协程一旦开始运行就不会结束，直到遇到<code>yield</code>交出执行权。<code>Yield</code>、<code>resume</code> 这一对 API 可以非常便捷的实现<code>异步</code>，这可是目前所有高级语法孜孜不倦追求的</p>
+</blockquote>
+<blockquote>
+<p>拿 python 代码举个例子，在一个线程里运行下面2个方法：</p>
+</blockquote>
+<blockquote>
+<pre class="line-numbers language-none"><code class="language-none">def A():
+	print '1'
+	print '2
+	print '3'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</blockquote>
+<blockquote>
+<pre class="line-numbers language-none"><code class="language-none">def B():
+ print 'x'
+ print 'y'
+ print 'z'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</blockquote>
+<blockquote>
+<p>假设由协程执行，每个方法都用协程标记，在执行A的过程中，可以随时中断，去执行B，B也可&gt; &gt; 能在执行过程中中断再去执行A，结果可能是：1 2 x y 3 z</p>
+</blockquote>
+<h3 id="协程优点之我见"><a href="#协程优点之我见" class="headerlink" title="协程优点之我见"></a>协程优点之我见</h3><ul>
+<li><p>协程操作在大多数情况下比多线程操作性能好</p>
+</li>
+<li><p>写起来很爽，配合await你写异步操作就跟写同步操作一样</p>
+</li>
+<li><p>相比于CompletableFuture更厉害的地方在于它可以中断线程，一会儿过后再继续执行，<strong>操作方式更加自由</strong></p>
+</li>
+<li><blockquote>
+<p>协程是非阻塞式的(也有阻塞API)，<strong>一个协程在进入阻塞后不会阻塞当前线程，当前线程会去执行其他协程任务</strong></p>
+<p>这就很舒服了</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Kotlin中协程的使用方法"><a href="#Kotlin中协程的使用方法" class="headerlink" title="Kotlin中协程的使用方法"></a>Kotlin中协程的使用方法</h2><h3 id="依赖库"><a href="#依赖库" class="headerlink" title="依赖库"></a>依赖库</h3><p>kotlin的协程api并不包含在kotlin-stdlib中，跟kotlin的反射api一样，我们需要自行导入依赖</p>
+<p>其实最新版本已经迭代到1.5.1了，只是最新版本必须要java16才能兼容，所以用了老版本</p>
+<pre class="line-numbers language-none"><code class="language-none">compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3")<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="如何创建一个协程"><a href="#如何创建一个协程" class="headerlink" title="如何创建一个协程"></a>如何创建一个协程</h3><p>引用: <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/76d2f47b900d">kotlin - Coroutine 协程 - 简书 (jianshu.com)</a></p>
+<blockquote>
+<p>kotlin 里没有 new ，自然也不像 JAVA 一样 new Thread，另外 kotlin 里面提供了大量的高阶函数，所以不难猜出协程这里 kotlin 也是有提供专用函数的。kotlin 中 GlobalScope 类提供了几个携程构造函数：</p>
+</blockquote>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://coldrain-moro.github.io/content.html?id=8">launch</a> - 创建协程</li>
+<li><a target="_blank" rel="noopener" href="https://coldrain-moro.github.io/content.html?id=8">async</a> - 创建带返回值的协程，返回的是 Deferred 类</li>
+<li><a target="_blank" rel="noopener" href="https://coldrain-moro.github.io/content.html?id=8">withContext </a>- 不创建新的协程，在指定协程上运行代码块</li>
+<li><a target="_blank" rel="noopener" href="https://coldrain-moro.github.io/content.html?id=8">runBlocking</a> - 不是 GlobalScope 的 API，可以独立使用，区别是 runBlocking 里面的 delay 会阻塞线程，而 launch 创建的不会</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>kotlin 在 1.3 之后要求协程必须由 CoroutineScope 创建，CoroutineScope 不阻塞当前线程，在后台创建一个新协程，也可以指定协程调度器。比如 CoroutineScope.launch{} 可以看成 new Coroutine</p>
+</blockquote>
+<h4 id="launch"><a href="#launch" class="headerlink" title="launch"></a>launch</h4><pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin">GlobalScope<span class="token punctuation">.</span><span class="token function">launch</span> <span class="token punctuation">{</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"123"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>如此便创建了一个最简单的协程，这个协程是在主线程上创建的，换句话说，<strong>是同步的</strong></p>
+<blockquote>
+<ul>
+<li>CoroutineContext</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>- 可以理解为协程的上下文，在这里我们可以设置 CoroutineDispatcher 协程运行的线程调度器，有 4种线程模式：</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>Dispatchers.Default</li>
+<li>Dispatchers.IO -</li>
+<li>Dispatchers.Main - 主线程</li>
+<li>Dispatchers.Unconfined - 没指定，就是在当前线程</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>不写的话就是 Dispatchers.Default 模式的</p>
+</blockquote>
+<p>它有一个返回值Job。<strong>可以把 Job 看成协程对象本身，协程的操作方法都在 Job 身上了</strong></p>
+<blockquote>
+<p>job.start() - 启动协程，除了 lazy 模式，协程都不需要手动启动</p>
+</blockquote>
+<blockquote>
+<p>job.join() - 等待协程执行完毕</p>
+</blockquote>
+<blockquote>
+<p>job.cancel() - 取消一个协程</p>
+</blockquote>
+<blockquote>
+<p>job.cancelAndJoin() - 等待协程执行完毕然后再取消</p>
+</blockquote>
+<h4 id="async"><a href="#async" class="headerlink" title="async"></a>async</h4><pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin">GlobalScope<span class="token punctuation">.</span><span class="token function">async</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 在异步线程中创建一个协程</span>
+    <span class="token comment">// 堵塞协程1s （即挂起协程）</span>
+    <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">1000L</span><span class="token punctuation">)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"123"</span><span class="token punctuation">)</span>
+ <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">invokeOnCompletion</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 完成后执行(同步)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"456"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这个方法是在异步线程中创建协程，不同于launch返回Job，async返回的是Deferred类型</p>
+<p>Deferred是Job的子类，包含Job的一切方法，除此之外，还新添了一个非常有用的方法 <strong>await</strong></p>
+<p>这个方法用起来非常舒服，多线程操作用这个方法处理就跟处理同步操作一样</p>
+<p>例子: (摘自简书)</p>
+<pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin">GlobalScope<span class="token punctuation">.</span><span class="token function">launch</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>Unconfined<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">val</span> deferred <span class="token operator">=</span> GlobalScope<span class="token punctuation">.</span><span class="token function">async</span><span class="token punctuation">{</span>
+  <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">1000L</span><span class="token punctuation">)</span>
+  Log<span class="token punctuation">.</span><span class="token function">d</span><span class="token punctuation">(</span><span class="token string">"AA"</span><span class="token punctuation">,</span><span class="token string">"This is async "</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span><span class="token label symbol">@async</span> <span class="token string">"taonce"</span>
+  <span class="token punctuation">}</span>
+
+  Log<span class="token punctuation">.</span><span class="token function">d</span><span class="token punctuation">(</span><span class="token string">"AA"</span><span class="token punctuation">,</span><span class="token string">"协程 other start"</span><span class="token punctuation">)</span>
+  <span class="token keyword">val</span> result <span class="token operator">=</span> deferred<span class="token punctuation">.</span><span class="token function">await</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  Log<span class="token punctuation">.</span><span class="token function">d</span><span class="token punctuation">(</span><span class="token string">"AA"</span><span class="token punctuation">,</span><span class="token string">"async result is <span class="token interpolation variable">$result</span>"</span><span class="token punctuation">)</span>
+  Log<span class="token punctuation">.</span><span class="token function">d</span><span class="token punctuation">(</span><span class="token string">"AA"</span><span class="token punctuation">,</span><span class="token string">"协程 other end "</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+Log<span class="token punctuation">.</span><span class="token function">d</span><span class="token punctuation">(</span><span class="token string">"AA"</span><span class="token punctuation">,</span> <span class="token string">"主线程位于协程之后的代码执行，时间:  <span class="token interpolation"><span class="token delimiter variable">${</span>System<span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="runBlocking"><a href="#runBlocking" class="headerlink" title="runBlocking"></a>runBlocking</h4><p><strong>该部分全部摘自简书</strong></p>
+<p>runBlocking 和 launch 区别的地方就是 runBlocking 的 delay 方法是可以阻塞当前的线程的，和Thread.sleep() 一样，看下面的例子:</p>
+<pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span>args<span class="token operator">:</span> Array<span class="token operator">&lt;</span>String<span class="token operator">&gt;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  runBlocking <span class="token punctuation">{</span>
+    <span class="token comment">// 阻塞1s</span>
+    <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">1000L</span><span class="token punctuation">)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"This is a coroutines <span class="token interpolation"><span class="token delimiter variable">${</span>TimeUtil<span class="token punctuation">.</span><span class="token function">getTimeDetail</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 阻塞2s</span>
+  Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">2000L</span><span class="token punctuation">)</span>
+  <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"main end <span class="token interpolation"><span class="token delimiter variable">${</span>TimeUtil<span class="token punctuation">.</span><span class="token function">getTimeDetail</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+~~~~~~~~~~~~~~log~~~~~~~~~~~~~~~~
+This <span class="token keyword">is</span> a coroutines <span class="token number">11</span><span class="token operator">:</span><span class="token number">00</span><span class="token operator">:</span><span class="token number">51</span>
+main end <span class="token number">11</span><span class="token operator">:</span><span class="token number">00</span><span class="token operator">:</span><span class="token number">53</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>runBlocking 通常的用法是用来桥接普通阻塞代码和挂起风格的非阻塞代码，在 runBlocking 闭包里面启动另外的协程，协程里面是可以嵌套启动别的协程的。</p>
+<h3 id="suspend-关键字"><a href="#suspend-关键字" class="headerlink" title="suspend 关键字"></a>suspend 关键字</h3><p>被修饰的函数可以称作<strong>挂起函数</strong></p>
+<p><strong>没用suspend标记的方法不能参加协程任务，suspend修饰的方法只能与另一个被suspend修饰的方法进行交流</strong></p>
+<p><strong>协程本身也是挂起函数</strong></p>
+<h2 id="实际运用"><a href="#实际运用" class="headerlink" title="实际运用"></a>实际运用</h2><p>代码来自我的SacredBank</p>
+<p>之前玩家仓库翻页时更新数据库就是很普通的async task，而翻到下一页这个操作是同步的</p>
+<p>这可能会导致玩家仓库数据尚未及时更新就翻到下一页，可能会出现玩家打开仓库中的物品与数据库中储存的玩家仓库物品不一致</p>
+<p>运用协程巧妙的解决了这个问题</p>
+<pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token comment">// 返回一个Deffered实例    </span>
+<span class="token keyword">fun</span> <span class="token function">saveWarehouse</span><span class="token punctuation">(</span><span class="token operator">inv</span><span class="token operator">:</span> Inventory<span class="token punctuation">,</span> holder<span class="token operator">:</span> BankHolder<span class="token punctuation">)</span><span class="token operator">:</span> Deferred<span class="token operator">&lt;</span>Unit<span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> GlobalScope<span class="token punctuation">.</span><span class="token function">async</span> <span class="token punctuation">{</span>
+            <span class="token operator">inv</span><span class="token punctuation">.</span><span class="token function">removeItem</span><span class="token punctuation">(</span>item_previous_page<span class="token punctuation">,</span> item_next_page<span class="token punctuation">,</span> item_current_page<span class="token punctuation">,</span> SacredBank<span class="token punctuation">.</span>lockItem<span class="token punctuation">)</span>
+            <span class="token keyword">val</span> profile <span class="token operator">=</span> Database<span class="token punctuation">.</span>selectedDB<span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span>Bukkit<span class="token punctuation">.</span><span class="token function">getOfflinePlayer</span><span class="token punctuation">(</span>holder<span class="token punctuation">.</span>target<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">?:</span> <span class="token function">PlayerProfile</span><span class="token punctuation">(</span>Bukkit<span class="token punctuation">.</span><span class="token function">getOfflinePlayer</span><span class="token punctuation">(</span>holder<span class="token punctuation">.</span>target<span class="token punctuation">)</span><span class="token punctuation">.</span>uniqueId<span class="token punctuation">)</span>
+            <span class="token operator">inv</span><span class="token punctuation">.</span><span class="token function">forEachIndexed</span> <span class="token punctuation">{</span> i<span class="token punctuation">,</span> item <span class="token operator">-&gt;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> <span class="token number">45</span> <span class="token operator">&amp;&amp;</span> item<span class="token punctuation">.</span><span class="token function">isNotAir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> profile<span class="token punctuation">.</span>warehouseItems<span class="token punctuation">[</span>i <span class="token operator">+</span> <span class="token number">45</span> <span class="token operator">*</span> <span class="token punctuation">(</span>holder<span class="token punctuation">.</span>warehouse_page <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> item
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> <span class="token number">45</span> <span class="token operator">&amp;&amp;</span> item<span class="token punctuation">.</span><span class="token function">isAir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> profile<span class="token punctuation">.</span>warehouseItems<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">45</span> <span class="token operator">*</span> <span class="token punctuation">(</span>holder<span class="token punctuation">.</span>warehouse_page <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+            Database<span class="token punctuation">.</span>selectedDB<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span>Bukkit<span class="token punctuation">.</span><span class="token function">getOfflinePlayer</span><span class="token punctuation">(</span>holder<span class="token punctuation">.</span>target<span class="token punctuation">)</span><span class="token punctuation">,</span> profile<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+<span class="token comment">// 翻页操作代码片段</span>
+<span class="token comment">// 对Deffered实例进行操作，使其在数据上传完毕后再进行翻页操作</span>
+Warehouse<span class="token punctuation">.</span><span class="token function">saveWarehouse</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>inventory<span class="token punctuation">,</span> holder<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">invokeOnCompletion</span> <span class="token punctuation">{</span>
+   	Warehouse<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>whoClicked <span class="token keyword">as</span> Player<span class="token punctuation">,</span> holder<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+		it<span class="token punctuation">.</span>warehouse_page <span class="token operator">+=</span> <span class="token number">1</span>
+		<span class="token punctuation">}</span><span class="token punctuation">)</span>
+	<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">寒雨</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://blog.coldrain.ink/2021/08/15/learn-kotlin-coroutine/">http://blog.coldrain.ink/2021/08/15/learn-kotlin-coroutine/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">寒雨</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Kotlin/">
+                                    <span class="chip bg-color">Kotlin</span>
+                                </a>
+                            
+                                <a href="/tags/Coroutine/">
+                                    <span class="chip bg-color">Coroutine</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/08/28/try-completablefuture/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="初试CompletableFuture">
+                        
+                        <span class="card-title">初试CompletableFuture</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            初次尝试java的CompletableFuture
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-28
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    笔记
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                    <a href="/tags/Kotlin/">
+                        <span class="chip bg-color">Kotlin</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/07/22/be-careful-using-mysql/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="在使用SQL时的一些注意事项">
+                        
+                        <span class="card-title">在使用SQL时的一些注意事项</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            记录一下使用MySQL的一些注意事项
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-22
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    笔记
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021</span>
+            
+            <a href="/about" target="_blank">寒雨</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">9.9k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/ColdRain-Moro" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:rain@asgard.hk" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1335014319" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1335014319" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+    <a href="https://www.zhihu.com/people/moro-59-3" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/people/moro-59-3" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/"><\/script>');
+            }
+        </script>
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

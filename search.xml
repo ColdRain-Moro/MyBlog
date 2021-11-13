@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>用OkHttp进行一个json信息的获取</title>
+      <link href="/2021/11/14/okhttp-get-json/"/>
+      <url>/2021/11/14/okhttp-get-json/</url>
+      
+        <content type="html"><![CDATA[<h1 id="用OkHttp进行一个json信息的获取"><a href="#用OkHttp进行一个json信息的获取" class="headerlink" title="用OkHttp进行一个json信息的获取"></a>用OkHttp进行一个json信息的获取</h1><p>获取一段json信息，用gson将它格式化，再输出到一个本地json文件里</p><pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token comment">/** * 从请求中获取json字符串，将其格式化输出到文件中 * 使用Gson格式化json字符串 */</span><span class="token keyword">fun</span> <span class="token function">getData</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>    <span class="token keyword">val</span> gson <span class="token operator">=</span> <span class="token function">GsonBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setPrettyPrinting</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token keyword">val</span> client <span class="token operator">=</span> <span class="token function">OkHttpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token keyword">val</span> request <span class="token operator">=</span> Request<span class="token punctuation">.</span><span class="token function">Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>        <span class="token punctuation">.</span><span class="token function">url</span><span class="token punctuation">(</span><span class="token string">"https://www.wanandroid.com/article/list/0/json"</span><span class="token punctuation">)</span>        <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token keyword">val</span> response <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">newCall</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token keyword">val</span> json <span class="token operator">=</span> response<span class="token punctuation">.</span>body<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token keyword">if</span> <span class="token punctuation">(</span>json <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>        <span class="token keyword">val</span> formatted <span class="token operator">=</span> gson<span class="token punctuation">.</span><span class="token function">toJson</span><span class="token punctuation">(</span>gson<span class="token punctuation">.</span><span class="token function">fromJson</span><span class="token punctuation">(</span>json<span class="token punctuation">,</span> Any<span class="token operator">::</span><span class="token keyword">class</span><span class="token punctuation">.</span>java<span class="token punctuation">)</span><span class="token punctuation">)</span>        <span class="token keyword">val</span> file <span class="token operator">=</span> <span class="token function">File</span><span class="token punctuation">(</span><span class="token string">"E:\\data.json"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span> <span class="token function">createNewFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">}</span>        <span class="token function">FileWriter</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>            <span class="token function">write</span><span class="token punctuation">(</span>formatted<span class="token punctuation">)</span>            <span class="token function">flush</span><span class="token punctuation">(</span><span class="token punctuation">)</span>            <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>        <span class="token punctuation">}</span>    <span class="token punctuation">}</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 外部库 </tag>
+            
+            <tag> 网络操作 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Kotlin 泛型协变/逆变学习笔记</title>
       <link href="/2021/11/13/kotlin-generics-covariation-and-inversion/"/>
       <url>/2021/11/13/kotlin-generics-covariation-and-inversion/</url>

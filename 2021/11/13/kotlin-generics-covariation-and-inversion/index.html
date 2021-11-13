@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Git Commit 规范, ColdRain&#39;s Blog">
-    <meta name="description" content="git commit规范">
+    <meta name="keywords" content="Kotlin 泛型协变/逆变学习笔记, ColdRain&#39;s Blog">
+    <meta name="description" content="Kotlin协变/逆变笔记">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Git Commit 规范 | ColdRain&#39;s Blog</title>
+    <title>Kotlin 泛型协变/逆变学习笔记 | ColdRain&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -248,12 +248,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Git Commit 规范</h1>
+                    <h1 class="description center-align post-title">Kotlin 泛型协变/逆变学习笔记</h1>
                 </div>
             </div>
         </div>
@@ -369,8 +369,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/git/">
-                                <span class="chip bg-color">git</span>
+                            <a href="/tags/Kotlin/">
+                                <span class="chip bg-color">Kotlin</span>
                             </a>
                         
                     </div>
@@ -394,28 +394,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-28
+                    2021-11-13
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-09
+                    2021-11-13
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    139
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -438,26 +438,142 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Commit-规范"><a href="#Commit-规范" class="headerlink" title="Commit 规范"></a>Commit 规范</h1><p>copy的学长的git教程。</p>
-<p>以前都没怎么注意commit这方面的规范，以后要多加注意</p>
+                <h1 id="Kotlin-泛型协变-逆变学习笔记"><a href="#Kotlin-泛型协变-逆变学习笔记" class="headerlink" title="Kotlin 泛型协变/逆变学习笔记"></a>Kotlin 泛型协变/逆变学习笔记</h1><h2 id="协变"><a href="#协变" class="headerlink" title="协变"></a>协变</h2><h3 id="我的理解"><a href="#我的理解" class="headerlink" title="我的理解"></a>我的理解</h3><p>设想以下情况: Student是Person的子类</p>
+<p>我们定义了一个Data<t>(val data: T)作为容器来存放他们</t></p>
+<p>函数test接受一个类型为Data<person>的参数,我们手上有一个类型为Data<student>的实例</student></person></p>
+<p>我们理所当然的把它作为参数传入test函数，却发现编译无法通过</p>
+<p>这时你傻眼了，原来Data<student>跟本无法作为一个Data<person>的参数传入函数，也就是没法隐式向下转型</person></student></p>
+<p>但我们发现，使用List这样的容器是允许这样做的</p>
+<pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token keyword">open</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token function">Student</span><span class="token punctuation">(</span>name<span class="token operator">:</span> String<span class="token punctuation">,</span> <span class="token keyword">val</span> level<span class="token operator">:</span> Int<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">Person</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+<span class="token keyword">class</span> Data<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token keyword">val</span> <span class="token keyword">data</span><span class="token operator">:</span> T<span class="token punctuation">)</span>
+
+<span class="token keyword">fun</span> <span class="token function">test</span><span class="token punctuation">(</span>people<span class="token operator">:</span> List<span class="token operator">&lt;</span>Person<span class="token operator">&gt;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">TODO</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">test</span><span class="token punctuation">(</span>people<span class="token operator">:</span> Data<span class="token operator">&lt;</span>Person<span class="token operator">&gt;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">TODO</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> studentList <span class="token operator">=</span> <span class="token function">arrayListOf</span><span class="token punctuation">(</span>
+        <span class="token function">Student</span><span class="token punctuation">(</span><span class="token string">"xxx"</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token function">Student</span><span class="token punctuation">(</span><span class="token string">"xxx"</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span>
+    <span class="token punctuation">)</span>
+    <span class="token keyword">val</span> <span class="token keyword">data</span> <span class="token operator">=</span> <span class="token function">Data</span><span class="token punctuation">(</span><span class="token function">Student</span><span class="token punctuation">(</span><span class="token string">"xxx"</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token function">test</span><span class="token punctuation">(</span><span class="token keyword">data</span><span class="token punctuation">)</span> <span class="token comment">// 编译不能通过</span>
+    <span class="token function">test</span><span class="token punctuation">(</span>studentList<span class="token punctuation">)</span> <span class="token comment">// 编译可以通过</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>这是因为List这个类型用到了泛型的协变，这类问题我们应该使用泛型的协变来处理</p>
+<p>实际上Java为了杜绝安全隐患，是不允许这样传递参数的。换句话说，即使 Student是Person的子类，SimpleData并不是SimpleData的子 类。</p>
+<p>但稍作思考，像crossinline那样，我们可以做一个约定来避免类型转换的安全隐患。如果我们约定泛型T是只读的话（也就是不能改变)，也就能避免类型转换的安全隐患，但那样就意味着我们这个类的参数中不能含有泛型。这样持有泛型的类型便会拥有泛型类型的继承关系。</p>
+<p>这里引用一下《第一行代码: 第三版》中对泛型协变的定义</p>
 <blockquote>
-<p>描述写法如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">[type]title
-describtion<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>假如定义了一个MyClass的泛型类，其中A 是B的子类型，同时MyClass<a>又是MyClass<b>的子类型，那么我们就可以称MyClass在T这个泛型上是协变的。</b></a></p><a><b>
+</b></a></blockquote><a><b>
+</b></a><b><h3 id="屁话多！如何使用"><a></a><a href="#屁话多！如何使用" class="headerlink" title="屁话多！如何使用"></a>屁话多！如何使用</h3><p>只需要在声明泛型时在前面加上out修饰符即可，之后你便需要遵守协变的约定</p>
+<pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token keyword">open</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token function">Student</span><span class="token punctuation">(</span>name<span class="token operator">:</span> String<span class="token punctuation">,</span> <span class="token keyword">val</span> level<span class="token operator">:</span> Int<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">Person</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+<span class="token comment">// 声明泛型时在前面加个out即可规定这个类在这个泛型上是协变的</span>
+<span class="token keyword">class</span> Data<span class="token operator">&lt;</span><span class="token keyword">out</span> T<span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token keyword">val</span> <span class="token keyword">data</span><span class="token operator">:</span> T<span class="token punctuation">)</span> <span class="token punctuation">{</span>
 
-<p>type如下：</p>
-<ul>
-<li>fix ————-&gt; bug 修护</li>
-<li>feature ——-&gt; 需求</li>
-<li>optimize ——&gt; 优化</li>
-<li>release ——–&gt; 版本升级</li>
-<li>style ————&gt; 代码格式调整，不涉及代码更改</li>
-</ul>
-<p>title：需求标题（对于该commit的简单描述）</p>
-<p>describtion：需求的具体描述（如果过于简单的提交可以不用写该部分）</p>
-<p>若提交消息有说明遗漏，可以通过 [Amend](#Amend 按钮) 进行补救</p>
-</blockquote>
+    <span class="token comment">// 不合法，因为外部可以访问并修改这个变量</span>
+    <span class="token comment">// 编译不通过</span>
+    <span class="token keyword">var</span> value<span class="token operator">:</span> T <span class="token operator">=</span> <span class="token function">TODO</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">// 合法，外部无法访问这个变量</span>
+    <span class="token keyword">private</span> <span class="token keyword">var</span> value2<span class="token operator">:</span> T <span class="token operator">=</span> <span class="token function">TODO</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">// 合法，因为这是常量，常量值无法被修改</span>
+    <span class="token keyword">val</span> value3<span class="token operator">:</span> T <span class="token operator">=</span> <span class="token function">TODO</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 
+    <span class="token comment">// 不合法，因为协变规定了不能在方法参数中使用泛型</span>
+    <span class="token comment">// 编译不通过</span>
+    <span class="token keyword">fun</span> <span class="token function">func</span><span class="token punctuation">(</span>input<span class="token operator">:</span> T<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">TODO</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 这样做是合法的，方法的返回值可以使用泛型</span>
+    <span class="token keyword">fun</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> T <span class="token punctuation">{</span>
+        <span class="token function">TODO</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">test</span><span class="token punctuation">(</span>people<span class="token operator">:</span> List<span class="token operator">&lt;</span>Person<span class="token operator">&gt;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">TODO</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">test</span><span class="token punctuation">(</span>people<span class="token operator">:</span> Data<span class="token operator">&lt;</span>Person<span class="token operator">&gt;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">TODO</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> studentList <span class="token operator">=</span> <span class="token function">arrayListOf</span><span class="token punctuation">(</span>
+        <span class="token function">Student</span><span class="token punctuation">(</span><span class="token string">"xxx"</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token function">Student</span><span class="token punctuation">(</span><span class="token string">"xxx"</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span>
+    <span class="token punctuation">)</span>
+    <span class="token keyword">val</span> <span class="token keyword">data</span> <span class="token operator">=</span> <span class="token function">Data</span><span class="token punctuation">(</span><span class="token function">Student</span><span class="token punctuation">(</span><span class="token string">"xxx"</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token function">test</span><span class="token punctuation">(</span><span class="token keyword">data</span><span class="token punctuation">)</span> <span class="token comment">// 使用协变后 编译通过</span>
+    <span class="token function">test</span><span class="token punctuation">(</span>studentList<span class="token punctuation">)</span> <span class="token comment">// 编译可以通过</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="逆变"><a href="#逆变" class="headerlink" title="逆变"></a>逆变</h2><p>协变让我们可以将Data<student>隐式向上转型变成Data<person></person></student></p>
+<p>那么逆变自然是让我们可以向下转型，并且它是隐式的</p>
+<p>只要我们约定泛型不会在返回值中使用，就可以让持有泛型的类<strong>隐式的</strong>向下转型 (隐式的向上转型意味着这可能不会像协变那样安全)</p>
+<h3 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h3><pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token keyword">open</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token function">Student</span><span class="token punctuation">(</span>name<span class="token operator">:</span> String<span class="token punctuation">,</span> <span class="token keyword">val</span> level<span class="token operator">:</span> Int<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">Person</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+
+<span class="token keyword">interface</span> Transformer<span class="token operator">&lt;</span><span class="token keyword">in</span> T<span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">fun</span> <span class="token function">transform</span><span class="token punctuation">(</span>t<span class="token operator">:</span> T<span class="token punctuation">)</span><span class="token operator">:</span> String
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> trans <span class="token operator">=</span> <span class="token keyword">object</span> <span class="token operator">:</span> Transformer<span class="token operator">&lt;</span>Person<span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">transform</span><span class="token punctuation">(</span>t<span class="token operator">:</span> Person<span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> t<span class="token punctuation">.</span>name
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">handleTransformer</span><span class="token punctuation">(</span>trans<span class="token punctuation">)</span> <span class="token comment">// 如果不声明逆变 这行代码无法通过编译</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">handleTransformer</span><span class="token punctuation">(</span>trans<span class="token operator">:</span> Transformer<span class="token operator">&lt;</span>Student<span class="token operator">&gt;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> student <span class="token operator">=</span> <span class="token function">Student</span><span class="token punctuation">(</span><span class="token string">"Tom"</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span>
+    <span class="token keyword">val</span> result <span class="token operator">=</span> trans<span class="token punctuation">.</span><span class="token function">transform</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="UnsafeVariance注解"><a href="#UnsafeVariance注解" class="headerlink" title="@UnsafeVariance注解"></a>@UnsafeVariance注解</h2><p>在你违反了协变/逆变的约定时，可以使用这个注解让编译通过</p>
+<p>但正如它的字面意思，<strong>它不安全</strong></p>
+<p>在迫不得已要使用它的情况下，你必须清楚你在做什么</p>
+<h3 id="使用示例-1"><a href="#使用示例-1" class="headerlink" title="使用示例"></a>使用示例</h3><pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Data<span class="token operator">&lt;</span><span class="token keyword">out</span> T<span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token keyword">val</span> <span class="token keyword">data</span><span class="token operator">:</span> T<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// 不合法，因为外部可以访问并修改这个变量</span>
+    <span class="token comment">// 使用@UnsafeVariance注解，编译通过</span>
+    <span class="token keyword">var</span> value<span class="token operator">:</span> <span class="token annotation builtin">@UnsafeVariance</span> T <span class="token operator">=</span> <span class="token function">TODO</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">// 合法，外部无法访问这个变量</span>
+    <span class="token keyword">private</span> <span class="token keyword">var</span> value2<span class="token operator">:</span> T <span class="token operator">=</span> <span class="token function">TODO</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">// 合法，因为这是常量，常量值无法被修改</span>
+    <span class="token keyword">val</span> value3<span class="token operator">:</span> T <span class="token operator">=</span> <span class="token function">TODO</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token comment">// 不合法，因为协变规定了不能在方法参数中使用泛型</span>
+    <span class="token comment">// 使用@UnsafeVariance注解，编译通过</span>
+    <span class="token keyword">fun</span> <span class="token function">func</span><span class="token punctuation">(</span>input<span class="token operator">:</span> <span class="token annotation builtin">@UnsafeVariance</span> T<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">TODO</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 这样做是合法的，方法的返回值可以使用泛型</span>
+    <span class="token keyword">fun</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> T <span class="token punctuation">{</span>
+        <span class="token function">TODO</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+</b>
                 
             </div>
             <hr/>
@@ -483,7 +599,7 @@ describtion<span aria-hidden="true" class="line-numbers-rows"><span></span><span
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://blog.coldrain.ink/2021/10/28/git-commit-rule/">http://blog.coldrain.ink/2021/10/28/git-commit-rule/</a>
+                    <a href="http://blog.coldrain.ink/2021/11/13/kotlin-generics-covariation-and-inversion/">http://blog.coldrain.ink/2021/11/13/kotlin-generics-covariation-and-inversion/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -521,8 +637,8 @@ describtion<span aria-hidden="true" class="line-numbers-rows"><span></span><span
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/git/">
-                                    <span class="chip bg-color">git</span>
+                                <a href="/tags/Kotlin/">
+                                    <span class="chip bg-color">Kotlin</span>
                                 </a>
                             
                         </div>
@@ -568,85 +684,29 @@ describtion<span aria-hidden="true" class="line-numbers-rows"><span></span><span
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/10/31/some-tips/">
+                <a href="/2021/11/13/kotlin-generics-covariation-and-inversion/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="整理一下今天踩的坑">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Kotlin 泛型协变/逆变学习笔记">
                         
-                        <span class="card-title">整理一下今天踩的坑</span>
+                        <span class="card-title">Kotlin 泛型协变/逆变学习笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            整理了一些在bukkit开发中经常碰到的坑
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-31
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    笔记
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Kotlin/">
-                        <span class="chip bg-color">Kotlin</span>
-                    </a>
-                    
-                    <a href="/tags/Coroutine/">
-                        <span class="chip bg-color">Coroutine</span>
-                    </a>
-                    
-                    <a href="/tags/Bukkit/">
-                        <span class="chip bg-color">Bukkit</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/10/24/android-note-1/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Android开发笔记其一">
-                        
-                        <span class="card-title">Android开发笔记其一</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            一些安卓的笔记
+                            Kotlin协变/逆变笔记
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-24
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-13
                             </span>
                         <span class="publish-author">
                             
@@ -660,13 +720,55 @@ describtion<span aria-hidden="true" class="line-numbers-rows"><span></span><span
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Android/">
-                        <span class="chip bg-color">Android</span>
+                    <a href="/tags/Kotlin/">
+                        <span class="chip bg-color">Kotlin</span>
                     </a>
                     
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/11/08/hello-world/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="Hello World！">
+                        
+                        <span class="card-title">Hello World！</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            于是万物伊始
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-08
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9D%82%E8%B0%88/" class="post-category">
+                                    杂谈
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
                 </div>
                 
             </div>

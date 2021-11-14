@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="记观察者模式(Observer Pattern) &amp; Android LifeCycle, ColdRain&#39;s Blog">
-    <meta name="description" content="主要还是谈谈观察者模式">
+    <meta name="keywords" content="OKHttp/HttpURLConnection使用笔记, ColdRain&#39;s Blog">
+    <meta name="description" content="OKHttp/HttpURLConnection使用笔记">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>记观察者模式(Observer Pattern) &amp; Android LifeCycle | ColdRain&#39;s Blog</title>
+    <title>OKHttp/HttpURLConnection使用笔记 | ColdRain&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -248,12 +248,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">记观察者模式(Observer Pattern) &amp; Android LifeCycle</h1>
+                    <h1 class="description center-align post-title">OKHttp/HttpURLConnection使用笔记</h1>
                 </div>
             </div>
         </div>
@@ -369,16 +369,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Android/">
-                                <span class="chip bg-color">Android</span>
-                            </a>
-                        
                             <a href="/tags/Kotlin/">
                                 <span class="chip bg-color">Kotlin</span>
                             </a>
                         
-                            <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                                <span class="chip bg-color">设计模式</span>
+                            <a href="/tags/%E5%A4%96%E9%83%A8%E5%BA%93/">
+                                <span class="chip bg-color">外部库</span>
+                            </a>
+                        
+                            <a href="/tags/%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C/">
+                                <span class="chip bg-color">网络操作</span>
                             </a>
                         
                     </div>
@@ -389,8 +389,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%9D%82%E8%B0%88/" class="post-category">
-                                杂谈
+                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
+                                笔记
                             </a>
                         
                     </div>
@@ -402,7 +402,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-06
+                    2021-11-14
                 </div>
                 
 
@@ -416,7 +416,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    237
+                    283
                 </div>
                 
 
@@ -446,14 +446,85 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>其实今天我才听说这种设计模式（之前把这个跟visitor模式搞混了），但以前不知不觉已经用过很多这样设计的api了。</p>
-<p>上周的红岩作业甚至手搓了个eventbus（不过没搓成注解那种形式，不过确实无意中用到了观察者模式的设计方式）</p>
-<p>感觉最牛逼的是，我是自己悟出观察者模式的设计方式去实现了eventbus，思路与观察者模式别无二致。（突然感觉自己也许没那么废物）</p>
-<p>今天这篇博文主要是记录一下Android Jetpack组件LifeCycle的用法捏</p>
-<h2 id="LifeCycle"><a href="#LifeCycle" class="headerlink" title="LifeCycle"></a>LifeCycle</h2><p>与TabooLib里的Awake注解比较类似，让我们不用把每个组件生命周期需要执行的代码都写在MainActivity （</p>
-<p>有助于降低代码耦合度</p>
-<p>同时它也使用了观察者模式的设计模式XD</p>
-<p>草，不想写了，就这样吧</p>
+                <h1 id="OKHttp-HttpURLConnection使用笔记"><a href="#OKHttp-HttpURLConnection使用笔记" class="headerlink" title="OKHttp/HttpURLConnection使用笔记"></a>OKHttp/HttpURLConnection使用笔记</h1><p>废话不多说，上代码</p>
+<pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token comment">// 使用OKHttp提交数据</span>
+<span class="token keyword">private</span> <span class="token keyword">fun</span> <span class="token function">okHttpPost</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    coroutineScope<span class="token punctuation">.</span><span class="token function">launch</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>IO<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">val</span> requestBody <span class="token operator">=</span> FormBody<span class="token punctuation">.</span><span class="token function">Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"user"</span><span class="token punctuation">,</span> <span class="token string">"admin"</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"password"</span><span class="token punctuation">,</span> <span class="token string">"123456"</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">val</span> request <span class="token operator">=</span> Request<span class="token punctuation">.</span><span class="token function">Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">url</span><span class="token punctuation">(</span><span class="token string">"https://www.baidu.com"</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span>requestBody<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment">// 之后操作跟拉取数据一样</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 使用OKHttp拉取数据</span>
+<span class="token comment">// 比HttpUrlConnection好使多了</span>
+<span class="token keyword">private</span> <span class="token keyword">fun</span> <span class="token function">okHttpPull</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    coroutineScope<span class="token punctuation">.</span><span class="token function">launch</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>IO<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword">val</span> client <span class="token operator">=</span> <span class="token function">OkHttpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">val</span> request <span class="token operator">=</span> Request<span class="token punctuation">.</span><span class="token function">Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">url</span><span class="token punctuation">(</span><span class="token string">"https://www.baidu.com"</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">val</span> response <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">newCall</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">val</span> <span class="token keyword">data</span> <span class="token operator">=</span> response<span class="token punctuation">.</span>body<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">data</span> <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token function">withContext</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>Main<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    binding<span class="token punctuation">.</span>responseText<span class="token punctuation">.</span>text <span class="token operator">=</span> <span class="token keyword">data</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>e<span class="token operator">:</span> Exception<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 使用HttpURLConnection提交数据</span>
+<span class="token keyword">private</span> <span class="token keyword">fun</span> <span class="token function">httpUrlConnectionPost</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> connection<span class="token operator">:</span> HttpURLConnection<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token comment">// 网络请求操作 拿到connection</span>
+    connection<span class="token operator">!!</span><span class="token punctuation">.</span>requestMethod <span class="token operator">=</span> <span class="token string">"POST"</span>
+    <span class="token keyword">val</span> output <span class="token operator">=</span> <span class="token function">DataOutputStream</span><span class="token punctuation">(</span>connection<span class="token punctuation">.</span>outputStream<span class="token punctuation">)</span>
+    output<span class="token punctuation">.</span><span class="token function">writeBytes</span><span class="token punctuation">(</span><span class="token string">"username=admin&amp;password=123456"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 使用HttpURLConnection拉取数据</span>
+<span class="token keyword">private</span> <span class="token keyword">fun</span> <span class="token function">httpUrlConnectionPull</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 即使使用协程，网络操作也不能在主线程上运行，需要使用Dispatchers.IO</span>
+    coroutineScope<span class="token punctuation">.</span><span class="token function">launch</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>IO<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> connection<span class="token operator">:</span> HttpURLConnection<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword">val</span> response <span class="token operator">=</span> <span class="token function">StringBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">val</span> url <span class="token operator">=</span> <span class="token function">URL</span><span class="token punctuation">(</span><span class="token string">"https://www.baidu.com"</span><span class="token punctuation">)</span>
+            connection <span class="token operator">=</span> url<span class="token punctuation">.</span><span class="token function">openConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">as</span> HttpURLConnection
+            connection<span class="token punctuation">.</span>connectTimeout <span class="token operator">=</span> <span class="token number">8000</span>
+            connection<span class="token punctuation">.</span>readTimeout <span class="token operator">=</span> <span class="token number">8000</span>
+            <span class="token keyword">val</span> input <span class="token operator">=</span> connection<span class="token punctuation">.</span>inputStream
+            <span class="token keyword">val</span> reader <span class="token operator">=</span> <span class="token function">BufferedReader</span><span class="token punctuation">(</span><span class="token function">InputStreamReader</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            reader<span class="token punctuation">.</span><span class="token function">use</span> <span class="token punctuation">{</span>
+                reader<span class="token punctuation">.</span><span class="token function">forEachLine</span> <span class="token punctuation">{</span>
+                    response<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+            <span class="token comment">// 切回主协程，这样做是因为Dispatcher.IO的协程其实不隶属于主线程</span>
+            <span class="token function">withContext</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>Main<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                binding<span class="token punctuation">.</span>responseText<span class="token punctuation">.</span>text <span class="token operator">=</span> response<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>e<span class="token operator">:</span> Exception<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            connection<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">disconnect</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 
                 
             </div>
@@ -480,7 +551,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://blog.coldrain.ink/2021/11/06/observe-pattern-and-android/">http://blog.coldrain.ink/2021/11/06/observe-pattern-and-android/</a>
+                    <a href="http://blog.coldrain.ink/2021/11/14/okhttp-usage/">http://blog.coldrain.ink/2021/11/14/okhttp-usage/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -518,16 +589,16 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Android/">
-                                    <span class="chip bg-color">Android</span>
-                                </a>
-                            
                                 <a href="/tags/Kotlin/">
                                     <span class="chip bg-color">Kotlin</span>
                                 </a>
                             
-                                <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                                    <span class="chip bg-color">设计模式</span>
+                                <a href="/tags/%E5%A4%96%E9%83%A8%E5%BA%93/">
+                                    <span class="chip bg-color">外部库</span>
+                                </a>
+                            
+                                <a href="/tags/%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C/">
+                                    <span class="chip bg-color">网络操作</span>
                                 </a>
                             
                         </div>
@@ -839,29 +910,30 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/11/07/try-javassist/">
+                <a href="/2021/11/14/okhttp-usage/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="初试Javassist">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="OKHttp/HttpURLConnection使用笔记">
                         
-                        <span class="card-title">初试Javassist</span>
+                        <span class="card-title">OKHttp/HttpURLConnection使用笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            列举了几种基本的javassist用法
+                            OKHttp/HttpURLConnection使用笔记
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-07
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-14
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -874,12 +946,9 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
-                    
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
-                    </a>
                     
                     <a href="/tags/Kotlin/">
                         <span class="chip bg-color">Kotlin</span>
@@ -887,6 +956,10 @@
                     
                     <a href="/tags/%E5%A4%96%E9%83%A8%E5%BA%93/">
                         <span class="chip bg-color">外部库</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C/">
+                        <span class="chip bg-color">网络操作</span>
                     </a>
                     
                 </div>
@@ -900,24 +973,24 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/11/03/get-stacktrace-method-path/">
+                <a href="/2021/11/14/okhttp-get-json/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="java/kotlin 方法中获得调用方的类与方法名">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="用OkHttp进行一个json信息的获取">
                         
-                        <span class="card-title">java/kotlin 方法中获得调用方的类与方法名</span>
+                        <span class="card-title">用OkHttp进行一个json信息的获取</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            整理了java/kotlin 方法中获得调用方的类与方法名的方式
+                            
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-03
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-14
                             </span>
                         <span class="publish-author">
                             
@@ -934,12 +1007,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
+                    <a href="/tags/%E5%A4%96%E9%83%A8%E5%BA%93/">
+                        <span class="chip bg-color">外部库</span>
                     </a>
                     
-                    <a href="/tags/Kotlin/">
-                        <span class="chip bg-color">Kotlin</span>
+                    <a href="/tags/%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C/">
+                        <span class="chip bg-color">网络操作</span>
                     </a>
                     
                 </div>

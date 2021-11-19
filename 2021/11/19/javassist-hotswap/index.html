@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="进入大学后一段时间的总结, ColdRain&#39;s Blog">
-    <meta name="description" content="进入大学后一段时间的总结">
+    <meta name="keywords" content="利用Javassist &amp; Javagent实现类的热替换, ColdRain&#39;s Blog">
+    <meta name="description" content="之前Javassist使用中的疑惑终于被我解决了">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>进入大学后一段时间的总结 | ColdRain&#39;s Blog</title>
+    <title>利用Javassist &amp; Javagent实现类的热替换 | ColdRain&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -248,12 +248,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">进入大学后一段时间的总结</h1>
+                    <h1 class="description center-align post-title">利用Javassist &amp; Javagent实现类的热替换</h1>
                 </div>
             </div>
         </div>
@@ -369,8 +369,20 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%94%9F%E6%B4%BB/">
-                                <span class="chip bg-color">学习生活</span>
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
+                            <a href="/tags/Kotlin/">
+                                <span class="chip bg-color">Kotlin</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%A4%96%E9%83%A8%E5%BA%93/">
+                                <span class="chip bg-color">外部库</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%AD%97%E8%8A%82%E7%A0%81%E6%93%8D%E4%BD%9C/">
+                                <span class="chip bg-color">字节码操作</span>
                             </a>
                         
                     </div>
@@ -381,8 +393,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%9D%82%E8%B0%88/" class="post-category">
-                                杂谈
+                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
+                                笔记
                             </a>
                         
                     </div>
@@ -394,28 +406,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-14
+                    2021-11-19
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-14
+                    2021-11-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    220
+                    709
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -438,17 +450,97 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="进入大学后一段时间的总结"><a href="#进入大学后一段时间的总结" class="headerlink" title="进入大学后一段时间的总结"></a>进入大学后一段时间的总结</h1><p>我过得很充实，很快乐。因为这段时间我选择了跟舍友的王者之路截然不同的一条荆棘之路，我能切身切实的感受的我技术的成长。甚至还用自己刚学两天的前端知识写了一个个人主页🤣</p>
-<h2 id="我的学习计划"><a href="#我的学习计划" class="headerlink" title="我的学习计划"></a>我的学习计划</h2><p>进入大学以来，我能接触到的知识越来越多了，将他们在短时间全部学完大概是不可能的。</p>
-<p>并且我也需要确立自己未来的发展方向，把精力用在刀刃上 （不过我现在还没什么头绪）</p>
-<p>姑且先理一下现在要学的知识吧</p>
-<h3 id="Schedule"><a href="#Schedule" class="headerlink" title="Schedule"></a>Schedule</h3><ul>
-<li>Android 开发 &amp; Kotlin -&gt; jetpack compose 的使用 (移动)</li>
-<li>Html/CSS/JavaScript/TypeScript -&gt; Node.js/React (前端)</li>
-<li>Golang (后端)</li>
-<li>AOP-面向切面编程思想</li>
-<li>C++/C#</li>
-</ul>
+                <h1 id="利用Javassist-amp-Javagent实现类的热替换"><a href="#利用Javassist-amp-Javagent实现类的热替换" class="headerlink" title="利用Javassist &amp; Javagent实现类的热替换"></a>利用Javassist &amp; Javagent实现类的热替换</h1><blockquote>
+<p>几天前写红岩作业的时候，发现其中的一个level非常有意思</p>
+<p>让我们定义一个Hero类，再定义一个Boss类。设定Boss的属性远大于Hero，Hero绝无战胜Boss的可能性</p>
+<p>作业要求是让我们给Hero开个挂，秒杀Boss</p>
+<p>出这个作业的学长大概只是想考察我们对反射的掌握程度，但我发现这个作业可以整花活（因为前段时间研究了ASM和Javassist）</p>
+<p>同时我也想借这个机会解决我之前研究Javassist时碰到的疑惑</p>
+<p>于是就有了这篇文章</p>
+</blockquote>
+<h2 id="Javassist对热替换的实现方式"><a href="#Javassist对热替换的实现方式" class="headerlink" title="Javassist对热替换的实现方式"></a>Javassist对热替换的实现方式</h2><p>我之前研究了很久，到处找资料也没研究出来怎么整。不过这次我终于在网络上找到了线索，并且初步了解了它的原理。</p>
+<blockquote>
+<p>正常来说，只靠Java代码是没法替换一个已经加载到SystemClassLoader里的类的。（如果是别的ClassLoader加载的类，也许可以让加载这个类的ClassLoader不可达再手动调用gc来达到让这个类被作为垃圾回收的目的来删除一个类）但一串神奇的VM Options让我们拥有了从代码层面覆写一个类的能力。</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>对于这行options的作用我并不是很清楚，但它确实让Javassist的Hotswapper类有了连接VM的能力，从此热覆写一个类的字节码便从技术层面可行了。</p>
+<p>美中不足的是只有加了这行Options才能达到效果</p>
+<h2 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h2><pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token comment">/**
+ * hk.asgard.rain.lesson4.Lv4
+ * 4thWork
+ * 三种开挂解决方案
+ * 反射 javassist生成新类 热替换
+ *
+ * @author 寒雨
+ * @since 2021/11/18 10:58
+ **/</span>
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> hero<span class="token operator">:</span> Entity <span class="token operator">=</span> <span class="token function">Hero</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">val</span> boss <span class="token operator">=</span> <span class="token function">Boss</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">//    bypass(hero)</span>
+<span class="token comment">//    hero = javassistByPass(hero)</span>
+    <span class="token function">hotSwap</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>boss<span class="token punctuation">.</span>speed <span class="token operator">&gt;</span> hero<span class="token punctuation">.</span>speed<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Boss 先手 秒杀</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"英雄被Boss秒杀啦"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token comment">// hero 先手</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>hero<span class="token punctuation">.</span>damage <span class="token operator">&gt;=</span> boss<span class="token punctuation">.</span>health<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"英雄开挂秒杀了Boss"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"英雄先手没能干掉Boss，被Boss反杀"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * 开挂(反射)
+ */</span>
+<span class="token keyword">fun</span> <span class="token function">bypass</span><span class="token punctuation">(</span>hero<span class="token operator">:</span> Entity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    hero<span class="token punctuation">.</span><span class="token function">setProperty</span><span class="token punctuation">(</span><span class="token string">"damage"</span><span class="token punctuation">,</span> <span class="token number">999999</span><span class="token punctuation">)</span>
+    hero<span class="token punctuation">.</span><span class="token function">setProperty</span><span class="token punctuation">(</span><span class="token string">"speed"</span><span class="token punctuation">,</span> <span class="token number">400</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 用javassist生成新类并加载</span>
+<span class="token keyword">fun</span> <span class="token function">javassistByPass</span><span class="token punctuation">(</span>hero<span class="token operator">:</span> Entity<span class="token punctuation">)</span><span class="token operator">:</span> Entity <span class="token punctuation">{</span>
+    <span class="token comment">// 获取ctClass</span>
+    <span class="token keyword">val</span> ctClass <span class="token operator">=</span> ClassPool<span class="token punctuation">.</span><span class="token function">getDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"hk.asgard.rain.lesson4.lv4.Hero"</span><span class="token punctuation">)</span>
+    <span class="token comment">// 改名，否则重复加载会抛异常</span>
+    ctClass<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"hk.asgard.rain.lesson4.lv4.HeroEdited"</span>
+    <span class="token comment">// 从ctClass获取方法</span>
+    <span class="token keyword">val</span> ctMethodDamage <span class="token operator">=</span> ctClass<span class="token punctuation">.</span><span class="token function">getDeclaredMethod</span><span class="token punctuation">(</span><span class="token string">"getDamage"</span><span class="token punctuation">)</span>
+    <span class="token keyword">val</span> ctMethodSpeed <span class="token operator">=</span> ctClass<span class="token punctuation">.</span><span class="token function">getDeclaredMethod</span><span class="token punctuation">(</span><span class="token string">"getSpeed"</span><span class="token punctuation">)</span>
+    ctMethodDamage<span class="token punctuation">.</span><span class="token function">setBody</span><span class="token punctuation">(</span><span class="token raw-string string">"""{
+        return 999999L;
+    }"""</span><span class="token punctuation">)</span>
+    ctMethodSpeed<span class="token punctuation">.</span><span class="token function">setBody</span><span class="token punctuation">(</span><span class="token raw-string string">"""{
+        return 400;
+    }"""</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> ctClass<span class="token punctuation">.</span><span class="token function">toClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">as</span> Entity
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 热替换</span>
+<span class="token comment">// 需要jvm选项 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000 并且implementation tools.jar</span>
+<span class="token keyword">fun</span> <span class="token function">hotSwap</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 获取ctClass</span>
+    <span class="token keyword">val</span> ctClass <span class="token operator">=</span> ClassPool<span class="token punctuation">.</span><span class="token function">getDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"hk.asgard.rain.lesson4.lv4.Hero"</span><span class="token punctuation">)</span>
+    <span class="token comment">// 从ctClass获取方法</span>
+    <span class="token keyword">val</span> ctMethodDamage <span class="token operator">=</span> ctClass<span class="token punctuation">.</span><span class="token function">getDeclaredMethod</span><span class="token punctuation">(</span><span class="token string">"getDamage"</span><span class="token punctuation">)</span>
+    <span class="token keyword">val</span> ctMethodSpeed <span class="token operator">=</span> ctClass<span class="token punctuation">.</span><span class="token function">getDeclaredMethod</span><span class="token punctuation">(</span><span class="token string">"getSpeed"</span><span class="token punctuation">)</span>
+    ctMethodDamage<span class="token punctuation">.</span><span class="token function">setBody</span><span class="token punctuation">(</span><span class="token raw-string string">"""{
+        return 999999L;
+    }"""</span><span class="token punctuation">)</span>
+    ctMethodSpeed<span class="token punctuation">.</span><span class="token function">setBody</span><span class="token punctuation">(</span><span class="token raw-string string">"""{
+        return 400;
+    }"""</span><span class="token punctuation">)</span>
+    <span class="token keyword">val</span> swap <span class="token operator">=</span> <span class="token function">HotSwapper</span><span class="token punctuation">(</span><span class="token number">8000</span><span class="token punctuation">)</span>
+    swap<span class="token punctuation">.</span><span class="token function">reload</span><span class="token punctuation">(</span><span class="token string">"hk.asgard.rain.lesson4.lv4.Hero"</span><span class="token punctuation">,</span> ctClass<span class="token punctuation">.</span><span class="token function">toBytecode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><blockquote>
+<p>使用HotSwapper不止需要导入Javassist库，还需要导入tools.jar</p>
+</blockquote>
 
                 
             </div>
@@ -475,7 +567,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://blog.coldrain.ink/2021/10/14/enter-college/">http://blog.coldrain.ink/2021/10/14/enter-college/</a>
+                    <a href="http://blog.coldrain.ink/2021/11/19/javassist-hotswap/">http://blog.coldrain.ink/2021/11/19/javassist-hotswap/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -513,8 +605,20 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%94%9F%E6%B4%BB/">
-                                    <span class="chip bg-color">学习生活</span>
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
+                                </a>
+                            
+                                <a href="/tags/Kotlin/">
+                                    <span class="chip bg-color">Kotlin</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%A4%96%E9%83%A8%E5%BA%93/">
+                                    <span class="chip bg-color">外部库</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%AD%97%E8%8A%82%E7%A0%81%E6%93%8D%E4%BD%9C/">
+                                    <span class="chip bg-color">字节码操作</span>
                                 </a>
                             
                         </div>
@@ -826,46 +930,60 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/10/15/my-first-android-application/">
+                <a href="/2021/11/19/javassist-hotswap/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="开发了第一个自己的安卓软件">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="利用Javassist &amp; Javagent实现类的热替换">
                         
-                        <span class="card-title">开发了第一个自己的安卓软件</span>
+                        <span class="card-title">利用Javassist &amp; Javagent实现类的热替换</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            开发了一个处理正则表达式的小Android软件
+                            之前Javassist使用中的疑惑终于被我解决了
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-15
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-19
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%9D%82%E8%B0%88/" class="post-category">
-                                    杂谈
+                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    笔记
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Android/">
-                        <span class="chip bg-color">Android</span>
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                    <a href="/tags/Kotlin/">
+                        <span class="chip bg-color">Kotlin</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%A4%96%E9%83%A8%E5%BA%93/">
+                        <span class="chip bg-color">外部库</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%AD%97%E8%8A%82%E7%A0%81%E6%93%8D%E4%BD%9C/">
+                        <span class="chip bg-color">字节码操作</span>
                     </a>
                     
                 </div>
@@ -879,31 +997,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/12/my-first-web-page/">
+                <a href="/2021/11/14/okhttp-usage/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="尝试用CSS/Html写了自己的第一个网站">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="OKHttp/HttpURLConnection使用笔记">
                         
-                        <span class="card-title">尝试用CSS/Html写了自己的第一个网站</span>
+                        <span class="card-title">OKHttp/HttpURLConnection使用笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            利用红岩前端学来的知识写了个个人主页
+                            OKHttp/HttpURLConnection使用笔记
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-12
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-14
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%9D%82%E8%B0%88/" class="post-category">
-                                    杂谈
+                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    笔记
                                 </a>
                             
                             
@@ -913,8 +1031,16 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%89%8D%E7%AB%AF/">
-                        <span class="chip bg-color">前端</span>
+                    <a href="/tags/Kotlin/">
+                        <span class="chip bg-color">Kotlin</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%A4%96%E9%83%A8%E5%BA%93/">
+                        <span class="chip bg-color">外部库</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C/">
+                        <span class="chip bg-color">网络操作</span>
                     </a>
                     
                 </div>

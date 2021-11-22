@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="利用Gitee搭建了自己的Maven仓库, ColdRain&#39;s Blog">
-    <meta name="description" content="使用gitee搭建了一个自用maven仓库">
+    <meta name="keywords" content="在DataBinding的使用过程中踩的坑, ColdRain&#39;s Blog">
+    <meta name="description" content="DataBinding可能会导致Kotlin编译器无法smart cast, 而IDE不会标红">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>利用Gitee搭建了自己的Maven仓库 | ColdRain&#39;s Blog</title>
+    <title>在DataBinding的使用过程中踩的坑 | ColdRain&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -248,12 +248,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">利用Gitee搭建了自己的Maven仓库</h1>
+                    <h1 class="description center-align post-title">在DataBinding的使用过程中踩的坑</h1>
                 </div>
             </div>
         </div>
@@ -369,8 +369,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/maven/">
-                                <span class="chip bg-color">maven</span>
+                            <a href="/tags/Kotlin/">
+                                <span class="chip bg-color">Kotlin</span>
+                            </a>
+                        
+                            <a href="/tags/Android/">
+                                <span class="chip bg-color">Android</span>
                             </a>
                         
                     </div>
@@ -394,21 +398,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-09-06
+                    2021-11-22
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-14
+                    2021-11-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    320
+                    350
                 </div>
                 
 
@@ -438,43 +442,31 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>鼓捣了一晚上终于弄出来了……</p>
-<p><a target="_blank" rel="noopener" href="https://gitee.com/coldrain-moro/maven">maven: 寒雨的maven仓库 (gitee.com)</a></p>
-<p>也算是给自己当初偷懒没去多多了解maven补上了一课，出来混，迟早要还的</p>
-<p>之所以选择gitee而没有选择github当然是因为速度快</p>
-<h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><h3 id="上传jar到仓库的命令"><a href="#上传jar到仓库的命令" class="headerlink" title="上传jar到仓库的命令"></a>上传jar到仓库的命令</h3><p>像这样写上传了Tiphareth到本地maven仓库里</p>
-<pre class="line-numbers language-none"><code class="language-none">mvn install:install-file -Dfile=E:\ColdRain_Moro\项目\Tiphareth\build\libs\Tiphareth-1.4.0.jar -DgroupId=ink.ptms.tiphareth -DartifactId=tiphareth -Dversion=1.4.0 -Dpackaging=Jar<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <h1 id="在DataBinding的使用过程中踩的坑"><a href="#在DataBinding的使用过程中踩的坑" class="headerlink" title="在DataBinding的使用过程中踩的坑"></a>在DataBinding的使用过程中踩的坑</h1><p>今天初次尝试了DataBinding，之前一直在用ViewBinding。今天欣喜的发现DataBinding包含了ViewBinding的全部功能，绝绝子。</p>
+<p>DataBinding对于基于MVVM架构理念设计的Android程序来说非常有意义，它可以进一步解耦。</p>
+<p>不说了，来看看我今天遇到的具体问题</p>
+<blockquote>
+<p>DataBinding可能会导致Kotlin编译器无法smart cast, 而IDE不会标红</p>
+</blockquote>
+<p>我在布局文件activity_login.xml中给布局绑定了这样一个变量</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>data</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>variable</span>
+        <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>viewModel<span class="token punctuation">"</span></span>
+        <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>kim.bifrost.coldrain.wanandroid.viewmodel.LoginViewModel<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>data</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="改变默认maven仓库路径"><a href="#改变默认maven仓库路径" class="headerlink" title="改变默认maven仓库路径"></a>改变默认maven仓库路径</h3><p>在 settings.xml 中下文标记位置添加如下内容</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>settings</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://maven.apache.org/SETTINGS/1.2.0<span class="token punctuation">"</span></span>
-          <span class="token attr-name"><span class="token namespace">xmlns:</span>xsi</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.w3.org/2001/XMLSchema-instance<span class="token punctuation">"</span></span>
-          <span class="token attr-name"><span class="token namespace">xsi:</span>schemaLocation</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
-  <span class="token comment">&lt;!-- localRepository
-   | The path to the local repository maven will use to store artifacts.
-   |
-   | Default: ${user.home}/.m2/repository
-  &lt;localRepository&gt;/path/to/local/repo&lt;/localRepository&gt;
-	下面是要添加的内容
-  --&gt;</span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>localRepository</span><span class="token punctuation">&gt;</span></span>E:\ColdRain_Moro\项目\maven\repo<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>localRepository</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>如你所见，我在代码中准备使用它</p>
+<pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin">binding<span class="token punctuation">.</span>viewModel<span class="token punctuation">.</span><span class="token function">postLogin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h3><p>我一般只用gradle，所以这里只标记gradle的使用方式</p>
-<p><em><strong>gradle yyds</strong></em></p>
-<pre class="line-numbers language-none"><code class="language-none">repositories {
-    mavenCentral()
-    // 添加我的仓库
-    maven { url = uri("https://gitee.com/coldrain-moro/maven/raw/master/repo") }
-}
+<p>这行代码在IDE中并没有标红，但无法通过编译</p>
+<pre class="line-numbers language-none"><code class="language-none">e: E:\ColdRain_Moro\AndroidProject\WanAndroid\app\src\main\java\kim\bifrost\coldrain\wanandroid\view\activity\LoginActivity.kt: (31, 13): Smart cast to 'LoginViewModel' is impossible, because 'binding.viewModel' is a complex expression<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-dependencies {
-	// 导入仓库里的依赖tiphareth
-    compileOnly("ink.ptms.tiphareth:tiphareth:1.4.0")
-    compileOnly("public:PlaceholderAPI:2.10.9@jar")
-    compileOnly("ink.ptms.core:v11605:11605")
-    compileOnly(kotlin("stdlib"))
-    compileOnly(fileTree("libs"))
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>遇事不决问度娘，于是在百度上找到了答案 (<a target="_blank" rel="noopener" href="https://www.javaer101.com/article/52202734.html">在Kotlin中无法进行Smart Cast - Javaer101</a>)</p>
+<p>原来这个viewModel变量的类型实际上是LoginViewModel?，也就是它是允许为空的。而我获取的时候是直接以LoginViewModel的形式获取，它没有办法从LoginViewModel?类型smart cast为LoginViewModel。</p>
+<p>那么在调用的时候后面加个?就解决了。</p>
+<pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin">binding<span class="token punctuation">.</span>viewModel<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">postLogin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
+<p>之所以记录下来，是因为Android Studio没有给之前错误的用法标红，我觉得这个还是应该标个红的。</p>
 
                 
             </div>
@@ -501,7 +493,7 @@ dependencies {
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://blog.coldrain.ink/2021/09/06/gitee-maven/">http://blog.coldrain.ink/2021/09/06/gitee-maven/</a>
+                    <a href="http://blog.coldrain.ink/2021/11/22/problem-databinding/">http://blog.coldrain.ink/2021/11/22/problem-databinding/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -539,8 +531,12 @@ dependencies {
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/maven/">
-                                    <span class="chip bg-color">maven</span>
+                                <a href="/tags/Kotlin/">
+                                    <span class="chip bg-color">Kotlin</span>
+                                </a>
+                            
+                                <a href="/tags/Android/">
+                                    <span class="chip bg-color">Android</span>
                                 </a>
                             
                         </div>
@@ -852,41 +848,43 @@ dependencies {
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/09/28/taboolib6-packet-control/">
+                <a href="/2021/11/22/problem-databinding/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="利用TabooLib6发送/拦截/修改数据包以实现梦想中的特性">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="在DataBinding的使用过程中踩的坑">
                         
-                        <span class="card-title">利用TabooLib6发送/拦截/修改数据包以实现梦想中的特性</span>
+                        <span class="card-title">在DataBinding的使用过程中踩的坑</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            写了一篇TabooLib数据包控制技巧的教程
+                            DataBinding可能会导致Kotlin编译器无法smart cast, 而IDE不会标红
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-28
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%95%99%E7%A8%8B/" class="post-category">
-                                    教程
+                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    笔记
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -894,8 +892,8 @@ dependencies {
                         <span class="chip bg-color">Kotlin</span>
                     </a>
                     
-                    <a href="/tags/TabooLib/">
-                        <span class="chip bg-color">TabooLib</span>
+                    <a href="/tags/Android/">
+                        <span class="chip bg-color">Android</span>
                     </a>
                     
                 </div>
@@ -909,24 +907,24 @@ dependencies {
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/08/28/try-completablefuture/">
+                <a href="/2021/11/19/javassist-hotswap/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="初试CompletableFuture">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="利用Javassist &amp; Javagent实现类的热替换">
                         
-                        <span class="card-title">初试CompletableFuture</span>
+                        <span class="card-title">利用Javassist &amp; Javagent实现类的热替换</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            初次尝试java的CompletableFuture
+                            之前Javassist使用中的疑惑终于被我解决了
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-19
                             </span>
                         <span class="publish-author">
                             
@@ -949,6 +947,14 @@ dependencies {
                     
                     <a href="/tags/Kotlin/">
                         <span class="chip bg-color">Kotlin</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%A4%96%E9%83%A8%E5%BA%93/">
+                        <span class="chip bg-color">外部库</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%AD%97%E8%8A%82%E7%A0%81%E6%93%8D%E4%BD%9C/">
+                        <span class="chip bg-color">字节码操作</span>
                     </a>
                     
                 </div>

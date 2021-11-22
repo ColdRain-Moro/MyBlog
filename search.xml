@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>在DataBinding的使用过程中踩的坑</title>
+      <link href="/2021/11/22/problem-databinding/"/>
+      <url>/2021/11/22/problem-databinding/</url>
+      
+        <content type="html"><![CDATA[<h1 id="在DataBinding的使用过程中踩的坑"><a href="#在DataBinding的使用过程中踩的坑" class="headerlink" title="在DataBinding的使用过程中踩的坑"></a>在DataBinding的使用过程中踩的坑</h1><p>今天初次尝试了DataBinding，之前一直在用ViewBinding。今天欣喜的发现DataBinding包含了ViewBinding的全部功能，绝绝子。</p><p>DataBinding对于基于MVVM架构理念设计的Android程序来说非常有意义，它可以进一步解耦。</p><p>不说了，来看看我今天遇到的具体问题</p><blockquote><p>DataBinding可能会导致Kotlin编译器无法smart cast, 而IDE不会标红</p></blockquote><p>我在布局文件activity_login.xml中给布局绑定了这样一个变量</p><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>data</span><span class="token punctuation">&gt;</span></span>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>variable</span>        <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>viewModel<span class="token punctuation">"</span></span>        <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>kim.bifrost.coldrain.wanandroid.viewmodel.LoginViewModel<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>data</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>如你所见，我在代码中准备使用它</p><pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin">binding<span class="token punctuation">.</span>viewModel<span class="token punctuation">.</span><span class="token function">postLogin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>这行代码在IDE中并没有标红，但无法通过编译</p><pre class="line-numbers language-none"><code class="language-none">e: E:\ColdRain_Moro\AndroidProject\WanAndroid\app\src\main\java\kim\bifrost\coldrain\wanandroid\view\activity\LoginActivity.kt: (31, 13): Smart cast to 'LoginViewModel' is impossible, because 'binding.viewModel' is a complex expression<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>遇事不决问度娘，于是在百度上找到了答案 (<a href="https://www.javaer101.com/article/52202734.html">在Kotlin中无法进行Smart Cast - Javaer101</a>)</p><p>原来这个viewModel变量的类型实际上是LoginViewModel?，也就是它是允许为空的。而我获取的时候是直接以LoginViewModel的形式获取，它没有办法从LoginViewModel?类型smart cast为LoginViewModel。</p><p>那么在调用的时候后面加个?就解决了。</p><pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin">binding<span class="token punctuation">.</span>viewModel<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">postLogin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>之所以记录下来，是因为Android Studio没有给之前错误的用法标红，我觉得这个还是应该标个红的。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Kotlin </tag>
+            
+            <tag> Android </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>利用Javassist &amp; Javagent实现类的热替换</title>
       <link href="/2021/11/19/javassist-hotswap/"/>
       <url>/2021/11/19/javassist-hotswap/</url>
@@ -180,9 +207,9 @@
       
         <tags>
             
-            <tag> Android </tag>
-            
             <tag> Kotlin </tag>
+            
+            <tag> Android </tag>
             
             <tag> 设计模式 </tag>
             

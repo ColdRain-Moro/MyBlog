@@ -4,6 +4,62 @@
   
     
     <entry>
+      <title>利用Kotlin委托快捷的创建可观察属性</title>
+      <link href="/2021/12/18/kotlin-delegates-observable/"/>
+      <url>/2021/12/18/kotlin-delegates-observable/</url>
+      
+        <content type="html"><![CDATA[<h1 id="利用Kotlin委托快捷的创建可观察属性"><a href="#利用Kotlin委托快捷的创建可观察属性" class="headerlink" title="利用Kotlin委托快捷的创建可观察属性"></a>利用Kotlin委托快捷的创建可观察属性</h1><p>废话少说，上代码</p><pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token keyword">class</span> User <span class="token punctuation">{</span>    <span class="token keyword">var</span> name<span class="token operator">:</span> String <span class="token keyword">by</span> Delegates<span class="token punctuation">.</span><span class="token function">observable</span><span class="token punctuation">(</span><span class="token string">"初始值"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> prop<span class="token punctuation">,</span> old<span class="token punctuation">,</span> new <span class="token operator">-&gt;</span>        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"旧值：<span class="token interpolation variable">$old</span> -&gt; 新值：<span class="token interpolation variable">$new</span>"</span><span class="token punctuation">)</span>    <span class="token punctuation">}</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>但不同于RxJava，Flow和LiveData，它只能在变量声明时指定观察的回调函数</p><p>这也使得它不能在功能上完全取代掉LiveData（没错，我是标题党），尤其是在MVVM这种分层架构的架构模式中</p><p>但这不妨碍它成为LiveData被时代抛弃的理由之一，毕竟它可是Kotlin原生库里的东西。如果不需要在变量声明之后指定回调函数，那什么RxJava，Flow都得靠边站了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Kotlin </tag>
+            
+            <tag> 委托 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Android 笔记</title>
+      <link href="/2021/12/02/useful-android-widget/"/>
+      <url>/2021/12/02/useful-android-widget/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Android-笔记"><a href="#Android-笔记" class="headerlink" title="Android 笔记"></a>Android 笔记</h1><h2 id="控件"><a href="#控件" class="headerlink" title="控件"></a>控件</h2><h3 id="RecyclerView"><a href="#RecyclerView" class="headerlink" title="RecyclerView"></a>RecyclerView</h3><h3 id="ViewPager2"><a href="#ViewPager2" class="headerlink" title="ViewPager2"></a>ViewPager2</h3><h3 id="DrawerLayout-侧滑栏"><a href="#DrawerLayout-侧滑栏" class="headerlink" title="DrawerLayout (侧滑栏)"></a>DrawerLayout (侧滑栏)</h3><h3 id="CoordinatorLayout-（协调者布局"><a href="#CoordinatorLayout-（协调者布局" class="headerlink" title="CoordinatorLayout （协调者布局)"></a>CoordinatorLayout （协调者布局)</h3><h3 id="Toolbar"><a href="#Toolbar" class="headerlink" title="Toolbar"></a>Toolbar</h3><h3 id="BottomNavigationView"><a href="#BottomNavigationView" class="headerlink" title="BottomNavigationView"></a>BottomNavigationView</h3><h3 id="TabLayout"><a href="#TabLayout" class="headerlink" title="TabLayout"></a>TabLayout</h3><h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><h3 id="DataBinding"><a href="#DataBinding" class="headerlink" title="DataBinding"></a>DataBinding</h3><h3 id="Paging3"><a href="#Paging3" class="headerlink" title="Paging3"></a>Paging3</h3><h3 id="Room"><a href="#Room" class="headerlink" title="Room"></a>Room</h3><h3 id="LiveData-ViewModel"><a href="#LiveData-ViewModel" class="headerlink" title="LiveData/ViewModel"></a>LiveData/ViewModel</h3><h3 id="LifeCycle"><a href="#LifeCycle" class="headerlink" title="LifeCycle"></a>LifeCycle</h3><h2 id="外部库"><a href="#外部库" class="headerlink" title="外部库"></a>外部库</h2><h3 id="OkHttp-Retrofit"><a href="#OkHttp-Retrofit" class="headerlink" title="OkHttp/Retrofit"></a>OkHttp/Retrofit</h3><h3 id="Glide"><a href="#Glide" class="headerlink" title="Glide"></a>Glide</h3><h3 id="Flow"><a href="#Flow" class="headerlink" title="Flow"></a>Flow</h3><h3 id="Kotlinx-Corountine-Kotlin协程"><a href="#Kotlinx-Corountine-Kotlin协程" class="headerlink" title="Kotlinx.Corountine (Kotlin协程)"></a>Kotlinx.Corountine (Kotlin协程)</h3><h3 id="Kotlinx-Serialization"><a href="#Kotlinx-Serialization" class="headerlink" title="Kotlinx.Serialization"></a>Kotlinx.Serialization</h3><h3 id="LitePal"><a href="#LitePal" class="headerlink" title="LitePal"></a>LitePal</h3>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+            <tag> Kotlin </tag>
+            
+            <tag> 知识梳理 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello-Mirai</title>
       <link href="/2021/12/02/hello-mirai/"/>
       <url>/2021/12/02/hello-mirai/</url>

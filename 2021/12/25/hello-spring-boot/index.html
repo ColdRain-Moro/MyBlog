@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="OKHttp/HttpURLConnection使用笔记, ColdRain&#39;s Blog">
-    <meta name="description" content="OKHttp/HttpURLConnection使用笔记">
+    <meta name="keywords" content="Hello Spring Boot!, ColdRain&#39;s Blog">
+    <meta name="description" content="用spring boot简单的实现了路姐姐的聊天室后端">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>OKHttp/HttpURLConnection使用笔记 | ColdRain&#39;s Blog</title>
+    <title>Hello Spring Boot! | ColdRain&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -248,12 +248,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">OKHttp/HttpURLConnection使用笔记</h1>
+                    <h1 class="description center-align post-title">Hello Spring Boot!</h1>
                 </div>
             </div>
         </div>
@@ -373,12 +373,12 @@
                                 <span class="chip bg-color">Kotlin</span>
                             </a>
                         
-                            <a href="/tags/%E5%A4%96%E9%83%A8%E5%BA%93/">
-                                <span class="chip bg-color">外部库</span>
+                            <a href="/tags/SpringBoot/">
+                                <span class="chip bg-color">SpringBoot</span>
                             </a>
                         
-                            <a href="/tags/%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C/">
-                                <span class="chip bg-color">网络操作</span>
+                            <a href="/tags/%E5%90%8E%E7%AB%AF/">
+                                <span class="chip bg-color">后端</span>
                             </a>
                         
                     </div>
@@ -389,8 +389,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
-                                笔记
+                            <a href="/categories/%E6%9D%82%E8%B0%88/" class="post-category">
+                                杂谈
                             </a>
                         
                     </div>
@@ -402,28 +402,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-14
+                    2021-12-25
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-14
+                    2021-12-25
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    283
+                    579
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -446,85 +446,89 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="OKHttp-HttpURLConnection使用笔记"><a href="#OKHttp-HttpURLConnection使用笔记" class="headerlink" title="OKHttp/HttpURLConnection使用笔记"></a>OKHttp/HttpURLConnection使用笔记</h1><p>废话不多说，上代码</p>
-<pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token comment">// 使用OKHttp提交数据</span>
-<span class="token keyword">private</span> <span class="token keyword">fun</span> <span class="token function">okHttpPost</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    coroutineScope<span class="token punctuation">.</span><span class="token function">launch</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>IO<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">val</span> requestBody <span class="token operator">=</span> FormBody<span class="token punctuation">.</span><span class="token function">Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"user"</span><span class="token punctuation">,</span> <span class="token string">"admin"</span><span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"password"</span><span class="token punctuation">,</span> <span class="token string">"123456"</span><span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token keyword">val</span> request <span class="token operator">=</span> Request<span class="token punctuation">.</span><span class="token function">Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">url</span><span class="token punctuation">(</span><span class="token string">"https://www.baidu.com"</span><span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span>requestBody<span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token comment">// 之后操作跟拉取数据一样</span>
-    <span class="token punctuation">}</span>
+                <h1 id="Hello-Spring-Boot"><a href="#Hello-Spring-Boot" class="headerlink" title="Hello Spring Boot"></a>Hello Spring Boot</h1><p>其实之前也有了解过其他的后端实现方式，比如Go的后端（还没学到怎么写接口就放弃了），Node.js的后端（还是整得稀里糊涂的），发现都学不太会。（其实是没时间去仔细琢磨，学习这些语言的后端同时也需要学习这些语言，学习成本较大）</p>
+<p>于是我还是选择了最传统的Spring Boot后端。不过我使用了我喜欢的Kotlin语言来编写，使用Gradle工具来管理依赖库。</p>
+<p>刚上手时便惊讶的发现，Spring Boot框架对java后端的封装真的特别彻底，基本就是几个注解便帮你处理了大部分工作，写起来真的特别的舒服。</p>
+<p>像这样便能实现一个简单的返回json信息的api接口</p>
+<pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token annotation builtin">@RestController</span>
+<span class="token keyword">class</span> TestController <span class="token punctuation">{</span>
+
+    <span class="token annotation builtin">@GetMapping</span><span class="token punctuation">(</span><span class="token string">"/greeting"</span><span class="token punctuation">)</span>
+    <span class="token keyword">fun</span> <span class="token function">greeting</span><span class="token punctuation">(</span><span class="token annotation builtin">@RequestParam</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"name"</span><span class="token punctuation">,</span> defaultValue <span class="token operator">=</span> <span class="token string">"World"</span><span class="token punctuation">)</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">BaseResponseBean</span><span class="token punctuation">(</span><span class="token string">"Hello <span class="token interpolation variable">$name</span>"</span><span class="token punctuation">)</span>
+
 <span class="token punctuation">}</span>
 
-<span class="token comment">// 使用OKHttp拉取数据</span>
-<span class="token comment">// 比HttpUrlConnection好使多了</span>
-<span class="token keyword">private</span> <span class="token keyword">fun</span> <span class="token function">okHttpPull</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    coroutineScope<span class="token punctuation">.</span><span class="token function">launch</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>IO<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">try</span> <span class="token punctuation">{</span>
-            <span class="token keyword">val</span> client <span class="token operator">=</span> <span class="token function">OkHttpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-            <span class="token keyword">val</span> request <span class="token operator">=</span> Request<span class="token punctuation">.</span><span class="token function">Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">url</span><span class="token punctuation">(</span><span class="token string">"https://www.baidu.com"</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-            <span class="token keyword">val</span> response <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">newCall</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-            <span class="token keyword">val</span> <span class="token keyword">data</span> <span class="token operator">=</span> response<span class="token punctuation">.</span>body<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">data</span> <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token function">withContext</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>Main<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                    binding<span class="token punctuation">.</span>responseText<span class="token punctuation">.</span>text <span class="token operator">=</span> <span class="token keyword">data</span>
-                <span class="token punctuation">}</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>e<span class="token operator">:</span> Exception<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">data</span> <span class="token keyword">class</span> BaseResponseBean<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token punctuation">(</span>
+    <span class="token keyword">val</span> <span class="token keyword">data</span><span class="token operator">:</span> T<span class="token operator">?</span><span class="token punctuation">,</span>
+    <span class="token keyword">val</span> errorCode<span class="token operator">:</span> Int <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token keyword">val</span> errorMsg<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string">""</span>
+<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后我便想写个项目练练手，于是就想到了路姐姐的聊天室后端。路姐姐是用的TypeScript实现的聊天室后端，我便想用Spring Boot实现一个功能类似的。</p>
+<p>代码如下</p>
+<pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">ChatWsMessageBean</span><span class="token punctuation">(</span>
+    <span class="token keyword">val</span> type<span class="token operator">:</span> String<span class="token punctuation">,</span>
+    <span class="token keyword">val</span> username<span class="token operator">:</span> String<span class="token punctuation">,</span>
+    <span class="token keyword">val</span> <span class="token keyword">data</span><span class="token operator">:</span> String<span class="token operator">?</span><span class="token punctuation">,</span>
+    <span class="token keyword">val</span> avatar<span class="token operator">:</span> String
+<span class="token punctuation">)</span>
+
+<span class="token keyword">object</span> WebSocketMessageType <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token keyword">val</span> OPEN <span class="token operator">=</span> <span class="token string">"OPEN"</span>
+    <span class="token keyword">const</span> <span class="token keyword">val</span> CLOSE <span class="token operator">=</span> <span class="token string">"CLOSE"</span>
+    <span class="token keyword">const</span> <span class="token keyword">val</span> MESSAGE <span class="token operator">=</span> <span class="token string">"MESSAGE"</span>
+<span class="token punctuation">}</span>
+
+<span class="token annotation builtin">@Component</span>
+<span class="token keyword">class</span> ChatRoomWsHandler <span class="token operator">:</span> <span class="token function">TextWebSocketHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">val</span> objectMapper <span class="token operator">=</span> <span class="token function">ObjectMapper</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token keyword">val</span> connectedSessions <span class="token operator">=</span> arrayListOf<span class="token operator">&lt;</span>WebSocketSession<span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">afterConnectionEstablished</span><span class="token punctuation">(</span>session<span class="token operator">:</span> WebSocketSession<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        connectedSessions<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>session<span class="token punctuation">)</span>
+        <span class="token keyword">val</span> username <span class="token operator">=</span> session<span class="token punctuation">.</span>attributes<span class="token punctuation">[</span><span class="token string">"username"</span><span class="token punctuation">]</span> <span class="token operator">?:</span> <span class="token string">"unnamed"</span>
+        <span class="token keyword">val</span> avatar <span class="token operator">=</span> session<span class="token punctuation">.</span>attributes<span class="token punctuation">[</span><span class="token string">"avatar"</span><span class="token punctuation">]</span> <span class="token operator">?:</span> <span class="token string">"https://i0.hdslb.com/bfs/face/member/noface.jpg@240w_240h_1c_1s.webp"</span>
+        connectedSessions<span class="token punctuation">.</span><span class="token function">forEach</span> <span class="token punctuation">{</span> it<span class="token punctuation">.</span><span class="token function">sendMessage</span><span class="token punctuation">(</span><span class="token function">TextMessage</span><span class="token punctuation">(</span><span class="token function">ChatWsMessageBean</span><span class="token punctuation">(</span>WebSocketMessageType<span class="token punctuation">.</span>OPEN<span class="token punctuation">,</span> username<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">,</span> avatar<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">}</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"[ChatRoom] <span class="token interpolation variable">$username</span> connect with avatar <span class="token interpolation variable">$avatar</span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">handleTextMessage</span><span class="token punctuation">(</span>session<span class="token operator">:</span> WebSocketSession<span class="token punctuation">,</span> message<span class="token operator">:</span> TextMessage<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">val</span> username <span class="token operator">=</span> session<span class="token punctuation">.</span>attributes<span class="token punctuation">[</span><span class="token string">"username"</span><span class="token punctuation">]</span> <span class="token operator">?:</span> <span class="token string">"unnamed"</span>
+        <span class="token keyword">val</span> avatar <span class="token operator">=</span> session<span class="token punctuation">.</span>attributes<span class="token punctuation">[</span><span class="token string">"avatar"</span><span class="token punctuation">]</span> <span class="token operator">?:</span> <span class="token string">"https://i0.hdslb.com/bfs/face/member/noface.jpg@240w_240h_1c_1s.webp"</span>
+        connectedSessions<span class="token punctuation">.</span><span class="token function">forEach</span> <span class="token punctuation">{</span>
+            it<span class="token punctuation">.</span><span class="token function">sendMessage</span><span class="token punctuation">(</span><span class="token function">TextMessage</span><span class="token punctuation">(</span><span class="token function">ChatWsMessageBean</span><span class="token punctuation">(</span>WebSocketMessageType<span class="token punctuation">.</span>MESSAGE<span class="token punctuation">,</span> username<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                message<span class="token punctuation">.</span>payload<span class="token punctuation">,</span> avatar<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
         <span class="token punctuation">}</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"[ChatRoom] <span class="token interpolation variable">$username</span> send message <span class="token interpolation"><span class="token delimiter variable">${</span>message<span class="token punctuation">.</span>payload<span class="token delimiter variable">}</span></span> with avatar <span class="token interpolation variable">$avatar</span>"</span><span class="token punctuation">)</span>
     <span class="token punctuation">}</span>
+
+    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">afterConnectionClosed</span><span class="token punctuation">(</span>session<span class="token operator">:</span> WebSocketSession<span class="token punctuation">,</span> closeStatus<span class="token operator">:</span> CloseStatus<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        connectedSessions<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>session<span class="token punctuation">)</span>
+        <span class="token keyword">val</span> username <span class="token operator">=</span> session<span class="token punctuation">.</span>attributes<span class="token punctuation">[</span><span class="token string">"username"</span><span class="token punctuation">]</span> <span class="token operator">?:</span> <span class="token string">"unnamed"</span>
+        <span class="token keyword">val</span> avatar <span class="token operator">=</span> session<span class="token punctuation">.</span>attributes<span class="token punctuation">[</span><span class="token string">"avatar"</span><span class="token punctuation">]</span> <span class="token operator">?:</span> <span class="token string">"https://i0.hdslb.com/bfs/face/member/noface.jpg@240w_240h_1c_1s.webp"</span>
+        connectedSessions<span class="token punctuation">.</span><span class="token function">forEach</span> <span class="token punctuation">{</span> it<span class="token punctuation">.</span><span class="token function">sendMessage</span><span class="token punctuation">(</span><span class="token function">TextMessage</span><span class="token punctuation">(</span><span class="token function">ChatWsMessageBean</span><span class="token punctuation">(</span>WebSocketMessageType<span class="token punctuation">.</span>CLOSE<span class="token punctuation">,</span> username<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">,</span> avatar<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">}</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"[ChatRoom] <span class="token interpolation variable">$username</span> disconnect with avatar <span class="token interpolation variable">$avatar</span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">fun</span> ChatWsMessageBean<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> objectMapper<span class="token punctuation">.</span><span class="token function">writeValueAsString</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span>
 
-<span class="token comment">// 使用HttpURLConnection提交数据</span>
-<span class="token keyword">private</span> <span class="token keyword">fun</span> <span class="token function">httpUrlConnectionPost</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> connection<span class="token operator">:</span> HttpURLConnection<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
-    <span class="token comment">// 网络请求操作 拿到connection</span>
-    connection<span class="token operator">!!</span><span class="token punctuation">.</span>requestMethod <span class="token operator">=</span> <span class="token string">"POST"</span>
-    <span class="token keyword">val</span> output <span class="token operator">=</span> <span class="token function">DataOutputStream</span><span class="token punctuation">(</span>connection<span class="token punctuation">.</span>outputStream<span class="token punctuation">)</span>
-    output<span class="token punctuation">.</span><span class="token function">writeBytes</span><span class="token punctuation">(</span><span class="token string">"username=admin&amp;password=123456"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
+<span class="token annotation builtin">@Configuration</span>
+<span class="token annotation builtin">@EnableWebSocket</span>
+<span class="token keyword">class</span> WebSocketConfig <span class="token operator">:</span> WebSocketConfigurer <span class="token punctuation">{</span>
 
-<span class="token comment">// 使用HttpURLConnection拉取数据</span>
-<span class="token keyword">private</span> <span class="token keyword">fun</span> <span class="token function">httpUrlConnectionPull</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment">// 即使使用协程，网络操作也不能在主线程上运行，需要使用Dispatchers.IO</span>
-    coroutineScope<span class="token punctuation">.</span><span class="token function">launch</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>IO<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">var</span> connection<span class="token operator">:</span> HttpURLConnection<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
-        <span class="token keyword">try</span> <span class="token punctuation">{</span>
-            <span class="token keyword">val</span> response <span class="token operator">=</span> <span class="token function">StringBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-            <span class="token keyword">val</span> url <span class="token operator">=</span> <span class="token function">URL</span><span class="token punctuation">(</span><span class="token string">"https://www.baidu.com"</span><span class="token punctuation">)</span>
-            connection <span class="token operator">=</span> url<span class="token punctuation">.</span><span class="token function">openConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">as</span> HttpURLConnection
-            connection<span class="token punctuation">.</span>connectTimeout <span class="token operator">=</span> <span class="token number">8000</span>
-            connection<span class="token punctuation">.</span>readTimeout <span class="token operator">=</span> <span class="token number">8000</span>
-            <span class="token keyword">val</span> input <span class="token operator">=</span> connection<span class="token punctuation">.</span>inputStream
-            <span class="token keyword">val</span> reader <span class="token operator">=</span> <span class="token function">BufferedReader</span><span class="token punctuation">(</span><span class="token function">InputStreamReader</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">)</span>
-            reader<span class="token punctuation">.</span><span class="token function">use</span> <span class="token punctuation">{</span>
-                reader<span class="token punctuation">.</span><span class="token function">forEachLine</span> <span class="token punctuation">{</span>
-                    response<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
-                <span class="token punctuation">}</span>
-            <span class="token punctuation">}</span>
-            <span class="token comment">// 切回主协程，这样做是因为Dispatcher.IO的协程其实不隶属于主线程</span>
-            <span class="token function">withContext</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>Main<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                binding<span class="token punctuation">.</span>responseText<span class="token punctuation">.</span>text <span class="token operator">=</span> response<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>e<span class="token operator">:</span> Exception<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
-            connection<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">disconnect</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">}</span>
+    <span class="token annotation builtin">@Autowired</span>
+    <span class="token keyword">private</span> <span class="token keyword">lateinit</span> <span class="token keyword">var</span> chatRoomWsHandler<span class="token operator">:</span> ChatRoomWsHandler
+
+    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">registerWebSocketHandlers</span><span class="token punctuation">(</span>registry<span class="token operator">:</span> WebSocketHandlerRegistry<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        registry<span class="token punctuation">.</span><span class="token function">addHandler</span><span class="token punctuation">(</span>chatRoomWsHandler<span class="token punctuation">,</span> <span class="token string">"chatroom"</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">setAllowedOrigins</span><span class="token punctuation">(</span><span class="token string">"*"</span><span class="token punctuation">)</span>
     <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
-
+<p>对其效果个人还是非常满意的，改天有时间写一个Android端的聊天室</p>
+<p>在全栈的道路上越走越远XD</p>
 
                 
             </div>
@@ -551,7 +555,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://blog.coldrain.ink/2021/11/14/okhttp-usage/">http://blog.coldrain.ink/2021/11/14/okhttp-usage/</a>
+                    <a href="http://blog.coldrain.ink/2021/12/25/hello-spring-boot/">http://blog.coldrain.ink/2021/12/25/hello-spring-boot/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -593,12 +597,12 @@
                                     <span class="chip bg-color">Kotlin</span>
                                 </a>
                             
-                                <a href="/tags/%E5%A4%96%E9%83%A8%E5%BA%93/">
-                                    <span class="chip bg-color">外部库</span>
+                                <a href="/tags/SpringBoot/">
+                                    <span class="chip bg-color">SpringBoot</span>
                                 </a>
                             
-                                <a href="/tags/%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C/">
-                                    <span class="chip bg-color">网络操作</span>
+                                <a href="/tags/%E5%90%8E%E7%AB%AF/">
+                                    <span class="chip bg-color">后端</span>
                                 </a>
                             
                         </div>
@@ -910,58 +914,56 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/11/19/javassist-hotswap/">
+                <a href="/2021/12/25/hello-spring-boot/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="利用Javassist &amp; Javagent实现类的热替换">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Hello Spring Boot!">
                         
-                        <span class="card-title">利用Javassist &amp; Javagent实现类的热替换</span>
+                        <span class="card-title">Hello Spring Boot!</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            之前Javassist使用中的疑惑终于被我解决了
+                            用spring boot简单的实现了路姐姐的聊天室后端
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-19
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-25
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    笔记
+                            <a href="/categories/%E6%9D%82%E8%B0%88/" class="post-category">
+                                    杂谈
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
-                    
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
-                    </a>
                     
                     <a href="/tags/Kotlin/">
                         <span class="chip bg-color">Kotlin</span>
                     </a>
                     
-                    <a href="/tags/%E5%A4%96%E9%83%A8%E5%BA%93/">
-                        <span class="chip bg-color">外部库</span>
+                    <a href="/tags/SpringBoot/">
+                        <span class="chip bg-color">SpringBoot</span>
                     </a>
                     
-                    <a href="/tags/%E5%AD%97%E8%8A%82%E7%A0%81%E6%93%8D%E4%BD%9C/">
-                        <span class="chip bg-color">字节码操作</span>
+                    <a href="/tags/%E5%90%8E%E7%AB%AF/">
+                        <span class="chip bg-color">后端</span>
                     </a>
                     
                 </div>
@@ -975,31 +977,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/11/14/okhttp-get-json/">
+                <a href="/2021/12/24/jetpack-compose-test/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="用OkHttp进行一个json信息的获取">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="初试Jetpack Compose">
                         
-                        <span class="card-title">用OkHttp进行一个json信息的获取</span>
+                        <span class="card-title">初试Jetpack Compose</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            用Jetpack Compose尝试仿写了Github App的部分内容
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-14
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-24
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    笔记
+                            <a href="/categories/%E6%9D%82%E8%B0%88/" class="post-category">
+                                    杂谈
                                 </a>
                             
                             
@@ -1009,12 +1011,16 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%A4%96%E9%83%A8%E5%BA%93/">
-                        <span class="chip bg-color">外部库</span>
+                    <a href="/tags/Android/">
+                        <span class="chip bg-color">Android</span>
                     </a>
                     
-                    <a href="/tags/%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C/">
-                        <span class="chip bg-color">网络操作</span>
+                    <a href="/tags/Kotlin/">
+                        <span class="chip bg-color">Kotlin</span>
+                    </a>
+                    
+                    <a href="/tags/Compose/">
+                        <span class="chip bg-color">Compose</span>
                     </a>
                     
                 </div>

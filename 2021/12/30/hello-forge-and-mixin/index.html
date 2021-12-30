@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="在使用SQL时的一些注意事项, ColdRain&#39;s Blog">
-    <meta name="description" content="记录一下使用MySQL的一些注意事项">
+    <meta name="keywords" content="Hello Minecraft Forge &amp; Mixin!, ColdRain&#39;s Blog">
+    <meta name="description" content="开发了自己的第一个Forge Mod,并且初步了解了Mixin这一极其实用的字节码操作框架">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>在使用SQL时的一些注意事项 | ColdRain&#39;s Blog</title>
+    <title>Hello Minecraft Forge &amp; Mixin! | ColdRain&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -248,12 +248,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">在使用SQL时的一些注意事项</h1>
+                    <h1 class="description center-align post-title">Hello Minecraft Forge &amp; Mixin!</h1>
                 </div>
             </div>
         </div>
@@ -369,8 +369,20 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/MySQL/">
-                                <span class="chip bg-color">MySQL</span>
+                            <a href="/tags/Minecraft/">
+                                <span class="chip bg-color">Minecraft</span>
+                            </a>
+                        
+                            <a href="/tags/Forge%E6%A8%A1%E7%BB%84%E5%BC%80%E5%8F%91/">
+                                <span class="chip bg-color">Forge模组开发</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%AD%97%E8%8A%82%E7%A0%81%E6%93%8D%E4%BD%9C/">
+                                <span class="chip bg-color">字节码操作</span>
+                            </a>
+                        
+                            <a href="/tags/Mixin/">
+                                <span class="chip bg-color">Mixin</span>
                             </a>
                         
                     </div>
@@ -381,8 +393,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
-                                笔记
+                            <a href="/categories/%E6%9D%82%E8%B0%88/" class="post-category">
+                                杂谈
                             </a>
                         
                     </div>
@@ -394,28 +406,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-07-22
+                    2021-12-30
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-14
+                    2021-12-30
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    83
+                    1.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    6 分
                 </div>
                 
 
@@ -438,14 +450,128 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="尽量避免将大量数据序列化扔一个列里"><a href="#尽量避免将大量数据序列化扔一个列里" class="headerlink" title="尽量避免将大量数据序列化扔一个列里"></a>尽量避免将大量数据序列化扔一个列里</h2><p><strong>尤其是在需要频繁获取/更新这些数据的情况下</strong><br>这样一旦数据库储量到达一定级别，<strong>数据库极可能丢失数据</strong><br>神域的地牢孤剑便是前车之鉴<br><strong>储存方式</strong></p>
-<p><a target="_blank" rel="noopener" href="https://user-images.githubusercontent.com/69996135/126663341-3692ff72-388d-4dea-a216-4021943b5437.png"><img src="https://user-images.githubusercontent.com/69996135/126663341-3692ff72-388d-4dea-a216-4021943b5437.png" alt="7e8c1fed3737e6ab"></a></p>
-<p><strong>后果</strong></p>
-<p><a target="_blank" rel="noopener" href="https://user-images.githubusercontent.com/69996135/126663530-030ca6e0-e7eb-456c-88d0-3ea803a609c0.jpg"><img src="https://user-images.githubusercontent.com/69996135/126663530-030ca6e0-e7eb-456c-88d0-3ea803a609c0.jpg" alt="-2bf7c04dec497124"></a></p>
-<p><a target="_blank" rel="noopener" href="https://user-images.githubusercontent.com/69996135/126663547-64e62179-46ca-4696-9fa6-044f57c804f7.jpg"><img src="https://user-images.githubusercontent.com/69996135/126663547-64e62179-46ca-4696-9fa6-044f57c804f7.jpg" alt="-3e6ca3264d9d5b3a"></a></p>
-<p><a target="_blank" rel="noopener" href="https://user-images.githubusercontent.com/69996135/126663565-d42a10e9-b5fd-42d6-bb34-edc6aef0d993.jpg"><img src="https://user-images.githubusercontent.com/69996135/126663565-d42a10e9-b5fd-42d6-bb34-edc6aef0d993.jpg" alt="54e384ac658f35d9"></a></p>
-<p><strong>知乎</strong><br><a target="_blank" rel="noopener" href="https://user-images.githubusercontent.com/69996135/126663612-d738f9d0-ea64-4a05-bc5d-eb6d5917c496.png"><img src="https://user-images.githubusercontent.com/69996135/126663612-d738f9d0-ea64-4a05-bc5d-eb6d5917c496.png" alt="1c4ec094fffaaa6a"></a><br><a target="_blank" rel="noopener" href="https://user-images.githubusercontent.com/69996135/126663622-aea138f4-716b-4186-9ce1-7e531b8e57ce.png"><img src="https://user-images.githubusercontent.com/69996135/126663622-aea138f4-716b-4186-9ce1-7e531b8e57ce.png" alt="-1edc645b674852e1"></a><br><a target="_blank" rel="noopener" href="https://user-images.githubusercontent.com/69996135/126663631-0c50a072-f1c2-4fc9-9d39-887138cb3048.png"><img src="https://user-images.githubusercontent.com/69996135/126663631-0c50a072-f1c2-4fc9-9d39-887138cb3048.png" alt="-5462c585fd3183db"></a></p>
+                <h1 id="Hello-Minecraft-Forge-amp-Mixin"><a href="#Hello-Minecraft-Forge-amp-Mixin" class="headerlink" title="Hello Minecraft Forge &amp; Mixin!"></a>Hello Minecraft Forge &amp; Mixin!</h1><blockquote>
+<p>起因经过大概是斯帕克那边需要一个模组来禁止玩家开启 强制使用Unicode字体 这一选项来确保材质包的体验效果</p>
+<p>行吧，以前虽然完全没有了解过Forge开发，还是只有硬着头皮上了呗</p>
+</blockquote>
+<h2 id="Forge环境搭建"><a href="#Forge环境搭建" class="headerlink" title="Forge环境搭建"></a>Forge环境搭建</h2><blockquote>
+<p>老大难了，Forge Mod的开发者之所以明显少于Bukkit插件开发者也许就是因为这位拦路虎吧</p>
+<p>不仅难，社区的有关教程也特别少 （我知道有很多1.12的环境搭建教程，但1.16版本的forge教程简直是一片荒原</p>
+<p>而由于网络原因（众所周知），老外的那套官方教程很多地方对我们不适用</p>
+<p>庆幸我最开始学习的是Bukkit开发，如果当时我选择学习forge mod开发，多半会倒在环境搭建这座大山前</p>
+</blockquote>
+<p>最开始我试图使用forge官方提供的ForgeGradle mdk快速完成开发环境的搭建，最后我发现即使我能够科学上网，有的东西gradle一样拉不下来</p>
+<p>怎么办？于是我上mcbbs寻求帮助，发现了耗子大佬的[<a target="_blank" rel="noopener" href="https://www.mcbbs.net/thread-896542-1-1.html">1.17.1-1.7.10] Minecraft模组开发离线包 [Forge|Fabric] - 编程开发 - Minecraft(我的世界)中文论坛 - (mcbbs.net)</a>于是我下载并部署了耗子大佬的gradle依赖离线包。</p>
+<p>到这里我便具备了一个Forge开发者的基本开发环境</p>
+<p>但如果仅仅到这里就结束，我也不会说他难了</p>
+<p>真正的重头戏，还在后头</p>
+<h2 id="Mixin环境搭建"><a href="#Mixin环境搭建" class="headerlink" title="Mixin环境搭建"></a>Mixin环境搭建</h2><blockquote>
+<p>Mixin是SpongePowered开发的一套基于javaagent和asm框架的字节码操作框架，有了Mixin，开发者可以摆脱繁琐的传统字节码插桩操作，以一种非常简洁直观的方式修改Minecraft客户端的底层逻辑代码</p>
+<p>而不同于Bukkit API竭力阻止开发者利用服务端原生特性，主张一切插件应该完全在Bukkit API的基础上实现</p>
+<p>Forge API的设计是完全信任开发者的，鼓励开发者修改客户端底层逻辑代码来实现自己想要的特性，甚至Forge准确来说不能被称为一种API，而是模组开发者与客户端底层代码的一层兼容层。</p>
+<p>所以说，Forge和Mixin可谓是天作之合，从Forge1.16版本开始，Forge开始原生附带Mixin环境</p>
+<p>而这一切，得益于Mojang官方公布了客户端的混淆表。Minecraft作为一款商业游戏，公布混淆表无疑是一种巨大的牺牲。但我相信，正是这个英明的决策，刺激了广大模组开发者的开发热情，让各色Minecraft模组在社区中遍地生根，让Minecraft成为如此一款伟大的游戏。</p>
+<p>所以在Forge开发中，我们看到的大部分客户端底层代码都是具有相当程度的可读性的。</p>
+<p>而使用Mixin，可以让我们以最高效的方式修改底层代码，实现一些以前在做Bukkit开发时连想都不敢想的魔法般的特性</p>
+<p>那么Mixin的环境搭建，上面我说的重头戏</p>
+</blockquote>
+<p>最开始我以为Mixin是不需要配置，开箱即用的。结果把编译出来的模组跑了一遍又一遍，发现Mixin没有起任何作用</p>
+<p>我尝试在网络上搜索Mixin环境搭建教程，却发现除了耗子大佬的[<a target="_blank" rel="noopener" href="https://www.mcbbs.net/thread-833646-1-1.html">未知之域][翻译]Mixin官方文档翻译——深度修改Minecraft的利器 - 编程开发 - Minecraft(我的世界)中文论坛 - (mcbbs.net)</a>，一篇有价值的文章也找不出来。</p>
+<p>我在耗子大佬的官方文档翻译中学习了Mixin的使用方法，但它并没有详细的告诉我如何搭建环境。</p>
+<p>于是我想起来，坏黑曾经写过一个1.16的Forge Mod，我是不是可以参考他的源码来招猫画虎呢</p>
+<p>同时我也想起来海螺的博客似乎也提到过这玩意，然后在这上面找到了官方的release note</p>
+<p><a target="_blank" rel="noopener" href="https://izzel.io/2020/02/06/mixin-0-8-guide/">关于 Mixin 升级到 0.8 和 ModLauncher 的那些事 | IzzelAliz’s Blog</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SpongePowered/Mixin/wiki/Release-Notes---Mixin-0.8">Release Notes Mixin 0.8 · SpongePowered/Mixin Wiki (github.com)</a></p>
+<p>于是依靠上面这些，我基本搭建起了一个Mixin环境</p>
+<blockquote>
+<p>难点基本如下</p>
+<p>1.MixinConnector</p>
+<p>2.MixinRefmap文件</p>
+<p>3.MixinAnnoationProcessor</p>
+<p>4.Mixin配置文件</p>
+<p>额外需要注意的是，Mixin配置文件中指定的Mixin Pakage不能指定位模组主类所在包，这样会导致模组无法加载</p>
+</blockquote>
+<p>虽然有些晚了，但我还是把问题解决之后找到的相关资料放在这里</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/mouse0w0/forge-mixin-example">mouse0w0/forge-mixin-example: An example for using Mixin in Minecraft Forge 1.12.2 (github.com)</a></p>
+<h2 id="功能实现"><a href="#功能实现" class="headerlink" title="功能实现"></a>功能实现</h2><p>毕竟也不是教程，杂谈而已，就不写使用教程了</p>
+<p>这里只放出实现功能的Mixin代码</p>
+<h3 id="我的做法"><a href="#我的做法" class="headerlink" title="我的做法"></a>我的做法</h3><p>锁掉底层选项实际boolean值，使玩家不论如何更改选项都以非强制Unicode字体方式渲染字体</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">
+<span class="token keyword">package</span> <span class="token namespace">me<span class="token punctuation">.</span>asgard<span class="token punctuation">.</span>rain<span class="token punctuation">.</span>afu<span class="token punctuation">.</span>mixin</span><span class="token punctuation">;</span>
 
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>common<span class="token punctuation">.</span>collect<span class="token punctuation">.</span></span><span class="token class-name">ImmutableMap</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">net<span class="token punctuation">.</span>minecraft<span class="token punctuation">.</span>client<span class="token punctuation">.</span></span><span class="token class-name">Minecraft</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">net<span class="token punctuation">.</span>minecraft<span class="token punctuation">.</span>client<span class="token punctuation">.</span>gui<span class="token punctuation">.</span>fonts<span class="token punctuation">.</span></span><span class="token class-name">FontResourceManager</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>spongepowered<span class="token punctuation">.</span>asm<span class="token punctuation">.</span>mixin<span class="token punctuation">.</span></span><span class="token class-name">Final</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>spongepowered<span class="token punctuation">.</span>asm<span class="token punctuation">.</span>mixin<span class="token punctuation">.</span></span><span class="token class-name">Mixin</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>spongepowered<span class="token punctuation">.</span>asm<span class="token punctuation">.</span>mixin<span class="token punctuation">.</span></span><span class="token class-name">Overwrite</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>spongepowered<span class="token punctuation">.</span>asm<span class="token punctuation">.</span>mixin<span class="token punctuation">.</span></span><span class="token class-name">Shadow</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span><span class="token class-name">IOException</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**
+ * me.asgard.rain.afu.GameSettingMixin
+ * AntiForceUnicode
+ *
+ * @author 寒雨
+ * @since 2021/12/29 13:48
+ **/</span>
+<span class="token annotation punctuation">@Mixin</span><span class="token punctuation">(</span><span class="token class-name">Minecraft</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">MinecraftMixin</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Final</span>
+    <span class="token annotation punctuation">@Shadow</span>
+    <span class="token keyword">private</span> <span class="token class-name">FontResourceManager</span> fontManager<span class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * @author Rain
+     * @reason force disable force unicode
+     */</span>
+    <span class="token annotation punctuation">@Overwrite</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isEnforceUnicode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">/**
+     * @author Rain
+     * @reason force disable force unicode
+     */</span>
+    <span class="token annotation punctuation">@Overwrite</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">selectMainFont</span><span class="token punctuation">(</span><span class="token keyword">boolean</span> p_238209_1_<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        fontManager<span class="token punctuation">.</span><span class="token function">setRenames</span><span class="token punctuation">(</span><span class="token class-name">ImmutableMap</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="坏黑的做法"><a href="#坏黑的做法" class="headerlink" title="坏黑的做法"></a>坏黑的做法</h3><p>写成一天后坏黑大概是来兴趣了，也写了一个</p>
+<p>他直接把那个选项的按钮删掉了。毫无疑问，这个做法更好</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">me<span class="token punctuation">.</span>skymc<span class="token punctuation">.</span>fsb<span class="token punctuation">.</span>mixin</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">net<span class="token punctuation">.</span>minecraft<span class="token punctuation">.</span>client<span class="token punctuation">.</span></span><span class="token class-name">AbstractOption</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">net<span class="token punctuation">.</span>minecraft<span class="token punctuation">.</span>client<span class="token punctuation">.</span>gui<span class="token punctuation">.</span>screen<span class="token punctuation">.</span></span><span class="token class-name">Screen</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">net<span class="token punctuation">.</span>minecraft<span class="token punctuation">.</span>client<span class="token punctuation">.</span>gui<span class="token punctuation">.</span>widget<span class="token punctuation">.</span></span><span class="token class-name">Widget</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">net<span class="token punctuation">.</span>minecraft<span class="token punctuation">.</span>client<span class="token punctuation">.</span>gui<span class="token punctuation">.</span>widget<span class="token punctuation">.</span>button<span class="token punctuation">.</span></span><span class="token class-name">OptionButton</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>spongepowered<span class="token punctuation">.</span>asm<span class="token punctuation">.</span>mixin<span class="token punctuation">.</span></span><span class="token class-name">Mixin</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>spongepowered<span class="token punctuation">.</span>asm<span class="token punctuation">.</span>mixin<span class="token punctuation">.</span>injection<span class="token punctuation">.</span></span><span class="token class-name">At</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>spongepowered<span class="token punctuation">.</span>asm<span class="token punctuation">.</span>mixin<span class="token punctuation">.</span>injection<span class="token punctuation">.</span></span><span class="token class-name">Inject</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>spongepowered<span class="token punctuation">.</span>asm<span class="token punctuation">.</span>mixin<span class="token punctuation">.</span>injection<span class="token punctuation">.</span>callback<span class="token punctuation">.</span></span><span class="token class-name">CallbackInfoReturnable</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**
+ * FSB
+ * me.skymc.fsb.mixin.MixinScreenLanguage
+ *
+ * @author 坏黑
+ * @since 2021/12/29 10:54 PM
+ */</span>
+<span class="token annotation punctuation">@Mixin</span><span class="token punctuation">(</span><span class="token class-name">Screen</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">MixinLanguageScreen</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Inject</span><span class="token punctuation">(</span>method <span class="token operator">=</span> <span class="token string">"addButton"</span><span class="token punctuation">,</span> at <span class="token operator">=</span> <span class="token annotation punctuation">@At</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"HEAD"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> cancellable <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+    <span class="token keyword">protected</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span> <span class="token keyword">extends</span> <span class="token class-name">Widget</span><span class="token punctuation">&gt;</span></span> <span class="token keyword">void</span> <span class="token function">addButton</span><span class="token punctuation">(</span><span class="token class-name">T</span> p_230480_1_<span class="token punctuation">,</span> <span class="token class-name">CallbackInfoReturnable</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> c<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>p_230480_1_ <span class="token keyword">instanceof</span> <span class="token class-name">OptionButton</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">OptionButton</span><span class="token punctuation">)</span> p_230480_1_<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getOption</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token class-name">AbstractOption</span><span class="token punctuation">.</span>FORCE_UNICODE_FONT<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            c<span class="token punctuation">.</span><span class="token function">setReturnValue</span><span class="token punctuation">(</span>p_230480_1_<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -471,7 +597,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://blog.coldrain.ink/2021/07/22/be-careful-using-mysql/">http://blog.coldrain.ink/2021/07/22/be-careful-using-mysql/</a>
+                    <a href="http://blog.coldrain.ink/2021/12/30/hello-forge-and-mixin/">http://blog.coldrain.ink/2021/12/30/hello-forge-and-mixin/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -509,8 +635,20 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/MySQL/">
-                                    <span class="chip bg-color">MySQL</span>
+                                <a href="/tags/Minecraft/">
+                                    <span class="chip bg-color">Minecraft</span>
+                                </a>
+                            
+                                <a href="/tags/Forge%E6%A8%A1%E7%BB%84%E5%BC%80%E5%8F%91/">
+                                    <span class="chip bg-color">Forge模组开发</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%AD%97%E8%8A%82%E7%A0%81%E6%93%8D%E4%BD%9C/">
+                                    <span class="chip bg-color">字节码操作</span>
+                                </a>
+                            
+                                <a href="/tags/Mixin/">
+                                    <span class="chip bg-color">Mixin</span>
                                 </a>
                             
                         </div>
@@ -822,50 +960,60 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/08/15/learn-kotlin-coroutine/">
+                <a href="/2021/12/30/hello-forge-and-mixin/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="了解了一下Kotlin的协程">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello Minecraft Forge &amp; Mixin!">
                         
-                        <span class="card-title">了解了一下Kotlin的协程</span>
+                        <span class="card-title">Hello Minecraft Forge &amp; Mixin!</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            简单的了解了一下协程，写了篇比较浅薄的协程笔记
+                            开发了自己的第一个Forge Mod,并且初步了解了Mixin这一极其实用的字节码操作框架
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-15
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-30
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    笔记
+                            <a href="/categories/%E6%9D%82%E8%B0%88/" class="post-category">
+                                    杂谈
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Kotlin/">
-                        <span class="chip bg-color">Kotlin</span>
+                    <a href="/tags/Minecraft/">
+                        <span class="chip bg-color">Minecraft</span>
                     </a>
                     
-                    <a href="/tags/Coroutine/">
-                        <span class="chip bg-color">Coroutine</span>
+                    <a href="/tags/Forge%E6%A8%A1%E7%BB%84%E5%BC%80%E5%8F%91/">
+                        <span class="chip bg-color">Forge模组开发</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%AD%97%E8%8A%82%E7%A0%81%E6%93%8D%E4%BD%9C/">
+                        <span class="chip bg-color">字节码操作</span>
+                    </a>
+                    
+                    <a href="/tags/Mixin/">
+                        <span class="chip bg-color">Mixin</span>
                     </a>
                     
                 </div>
@@ -879,31 +1027,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/07/21/regex-matcher/">
+                <a href="/2021/12/25/hello-spring-boot/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="正则表达式捕获组在Java/Kotlin中的使用">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Hello Spring Boot!">
                         
-                        <span class="card-title">正则表达式捕获组在Java/Kotlin中的使用</span>
+                        <span class="card-title">Hello Spring Boot!</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            记录下java的正则表达式捕获组的使用
+                            用spring boot简单的实现了路姐姐的聊天室后端
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-25
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    笔记
+                            <a href="/categories/%E6%9D%82%E8%B0%88/" class="post-category">
+                                    杂谈
                                 </a>
                             
                             
@@ -913,12 +1061,16 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
-                    </a>
-                    
                     <a href="/tags/Kotlin/">
                         <span class="chip bg-color">Kotlin</span>
+                    </a>
+                    
+                    <a href="/tags/SpringBoot/">
+                        <span class="chip bg-color">SpringBoot</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%90%8E%E7%AB%AF/">
+                        <span class="chip bg-color">后端</span>
                     </a>
                     
                 </div>

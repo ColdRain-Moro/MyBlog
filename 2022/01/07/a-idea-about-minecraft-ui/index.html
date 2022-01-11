@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="记观察者模式(Observer Pattern) &amp; Android LifeCycle, ColdRain&#39;s Blog">
-    <meta name="description" content="主要还是谈谈观察者模式">
+    <meta name="keywords" content="一个Minecraft Chest UI框架的灵感, ColdRain&#39;s Blog">
+    <meta name="description" content="我在想，Minecraft的GUI，是不是也可以沿用Compose的那套设计思路...">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>记观察者模式(Observer Pattern) &amp; Android LifeCycle | ColdRain&#39;s Blog</title>
+    <title>一个Minecraft Chest UI框架的灵感 | ColdRain&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -248,12 +248,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">记观察者模式(Observer Pattern) &amp; Android LifeCycle</h1>
+                    <h1 class="description center-align post-title">一个Minecraft Chest UI框架的灵感</h1>
                 </div>
             </div>
         </div>
@@ -369,16 +369,16 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/Minecraft/">
+                                <span class="chip bg-color">Minecraft</span>
+                            </a>
+                        
+                            <a href="/tags/Compose/">
+                                <span class="chip bg-color">Compose</span>
+                            </a>
+                        
                             <a href="/tags/Kotlin/">
                                 <span class="chip bg-color">Kotlin</span>
-                            </a>
-                        
-                            <a href="/tags/Android/">
-                                <span class="chip bg-color">Android</span>
-                            </a>
-                        
-                            <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                                <span class="chip bg-color">设计模式</span>
                             </a>
                         
                     </div>
@@ -402,21 +402,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-06
+                    2022-01-07
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-14
+                    2022-01-07
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    237
+                    251
                 </div>
                 
 
@@ -446,14 +446,33 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>其实今天我才听说这种设计模式（之前把这个跟visitor模式搞混了），但以前不知不觉已经用过很多这样设计的api了。</p>
-<p>上周的红岩作业甚至手搓了个eventbus（不过没搓成注解那种形式，不过确实无意中用到了观察者模式的设计方式）</p>
-<p>感觉最牛逼的是，我是自己悟出观察者模式的设计方式去实现了eventbus，思路与观察者模式别无二致。（突然感觉自己也许没那么废物）</p>
-<p>今天这篇博文主要是记录一下Android Jetpack组件LifeCycle的用法捏</p>
-<h2 id="LifeCycle"><a href="#LifeCycle" class="headerlink" title="LifeCycle"></a>LifeCycle</h2><p>与TabooLib里的Awake注解比较类似，让我们不用把每个组件生命周期需要执行的代码都写在MainActivity （</p>
-<p>有助于降低代码耦合度</p>
-<p>同时它也使用了观察者模式的设计模式XD</p>
-<p>草，不想写了，就这样吧</p>
+                <h1 id="一个Minecraft-Chest-UI框架的灵感"><a href="#一个Minecraft-Chest-UI框架的灵感" class="headerlink" title="一个Minecraft Chest UI框架的灵感"></a>一个Minecraft Chest UI框架的灵感</h1><p>我在想，Minecraft的GUI，是不是也可以沿用Compose的那套设计思路…</p>
+<p>于是说干就干，我会放一些思路在下面</p>
+<h2 id="一些Minecraft本土化措施"><a href="#一些Minecraft本土化措施" class="headerlink" title="一些Minecraft本土化措施"></a>一些Minecraft本土化措施</h2><p>当然不能搞教条主义，毕竟Minecraft GUI与Android UI之间差距不可谓不大，不可能照搬照抄。</p>
+<h3 id="多平台实现"><a href="#多平台实现" class="headerlink" title="多平台实现"></a>多平台实现</h3><p>MinecraftCompose提供接口供其他开发者实现，同时提供一套基于TabooLib框架下的默认实现</p>
+<p>如果你希望基于其他UI框架使用MinecraftCompose，可以自行实现</p>
+<h3 id="Composable实现"><a href="#Composable实现" class="headerlink" title="@Composable实现"></a>@Composable实现</h3><p>我认为对我来说搞出@Composable那种效果有点不现实，那么我们便退而求其次，使用下面的方式达到函数组合的效果。</p>
+<pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token keyword">val</span> composeApi <span class="token operator">=</span> MinecraftCompose<span class="token punctuation">.</span><span class="token function">newAPIInst</span><span class="token punctuation">(</span>TabooLibImpl<span class="token operator">::</span><span class="token keyword">class</span><span class="token punctuation">.</span>java<span class="token punctuation">)</span>
+
+<span class="token comment">// 为玩家打开UI</span>
+<span class="token keyword">fun</span> <span class="token function">openFor</span><span class="token punctuation">(</span>player<span class="token operator">:</span> Player<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    composeApi<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span>player<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">/**this: ComposeScope **/</span>
+        <span class="token function">mainUI</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Compose Function</span>
+<span class="token keyword">fun</span> <span class="token function">mainUI</span><span class="token punctuation">(</span>scope<span class="token operator">:</span> ComposeScope<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">with</span><span class="token punctuation">(</span>scope<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 剩下的留着我之后想</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="MVI思想"><a href="#MVI思想" class="headerlink" title="MVI思想"></a>MVI思想</h3><pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token keyword">val</span> state <span class="token keyword">by</span> viewModel<span class="token punctuation">.</span>databaseFlow<span class="token punctuation">.</span><span class="token function">observeAsState</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">// ObserveAsState后,ComposeUI会随订阅的Flow更新而重构</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
 
                 
             </div>
@@ -480,7 +499,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://blog.coldrain.ink/2021/11/06/observe-pattern-and-android/">http://blog.coldrain.ink/2021/11/06/observe-pattern-and-android/</a>
+                    <a href="http://blog.coldrain.ink/2022/01/07/a-idea-about-minecraft-ui/">http://blog.coldrain.ink/2022/01/07/a-idea-about-minecraft-ui/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -518,16 +537,16 @@
                     
                         <div class="article-tag">
                             
+                                <a href="/tags/Minecraft/">
+                                    <span class="chip bg-color">Minecraft</span>
+                                </a>
+                            
+                                <a href="/tags/Compose/">
+                                    <span class="chip bg-color">Compose</span>
+                                </a>
+                            
                                 <a href="/tags/Kotlin/">
                                     <span class="chip bg-color">Kotlin</span>
-                                </a>
-                            
-                                <a href="/tags/Android/">
-                                    <span class="chip bg-color">Android</span>
-                                </a>
-                            
-                                <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                                    <span class="chip bg-color">设计模式</span>
                                 </a>
                             
                         </div>
@@ -843,31 +862,31 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/11/07/try-javassist/">
+                <a href="/2022/01/12/taboolib-orm/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="初试Javassist">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="写了个Kotlin ORM框架">
                         
-                        <span class="card-title">初试Javassist</span>
+                        <span class="card-title">写了个Kotlin ORM框架</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            列举了几种基本的javassist用法
+                            用动态代理实现了一套基于TabooLib的Kotlin ORM框架
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-07
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-01-12
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    笔记
+                            <a href="/categories/%E6%9D%82%E8%B0%88/" class="post-category">
+                                    杂谈
                                 </a>
                             
                             
@@ -881,12 +900,16 @@
                         <span class="chip bg-color">Kotlin</span>
                     </a>
                     
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
                     </a>
                     
-                    <a href="/tags/%E5%A4%96%E9%83%A8%E5%BA%93/">
-                        <span class="chip bg-color">外部库</span>
+                    <a href="/tags/TabooLib/">
+                        <span class="chip bg-color">TabooLib</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">
+                        <span class="chip bg-color">动态代理</span>
                     </a>
                     
                 </div>
@@ -900,31 +923,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/11/03/get-stacktrace-method-path/">
+                <a href="/2022/01/03/hello-ktor/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="java/kotlin 方法中获得调用方的类与方法名">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Hello Ktor!">
                         
-                        <span class="card-title">java/kotlin 方法中获得调用方的类与方法名</span>
+                        <span class="card-title">Hello Ktor!</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            整理了java/kotlin 方法中获得调用方的类与方法名的方式
+                            用Ktor实现了路姐姐聊天室的后端
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-03
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-03
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    笔记
+                            <a href="/categories/%E6%9D%82%E8%B0%88/" class="post-category">
+                                    杂谈
                                 </a>
                             
                             
@@ -938,8 +961,12 @@
                         <span class="chip bg-color">Kotlin</span>
                     </a>
                     
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
+                    <a href="/tags/Ktor/">
+                        <span class="chip bg-color">Ktor</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%90%8E%E7%AB%AF/">
+                        <span class="chip bg-color">后端</span>
                     </a>
                     
                 </div>

@@ -4,6 +4,66 @@
   
     
     <entry>
+      <title>写了个Kotlin ORM框架</title>
+      <link href="/2022/01/12/taboolib-orm/"/>
+      <url>/2022/01/12/taboolib-orm/</url>
+      
+        <content type="html"><![CDATA[<h1 id="写了个Kotlin-ORM框架"><a href="#写了个Kotlin-ORM框架" class="headerlink" title="写了个Kotlin ORM框架"></a>写了个Kotlin ORM框架</h1><p>嘛，一直想写框架，又发现TabooLib的数据库虽然有跟ktorm比起来也不差的sql-dsl支持，但却缺少ORM的支持。</p><p>虽说直接用ktorm也不是不行，但这可是个绝佳的练手项目。我早八百年前就想写框架了。</p><h2 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h2><p>一个框架也许最重要的就是它的设计，这将决定开发者用得爽不爽。事实证明，好用才是第一位，哪怕效率都得靠边站。</p><p><strong>开发效率第一</strong></p><p>于是为了设计好这个框架，我那天从凌晨1点构思到3点半，最终确定了一套个人觉得非常不错的设计</p><p>最开始借鉴了很多Android Jetpack Room的设计，然后结合实际情况改了不少，还顺带给TabooLib的DSL做了支持</p><p>如今感觉这套设计青出于蓝，甚至比Room更胜一筹 （个人感觉）</p><pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">ExampleEntity</span><span class="token punctuation">(</span>    <span class="token comment">// PrimaryKey 不用写option</span>    <span class="token annotation builtin">@PrimaryKey</span><span class="token punctuation">(</span>autoGenerate <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">)</span>    <span class="token annotation builtin">@Column</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"id"</span><span class="token punctuation">,</span> type <span class="token operator">=</span> ColumnTypeSQL<span class="token punctuation">.</span>INT<span class="token punctuation">)</span>    <span class="token keyword">val</span> id<span class="token operator">:</span> Int<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">,</span>    <span class="token annotation builtin">@Column</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"type"</span><span class="token punctuation">,</span> type <span class="token operator">=</span> ColumnTypeSQL<span class="token punctuation">.</span>TEXT<span class="token punctuation">,</span> options <span class="token operator">=</span> <span class="token punctuation">[</span>ColumnOptionSQL<span class="token punctuation">.</span>NOTNULL<span class="token punctuation">]</span><span class="token punctuation">)</span>    <span class="token keyword">val</span> type<span class="token operator">:</span> String<span class="token punctuation">,</span>    <span class="token annotation builtin">@Column</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"user"</span><span class="token punctuation">,</span> type <span class="token operator">=</span> ColumnTypeSQL<span class="token punctuation">.</span>TEXT<span class="token punctuation">,</span> options <span class="token operator">=</span> <span class="token punctuation">[</span>ColumnOptionSQL<span class="token punctuation">.</span>NOTNULL<span class="token punctuation">]</span><span class="token punctuation">)</span>    <span class="token keyword">val</span> user<span class="token operator">:</span> String<span class="token punctuation">,</span>    <span class="token annotation builtin">@Column</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"user"</span><span class="token punctuation">,</span> type <span class="token operator">=</span> ColumnTypeSQL<span class="token punctuation">.</span>TEXT<span class="token punctuation">,</span> def <span class="token operator">=</span> <span class="token string">"null"</span><span class="token punctuation">)</span>    <span class="token keyword">val</span> <span class="token keyword">data</span><span class="token operator">:</span> String<span class="token operator">?</span><span class="token punctuation">)</span><span class="token keyword">interface</span> ExampleDAO <span class="token operator">:</span> IDao<span class="token operator">&lt;</span>ExampleEntity<span class="token operator">&gt;</span> <span class="token punctuation">{</span>    <span class="token annotation builtin">@Query</span><span class="token punctuation">(</span><span class="token string">"SELECT * FROM {table}"</span><span class="token punctuation">)</span>    <span class="token keyword">fun</span> <span class="token function">queryAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> List<span class="token operator">&lt;</span>ExampleEntity<span class="token operator">&gt;</span>    <span class="token annotation builtin">@Insert</span>    <span class="token keyword">fun</span> <span class="token function">insert</span><span class="token punctuation">(</span>entity<span class="token operator">:</span> ExampleEntity<span class="token punctuation">)</span>        <span class="token annotation builtin">@Query</span><span class="token punctuation">(</span><span class="token string">"DELETE FROM {table}"</span><span class="token punctuation">)</span>    <span class="token keyword">fun</span> <span class="token function">delete</span><span class="token punctuation">(</span><span class="token punctuation">)</span>        <span class="token annotation builtin">@Query</span><span class="token punctuation">(</span><span class="token string">"SELECT WHERE id &gt; {id} FROM {table}"</span><span class="token punctuation">)</span>    <span class="token keyword">fun</span> <span class="token function">querySome</span><span class="token punctuation">(</span>id<span class="token operator">:</span> Int<span class="token punctuation">)</span><span class="token operator">:</span> List<span class="token operator">&lt;</span>ExampleEntity<span class="token operator">&gt;</span>        <span class="token comment">// 使用TabooLib DSL语句控制</span>    <span class="token annotation builtin">@DSL</span>    <span class="token keyword">fun</span> <span class="token function">selectUser</span><span class="token punctuation">(</span>name<span class="token operator">:</span> String<span class="token punctuation">)</span><span class="token operator">:</span> ExampleEntity<span class="token operator">?</span> <span class="token punctuation">{</span>        <span class="token keyword">return</span> table<span class="token punctuation">.</span><span class="token function">workspace</span><span class="token punctuation">(</span>datasource<span class="token punctuation">)</span> <span class="token punctuation">{</span>            select <span class="token punctuation">{</span> <span class="token keyword">where</span> <span class="token punctuation">{</span> <span class="token string">"user"</span> eq name <span class="token punctuation">}</span> <span class="token punctuation">}</span>        <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">firstOrNull</span> <span class="token punctuation">{</span>            <span class="token function">adaptResultSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span>        <span class="token punctuation">}</span>    <span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token keyword">object</span> AppDatabase <span class="token punctuation">{</span>    <span class="token comment">/**     * 也可通过ORMBuilder#buildFromConf(ConfigurationSection, String)直接构建     */</span>    <span class="token keyword">private</span> <span class="token keyword">val</span> builder <span class="token keyword">by</span> lazy <span class="token punctuation">{</span>        ORMBuilder<span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>            <span class="token punctuation">.</span><span class="token function">host</span><span class="token punctuation">(</span><span class="token string">"localhost"</span><span class="token punctuation">)</span>            <span class="token punctuation">.</span><span class="token function">port</span><span class="token punctuation">(</span><span class="token number">3306</span><span class="token punctuation">)</span>            <span class="token punctuation">.</span><span class="token function">user</span><span class="token punctuation">(</span><span class="token string">"root"</span><span class="token punctuation">)</span>            <span class="token punctuation">.</span><span class="token function">password</span><span class="token punctuation">(</span><span class="token string">"root"</span><span class="token punctuation">)</span>            <span class="token punctuation">.</span><span class="token function">database</span><span class="token punctuation">(</span><span class="token string">"database"</span><span class="token punctuation">)</span>            <span class="token punctuation">.</span><span class="token function">buildHost</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token punctuation">}</span>             <span class="token keyword">val</span> exampleTableDao <span class="token keyword">by</span> lazy <span class="token punctuation">{</span>        <span class="token comment">// 表名 DAO类</span>        builder<span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token string">"exampleTable"</span> <span class="token punctuation">,</span>ExampleDAO<span class="token operator">::</span><span class="token keyword">class</span><span class="token punctuation">.</span>java<span class="token punctuation">)</span>    <span class="token punctuation">}</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="平台"><a href="#平台" class="headerlink" title="平台"></a>平台</h3><p>最开始其实我是想做成跨平台项目的，然后提供TabooLib的实现。</p><p>然后我发现说实话我对跨平台设计还不是特别了解，于是最后一气之下换成了TabooLib单平台实现。</p><h3 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h3><p>最开始其实我是完全没有头绪的，后面看了一下Room的使用方法，麻木的仿写出了一套写法</p><p>后来再看了一遍这个写法，联想到了Retrofit，然后想到了Retrofit的底层实现是动态代理</p><p>说实话以前没有用过动态代理，于是就去了解了一下子</p><p>最后发现这个项目的灵魂就在动态代理，而且其实代码量并不多</p><h3 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h3><ul><li>Kotlin接口方法默认实现不是基于JDK8以后的default关键字，而是在接口里生成了一个静态内部类以静态方法的形式存放</li><li>ResultSet应该以迭代器的方式使用</li><li>获取父类/接口的泛型应该使用genericSuperClass/Interfaces</li><li>返回值类型为void或Unit的方法的returnType不是Void::class.java,也不是Unit::class.java。但它可以用returnType.name == “void”这种形式进行判断</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 杂谈 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Kotlin </tag>
+            
+            <tag> MySQL </tag>
+            
+            <tag> TabooLib </tag>
+            
+            <tag> 动态代理 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>一个Minecraft Chest UI框架的灵感</title>
+      <link href="/2022/01/07/a-idea-about-minecraft-ui/"/>
+      <url>/2022/01/07/a-idea-about-minecraft-ui/</url>
+      
+        <content type="html"><![CDATA[<h1 id="一个Minecraft-Chest-UI框架的灵感"><a href="#一个Minecraft-Chest-UI框架的灵感" class="headerlink" title="一个Minecraft Chest UI框架的灵感"></a>一个Minecraft Chest UI框架的灵感</h1><p>我在想，Minecraft的GUI，是不是也可以沿用Compose的那套设计思路…</p><p>于是说干就干，我会放一些思路在下面</p><h2 id="一些Minecraft本土化措施"><a href="#一些Minecraft本土化措施" class="headerlink" title="一些Minecraft本土化措施"></a>一些Minecraft本土化措施</h2><p>当然不能搞教条主义，毕竟Minecraft GUI与Android UI之间差距不可谓不大，不可能照搬照抄。</p><h3 id="多平台实现"><a href="#多平台实现" class="headerlink" title="多平台实现"></a>多平台实现</h3><p>MinecraftCompose提供接口供其他开发者实现，同时提供一套基于TabooLib框架下的默认实现</p><p>如果你希望基于其他UI框架使用MinecraftCompose，可以自行实现</p><h3 id="Composable实现"><a href="#Composable实现" class="headerlink" title="@Composable实现"></a>@Composable实现</h3><p>我认为对我来说搞出@Composable那种效果有点不现实，那么我们便退而求其次，使用下面的方式达到函数组合的效果。</p><pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token keyword">val</span> composeApi <span class="token operator">=</span> MinecraftCompose<span class="token punctuation">.</span><span class="token function">newAPIInst</span><span class="token punctuation">(</span>TabooLibImpl<span class="token operator">::</span><span class="token keyword">class</span><span class="token punctuation">.</span>java<span class="token punctuation">)</span><span class="token comment">// 为玩家打开UI</span><span class="token keyword">fun</span> <span class="token function">openFor</span><span class="token punctuation">(</span>player<span class="token operator">:</span> Player<span class="token punctuation">)</span> <span class="token punctuation">{</span>    composeApi<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span>player<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">/**this: ComposeScope **/</span>        <span class="token function">mainUI</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>    <span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token comment">// Compose Function</span><span class="token keyword">fun</span> <span class="token function">mainUI</span><span class="token punctuation">(</span>scope<span class="token operator">:</span> ComposeScope<span class="token punctuation">)</span> <span class="token punctuation">{</span>    <span class="token function">with</span><span class="token punctuation">(</span>scope<span class="token punctuation">)</span> <span class="token punctuation">{</span>        <span class="token comment">// 剩下的留着我之后想</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="MVI思想"><a href="#MVI思想" class="headerlink" title="MVI思想"></a>MVI思想</h3><pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token keyword">val</span> state <span class="token keyword">by</span> viewModel<span class="token punctuation">.</span>databaseFlow<span class="token punctuation">.</span><span class="token function">observeAsState</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">// ObserveAsState后,ComposeUI会随订阅的Flow更新而重构</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 杂谈 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Minecraft </tag>
+            
+            <tag> Compose </tag>
+            
+            <tag> Kotlin </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello Ktor!</title>
       <link href="/2022/01/03/hello-ktor/"/>
       <url>/2022/01/03/hello-ktor/</url>
@@ -109,11 +169,11 @@
       
         <tags>
             
-            <tag> Android </tag>
+            <tag> Compose </tag>
             
             <tag> Kotlin </tag>
             
-            <tag> Compose </tag>
+            <tag> Android </tag>
             
         </tags>
       
@@ -165,11 +225,11 @@
       
         <tags>
             
+            <tag> Kotlin </tag>
+            
             <tag> Android </tag>
             
             <tag> 知识梳理 </tag>
-            
-            <tag> Kotlin </tag>
             
         </tags>
       
@@ -248,9 +308,9 @@
       
         <tags>
             
-            <tag> Android </tag>
-            
             <tag> Kotlin </tag>
+            
+            <tag> Android </tag>
             
         </tags>
       
@@ -275,9 +335,9 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> Kotlin </tag>
+            
+            <tag> Java </tag>
             
             <tag> 外部库 </tag>
             
@@ -406,9 +466,9 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> Kotlin </tag>
+            
+            <tag> Java </tag>
             
             <tag> 外部库 </tag>
             
@@ -435,9 +495,9 @@
       
         <tags>
             
-            <tag> Android </tag>
-            
             <tag> Kotlin </tag>
+            
+            <tag> Android </tag>
             
             <tag> 设计模式 </tag>
             
@@ -464,9 +524,9 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> Kotlin </tag>
+            
+            <tag> Java </tag>
             
         </tags>
       
@@ -784,9 +844,9 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> Kotlin </tag>
+            
+            <tag> Java </tag>
             
         </tags>
       
@@ -863,9 +923,9 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> Kotlin </tag>
+            
+            <tag> Java </tag>
             
         </tags>
       
@@ -890,9 +950,9 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> Kotlin </tag>
+            
+            <tag> Java </tag>
             
         </tags>
       
@@ -917,9 +977,9 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> Kotlin </tag>
+            
+            <tag> Java </tag>
             
             <tag> 外部库 </tag>
             

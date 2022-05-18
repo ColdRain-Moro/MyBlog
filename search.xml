@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>2022暑假学习计划</title>
+      <link href="/2022/05/18/learning-plan-of-summer-vacation/"/>
+      <url>/2022/05/18/learning-plan-of-summer-vacation/</url>
+      
+        <content type="html"><![CDATA[<h1 id="2022暑假学习计划"><a href="#2022暑假学习计划" class="headerlink" title="2022暑假学习计划"></a>2022暑假学习计划</h1><p>优先度按照顺序来</p><ul><li>JVM</li><li>Jetpack Compose</li><li>自定义View</li><li>React/Vue/Electron</li><li>Flutter</li><li>Go Web / Java NIO / Java Web</li></ul><p>没必要纠结Compose for Desktop / Compose for MultiPlatform，目前我认为桌面应用还是Electron来得快些。Electron有Web前端的生态，而Compose现在生态属实不太行。并且我认为我这段时间前端写得确实挺少，迫切的需要练习，如果开发桌面应用也使用前端的技术的话也能有更多机会磨练前端技术。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计划 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 学习计划 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>记一次服务器遭到挖矿病毒感染的经历</title>
       <link href="/2022/05/17/deal-with-viruses-in-the-server/"/>
       <url>/2022/05/17/deal-with-viruses-in-the-server/</url>
@@ -277,9 +302,9 @@
             
             <tag> Kotlin </tag>
             
-            <tag> 知识梳理 </tag>
-            
             <tag> Android </tag>
+            
+            <tag> 知识梳理 </tag>
             
         </tags>
       

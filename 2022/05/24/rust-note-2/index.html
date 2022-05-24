@@ -1,0 +1,1787 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Rust笔记其二, ColdRain&#39;s Blog">
+    <meta name="description" content="流程控制&amp;模式匹配&amp;方法&amp;泛型&amp;trait">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Rust笔记其二 | ColdRain&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">ColdRain&#39;s Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">ColdRain&#39;s Blog</div>
+        <div class="logo-desc">
+            
+            不妨喝杯热茶，暖和暖和身子再上路吧~
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Rust笔记其二</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Rust/">
+                                <span class="chip bg-color">Rust</span>
+                            </a>
+                        
+                            <a href="/tags/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                <span class="chip bg-color">Rust学习笔记</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
+                                笔记
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-05-24
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-05-24
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.2k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    13 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="Rust笔记其二"><a href="#Rust笔记其二" class="headerlink" title="Rust笔记其二"></a>Rust笔记其二</h1><h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h2><p>比较类似go吧，if for这些后面跟的表达式都不用用括号包起来</p>
+<pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token comment">// 这里比较像kotlin，没有采用传统的三元运算符</span>
+<span class="token keyword">let</span> condition <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> number <span class="token operator">=</span> <span class="token keyword">if</span> condition <span class="token punctuation">{</span>
+        <span class="token number">5</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token number">6</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 多分支</span>
+<span class="token keyword">let</span> n <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span> n <span class="token operator">%</span> <span class="token number">4</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+    <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"number is divisible by 4"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> n <span class="token operator">%</span> <span class="token number">3</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+    <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"number is divisible by 3"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> n <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+    <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"number is divisible by 2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"number is not divisible by 4, 3, or 2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// for循环</span>
+<span class="token comment">// 有点类似kt, 支持区间</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token number">1</span><span class="token punctuation">..=</span><span class="token number">5</span> <span class="token punctuation">{</span>
+   <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 遍历集合</span>
+<span class="token comment">// 注意所有权的转移，不取引用的话下面就用不了container了</span>
+<span class="token keyword">for</span> item <span class="token keyword">in</span> <span class="token operator">&amp;</span>container <span class="token punctuation">{</span>
+  <span class="token comment">// ...</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 遍历时修改</span>
+<span class="token keyword">for</span> item <span class="token keyword">in</span> <span class="token operator">&amp;</span><span class="token keyword">mut</span> collection <span class="token punctuation">{</span>
+  <span class="token comment">// ...</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 遍历index和值</span>
+<span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token comment">// `.iter()` 方法把 `a` 数组变成一个迭代器</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span>i<span class="token punctuation">,</span> v<span class="token punctuation">)</span> <span class="token keyword">in</span> a<span class="token punctuation">.</span><span class="token function">iter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">enumerate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"第{}个元素是{}"</span><span class="token punctuation">,</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 无限循环 等价于while(true)</span>
+<span class="token keyword">loop</span> <span class="token punctuation">{</span>
+   <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"again!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>值得注意的是，rust的break既可以单独使用，也可以让他返回一个值</p>
+<p>loop是一个表达式，因而可以返回一个值</p>
+</blockquote>
+<h2 id="模式匹配"><a href="#模式匹配" class="headerlink" title="模式匹配"></a>模式匹配</h2><blockquote>
+<p>画重点，rust的模式匹配非常强大，以至于其他语言都在抄</p>
+</blockquote>
+<h3 id="match"><a href="#match" class="headerlink" title="match"></a>match</h3><pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token comment">// 这里是比较类似于其他语言switch的用法</span>
+<span class="token comment">// 但match比switch强大得多</span>
+<span class="token keyword">enum</span> <span class="token type-definition class-name">Coin</span> <span class="token punctuation">{</span>
+    <span class="token class-name">Penny</span><span class="token punctuation">,</span>
+    <span class="token class-name">Nickel</span><span class="token punctuation">,</span>
+    <span class="token class-name">Dime</span><span class="token punctuation">,</span>
+    <span class="token class-name">Quarter</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fn</span> <span class="token function-definition function">value_in_cents</span><span class="token punctuation">(</span>coin<span class="token punctuation">:</span> <span class="token class-name">Coin</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token keyword">u8</span> <span class="token punctuation">{</span>
+    <span class="token keyword">match</span> coin <span class="token punctuation">{</span>
+        <span class="token class-name">Coin</span><span class="token punctuation">::</span><span class="token class-name">Penny</span> <span class="token operator">=&gt;</span>  <span class="token punctuation">{</span>
+            <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"Lucky penny!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token number">1</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token class-name">Coin</span><span class="token punctuation">::</span><span class="token class-name">Nickel</span> <span class="token operator">=&gt;</span> <span class="token number">5</span><span class="token punctuation">,</span>
+        <span class="token class-name">Coin</span><span class="token punctuation">::</span><span class="token class-name">Dime</span> <span class="token operator">=&gt;</span> <span class="token number">10</span><span class="token punctuation">,</span>
+        <span class="token class-name">Coin</span><span class="token punctuation">::</span><span class="token class-name">Quarter</span> <span class="token operator">=&gt;</span> <span class="token number">25</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// match是一个表达式，可以用来赋值</span>
+<span class="token keyword">enum</span> <span class="token type-definition class-name">IpAddr</span> <span class="token punctuation">{</span>
+   <span class="token class-name">Ipv4</span><span class="token punctuation">,</span>
+   <span class="token class-name">Ipv6</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fn</span> <span class="token function-definition function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> ip1 <span class="token operator">=</span> <span class="token class-name">IpAddr</span><span class="token punctuation">::</span><span class="token class-name">Ipv6</span><span class="token punctuation">;</span>
+    <span class="token keyword">let</span> ip_str <span class="token operator">=</span> <span class="token keyword">match</span> ip1 <span class="token punctuation">{</span>
+        <span class="token class-name">IpAddr</span><span class="token punctuation">::</span><span class="token class-name">Ipv4</span> <span class="token operator">=&gt;</span> <span class="token string">"127.0.0.1"</span><span class="token punctuation">,</span>
+        _ <span class="token operator">=&gt;</span> <span class="token string">"::1"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> ip_str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 模式绑定 （有点像解构）</span>
+<span class="token keyword">enum</span> <span class="token type-definition class-name">Coin</span> <span class="token punctuation">{</span>
+    <span class="token class-name">Penny</span><span class="token punctuation">,</span>
+    <span class="token class-name">Nickel</span><span class="token punctuation">,</span>
+    <span class="token class-name">Dime</span><span class="token punctuation">,</span>
+    <span class="token class-name">Quarter</span><span class="token punctuation">(</span><span class="token class-name">UsState</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// 25美分硬币</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fn</span> <span class="token function-definition function">value_in_cents</span><span class="token punctuation">(</span>coin<span class="token punctuation">:</span> <span class="token class-name">Coin</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token keyword">u8</span> <span class="token punctuation">{</span>
+    <span class="token keyword">match</span> coin <span class="token punctuation">{</span>
+        <span class="token class-name">Coin</span><span class="token punctuation">::</span><span class="token class-name">Penny</span> <span class="token operator">=&gt;</span> <span class="token number">1</span><span class="token punctuation">,</span>
+        <span class="token class-name">Coin</span><span class="token punctuation">::</span><span class="token class-name">Nickel</span> <span class="token operator">=&gt;</span> <span class="token number">5</span><span class="token punctuation">,</span>
+        <span class="token class-name">Coin</span><span class="token punctuation">::</span><span class="token class-name">Dime</span> <span class="token operator">=&gt;</span> <span class="token number">10</span><span class="token punctuation">,</span>
+        <span class="token comment">// 这里可以通过这样的写法直接拿到state</span>
+        <span class="token class-name">Coin</span><span class="token punctuation">::</span><span class="token class-name">Quarter</span><span class="token punctuation">(</span>state<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+            <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"State quarter from {:?}!"</span><span class="token punctuation">,</span> state<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token number">25</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 有时会遇到只有一个模式的值需要被处理，其它值直接忽略的场景，如果用 match 来处理就要写成下面这样</span>
+<span class="token keyword">let</span> v <span class="token operator">=</span> <span class="token class-name">Some</span><span class="token punctuation">(</span><span class="token number">3u8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">match</span> v <span class="token punctuation">{</span>
+   <span class="token class-name">Some</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"three"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+   _ <span class="token operator">=&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 这种情况下可以直接用语法糖简化</span>
+<span class="token keyword">if</span> <span class="token keyword">let</span> <span class="token class-name">Some</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">=</span> v <span class="token punctuation">{</span>
+    <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"three"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>match的匹配必须穷尽所有的情况，也就是如果不列出所有的可能，必须定义_ =&gt;分支</p>
+</blockquote>
+<h3 id="matches-宏"><a href="#matches-宏" class="headerlink" title="matches!宏"></a>matches!宏</h3><blockquote>
+<p>跟java中的String#matches比较类似，如果我只是想知道某个实例是否匹配上了我给与的模式，可以不用特意去macth,直接调用matches!宏。</p>
+</blockquote>
+<pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token comment">// 使用match</span>
+<span class="token keyword">let</span> foo <span class="token operator">=</span> <span class="token char string">'f'</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> matched <span class="token operator">=</span> <span class="token keyword">match</span> foo <span class="token punctuation">{</span>
+    <span class="token char string">'A'</span><span class="token punctuation">..</span><span class="token char string">'Z'</span> <span class="token operator">|</span> <span class="token char string">'a'</span><span class="token punctuation">..</span><span class="token char string">'z'</span> <span class="token operator">=&gt;</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    _ <span class="token operator">=&gt;</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 使用matches!</span>
+<span class="token keyword">let</span> foo <span class="token operator">=</span> <span class="token char string">'f'</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> matched <span class="token operator">=</span> <span class="token macro property">matches!</span><span class="token punctuation">(</span>foo<span class="token punctuation">,</span> <span class="token char string">'A'</span><span class="token punctuation">..</span><span class="token char string">'Z'</span> <span class="token operator">|</span> <span class="token char string">'a'</span><span class="token punctuation">..</span><span class="token char string">'z'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="解构"><a href="#解构" class="headerlink" title="解构"></a>解构</h3><p>解构其实也是模式匹配实现的，在上一节笔记中已经写过了，不做详细介绍</p>
+<h3 id="匹配守卫"><a href="#匹配守卫" class="headerlink" title="匹配守卫"></a>匹配守卫</h3><blockquote>
+<p>在要匹配的模式后面可以加上if condition，来对模式匹配进行进一步限制</p>
+</blockquote>
+<pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> x <span class="token operator">=</span> <span class="token class-name">Some</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">let</span> y <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">match</span> x <span class="token punctuation">{</span>
+        <span class="token class-name">Some</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"Got 50"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token class-name">Some</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token keyword">if</span> n <span class="token operator">==</span> y <span class="token operator">=&gt;</span> <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"Matched, n = {}"</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">,</span>
+        _ <span class="token operator">=&gt;</span> <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"Default case, x = {:?}"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"at the end: x = {:?}, y = {}"</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p><strong>匹配守卫的条件会作用于所有的模式</strong></p>
+</blockquote>
+<pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">let</span> x <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> y <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+
+<span class="token keyword">match</span> x <span class="token punctuation">{</span>
+    <span class="token number">4</span> <span class="token operator">|</span> <span class="token number">5</span> <span class="token operator">|</span> <span class="token number">6</span> <span class="token keyword">if</span> y <span class="token operator">=&gt;</span> <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"yes"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    _ <span class="token operator">=&gt;</span> <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"no"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>这个例子中看起来好像 <code>if y</code> 只作用于 <code>6</code>，但实际上匹配守卫 <code>if y</code> 作用于 <code>4</code>、<code>5</code> <strong>和</strong> <code>6</code> ，在满足 <code>x</code> 属于 <code>4 | 5 | 6</code> 后才会判断 <code>y</code> 是否为 <code>true</code>：</p>
+</blockquote>
+<h3 id="绑定"><a href="#绑定" class="headerlink" title="@绑定"></a>@绑定</h3><blockquote>
+<p>说白了就是我们即想要模式匹配，匹配成功后又想通过解构的形式拿到对应的值</p>
+<p>小孩子才做选择 大人全都要！</p>
+</blockquote>
+<pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">enum</span> <span class="token type-definition class-name">Message</span> <span class="token punctuation">{</span>
+    <span class="token class-name">Hello</span> <span class="token punctuation">{</span> id<span class="token punctuation">:</span> <span class="token keyword">i32</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">let</span> msg <span class="token operator">=</span> <span class="token class-name">Message</span><span class="token punctuation">::</span><span class="token class-name">Hello</span> <span class="token punctuation">{</span> id<span class="token punctuation">:</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">match</span> msg <span class="token punctuation">{</span>
+    <span class="token class-name">Message</span><span class="token punctuation">::</span><span class="token class-name">Hello</span> <span class="token punctuation">{</span> id<span class="token punctuation">:</span> id_variable <span class="token operator">@</span> <span class="token number">3</span><span class="token punctuation">..=</span><span class="token number">7</span> <span class="token punctuation">}</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"Found an id in range: {}"</span><span class="token punctuation">,</span> id_variable<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token class-name">Message</span><span class="token punctuation">::</span><span class="token class-name">Hello</span> <span class="token punctuation">{</span> id<span class="token punctuation">:</span> <span class="token number">10</span><span class="token punctuation">..=</span><span class="token number">12</span> <span class="token punctuation">}</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"Found an id in another range"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token class-name">Message</span><span class="token punctuation">::</span><span class="token class-name">Hello</span> <span class="token punctuation">{</span> id <span class="token punctuation">}</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"Found some other id: {}"</span><span class="token punctuation">,</span> id<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>上面这个例子的第一个分支中，我们既通过解构拿到了id，又对他进行了模式匹配: 在3..=7范围内才能通过。</p>
+<p>注意:</p>
+<blockquote>
+<p>考虑下面一段代码:</p>
+<pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">match</span> <span class="token number">1</span> <span class="token punctuation">{</span>
+        num <span class="token operator">@</span> <span class="token number">1</span> <span class="token operator">|</span> <span class="token number">2</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+            <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        _ <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>编译不通过，是因为 <code>num</code> 没有绑定到所有的模式上，只绑定了模式 <code>1</code>，你可能会试图通过这个方式来解决：</p>
+<pre class="line-numbers language-rust" data-language="rust"><code class="language-rust">num <span class="token operator">@</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">|</span> <span class="token number">2</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>但是，如果你用的是 Rust 1.53 之前的版本，那这种写法会报错，因为编译器不支持。</p>
+</blockquote>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>Rust使用<code>impl</code>块来定义方法，多说无益，先来一段示例代码</p>
+<pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">struct</span> <span class="token type-definition class-name">Circle</span> <span class="token punctuation">{</span>
+    x<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">,</span>
+    y<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">,</span>
+    radius<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">impl</span> <span class="token class-name">Circle</span> <span class="token punctuation">{</span>
+    <span class="token comment">// new是Circle的关联函数，因为它的第一个参数不是self</span>
+    <span class="token comment">// 这种方法往往用于初始化当前结构体的实例</span>
+    <span class="token keyword">fn</span> <span class="token function-definition function">new</span><span class="token punctuation">(</span>x<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">,</span> y<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">,</span> radius<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token class-name">Circle</span> <span class="token punctuation">{</span>
+        <span class="token class-name">Circle</span> <span class="token punctuation">{</span>
+            x<span class="token punctuation">:</span> x<span class="token punctuation">,</span>
+            y<span class="token punctuation">:</span> y<span class="token punctuation">,</span>
+            radius<span class="token punctuation">:</span> radius<span class="token punctuation">,</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Circle的方法，&amp;self表示借用当前的Circle结构体</span>
+    <span class="token keyword">fn</span> <span class="token function-definition function">area</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token keyword">f64</span> <span class="token punctuation">{</span>
+        <span class="token namespace">std<span class="token punctuation">::</span></span><span class="token keyword">f64</span><span class="token punctuation">::</span><span class="token namespace">consts<span class="token punctuation">::</span></span><span class="token constant">PI</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">.</span>radius <span class="token operator">*</span> <span class="token keyword">self</span><span class="token punctuation">.</span>radius<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>与java的不同在于，要实现一个类似于java类的结构，我们需要定义struct和它的impl，相当于字段的声明和方法的声明被分开了。</p>
+<p>并且，impl可以有很多个</p>
+<pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">struct</span> <span class="token type-definition class-name">Circle</span> <span class="token punctuation">{</span>
+    x<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">,</span>
+    y<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">,</span>
+    radius<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">impl</span> <span class="token class-name">Circle</span> <span class="token punctuation">{</span>
+    <span class="token keyword">fn</span> <span class="token function-definition function">new</span><span class="token punctuation">(</span>x<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">,</span> y<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">,</span> radius<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token class-name">Circle</span> <span class="token punctuation">{</span>
+        <span class="token class-name">Circle</span> <span class="token punctuation">{</span>
+            x<span class="token punctuation">:</span> x<span class="token punctuation">,</span>
+            y<span class="token punctuation">:</span> y<span class="token punctuation">,</span>
+            radius<span class="token punctuation">:</span> radius<span class="token punctuation">,</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">impl</span> <span class="token class-name">Circle</span> <span class="token punctuation">{</span>
+    <span class="token keyword">fn</span> <span class="token function-definition function">area</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token keyword">f64</span> <span class="token punctuation">{</span>
+        <span class="token namespace">std<span class="token punctuation">::</span></span><span class="token keyword">f64</span><span class="token punctuation">::</span><span class="token namespace">consts<span class="token punctuation">::</span></span><span class="token constant">PI</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">.</span>radius <span class="token operator">*</span> <span class="token keyword">self</span><span class="token punctuation">.</span>radius<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这样做的好处在于可以让方法的声明更加清晰，我们可以把为完成同一种职能的方法声明在一个impl块中，这样比起塞在一块会有条理得多。</p>
+<h3 id="关联函数-amp-方法"><a href="#关联函数-amp-方法" class="headerlink" title="关联函数&amp;方法"></a>关联函数&amp;方法</h3><p>看到<code>函数</code>和<code>方法</code>二字我们便可以知晓他们的不同。函数不会绑定在一个对象上，而方法会。</p>
+<p>我们先来看一下如何声明关联函数与方法</p>
+<pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">struct</span> <span class="token type-definition class-name">Circle</span> <span class="token punctuation">{</span>
+    x<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">,</span>
+    y<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">,</span>
+    radius<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">impl</span> <span class="token class-name">Circle</span> <span class="token punctuation">{</span>
+    <span class="token comment">// new是Circle的关联函数，因为它的第一个参数不是self</span>
+    <span class="token comment">// 这种方法往往用于初始化当前结构体的实例</span>
+    <span class="token keyword">fn</span> <span class="token function-definition function">new</span><span class="token punctuation">(</span>x<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">,</span> y<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">,</span> radius<span class="token punctuation">:</span> <span class="token keyword">f64</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token class-name">Circle</span> <span class="token punctuation">{</span>
+        <span class="token class-name">Circle</span> <span class="token punctuation">{</span>
+            x<span class="token punctuation">:</span> x<span class="token punctuation">,</span>
+            y<span class="token punctuation">:</span> y<span class="token punctuation">,</span>
+            radius<span class="token punctuation">:</span> radius<span class="token punctuation">,</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Circle的方法，&amp;self表示借用当前的Circle结构体</span>
+    <span class="token keyword">fn</span> <span class="token function-definition function">area</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token keyword">f64</span> <span class="token punctuation">{</span>
+        <span class="token namespace">std<span class="token punctuation">::</span></span><span class="token keyword">f64</span><span class="token punctuation">::</span><span class="token namespace">consts<span class="token punctuation">::</span></span><span class="token constant">PI</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">.</span>radius <span class="token operator">*</span> <span class="token keyword">self</span><span class="token punctuation">.</span>radius<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>可以看到，所谓的方法，就是传入了一个<code>&amp;self</code>的函数，这是一个语法糖，实际上是 <code>self: &amp;Self</code> 的简写。意思是我们传入了一个这个类型的实例的引用。这样在调用时便可以直接<code>circle.area()</code>。</p>
+<p>而没有传入自身引用的关联函数又是什么呢？我只说四个字——<strong>静态方法</strong>。</p>
+<h3 id="为枚举实现方法"><a href="#为枚举实现方法" class="headerlink" title="为枚举实现方法"></a>为枚举实现方法</h3><pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token attribute attr-name">#![allow(unused)]</span>
+<span class="token keyword">fn</span> <span class="token function-definition function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token keyword">enum</span> <span class="token type-definition class-name">Message</span> <span class="token punctuation">{</span>
+    <span class="token class-name">Quit</span><span class="token punctuation">,</span>
+    <span class="token class-name">Move</span> <span class="token punctuation">{</span> x<span class="token punctuation">:</span> <span class="token keyword">i32</span><span class="token punctuation">,</span> y<span class="token punctuation">:</span> <span class="token keyword">i32</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token class-name">Write</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token class-name">ChangeColor</span><span class="token punctuation">(</span><span class="token keyword">i32</span><span class="token punctuation">,</span> <span class="token keyword">i32</span><span class="token punctuation">,</span> <span class="token keyword">i32</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">impl</span> <span class="token class-name">Message</span> <span class="token punctuation">{</span>
+    <span class="token keyword">fn</span> <span class="token function-definition function">call</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 在这里定义方法体</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+	<span class="token keyword">let</span> m <span class="token operator">=</span> <span class="token class-name">Message</span><span class="token punctuation">::</span><span class="token class-name">Write</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">::</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	m<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="泛型-amp-特征-trait"><a href="#泛型-amp-特征-trait" class="headerlink" title="泛型&amp;特征(trait)"></a>泛型&amp;特征(trait)</h2><h3 id="声明一个基础的泛型"><a href="#声明一个基础的泛型" class="headerlink" title="声明一个基础的泛型"></a>声明一个基础的泛型</h3><pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">add</span><span class="token operator">&lt;</span><span class="token class-name">T</span><span class="token operator">&gt;</span><span class="token punctuation">(</span>a<span class="token punctuation">:</span><span class="token class-name">T</span><span class="token punctuation">,</span> b<span class="token punctuation">:</span><span class="token class-name">T</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token class-name">T</span> <span class="token punctuation">{</span>
+    a <span class="token operator">+</span> b
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fn</span> <span class="token function-definition function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"add i8: {}"</span><span class="token punctuation">,</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token number">2i8</span><span class="token punctuation">,</span> <span class="token number">3i8</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"add i32: {}"</span><span class="token punctuation">,</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"add f64: {}"</span><span class="token punctuation">,</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1.23</span><span class="token punctuation">,</span> <span class="token number">1.23</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>当然可以看出来，这串代码是跑不了的，不是所有类型都允许相加的</p>
+<h3 id="使用trait约束泛型的类型"><a href="#使用trait约束泛型的类型" class="headerlink" title="使用trait约束泛型的类型"></a>使用trait约束泛型的类型</h3><p>那我们就尝试对他的类型进行约束</p>
+<p>这里语法比较类似kotlin</p>
+<pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">add</span><span class="token operator">&lt;</span><span class="token class-name">T</span><span class="token punctuation">:</span> <span class="token namespace">std<span class="token punctuation">::</span>ops<span class="token punctuation">::</span></span><span class="token class-name">Add</span><span class="token operator">&lt;</span><span class="token class-name">Output</span> <span class="token operator">=</span> <span class="token class-name">T</span><span class="token operator">&gt;&gt;</span><span class="token punctuation">(</span>a<span class="token punctuation">:</span><span class="token class-name">T</span><span class="token punctuation">,</span> b<span class="token punctuation">:</span><span class="token class-name">T</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token class-name">T</span> <span class="token punctuation">{</span>
+    a <span class="token operator">+</span> b
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>这里的<code>std::ops::Add&lt;Output = T&gt;</code>是不是比较类似于kotlin的接口？在rust中它叫做<code>trait </code>,特征。而实现了<code>std::ops::Add&lt;Output = T&gt;</code>,就支持了相加，泛型output就是相加后结果的类型。</p>
+<blockquote>
+<p>这些都说明一个道理，特征定义了<strong>一个可以被共享的行为，只要实现了特征，你就能使用该行为</strong>。</p>
+</blockquote>
+<h3 id="在枚举中使用泛型"><a href="#在枚举中使用泛型" class="headerlink" title="在枚举中使用泛型"></a>在枚举中使用泛型</h3><pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">enum</span> <span class="token type-definition class-name">Option</span><span class="token operator">&lt;</span><span class="token class-name">T</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token class-name">Some</span><span class="token punctuation">(</span><span class="token class-name">T</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token class-name">None</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">enum</span> <span class="token type-definition class-name">Result</span><span class="token operator">&lt;</span><span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token class-name">E</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token class-name">Ok</span><span class="token punctuation">(</span><span class="token class-name">T</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token class-name">Err</span><span class="token punctuation">(</span><span class="token class-name">E</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="在方法中使用泛型"><a href="#在方法中使用泛型" class="headerlink" title="在方法中使用泛型"></a>在方法中使用泛型</h3><pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">struct</span> <span class="token type-definition class-name">Point</span><span class="token operator">&lt;</span><span class="token class-name">T</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    x<span class="token punctuation">:</span> <span class="token class-name">T</span><span class="token punctuation">,</span>
+    y<span class="token punctuation">:</span> <span class="token class-name">T</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">impl</span><span class="token operator">&lt;</span><span class="token class-name">T</span><span class="token operator">&gt;</span> <span class="token class-name">Point</span><span class="token operator">&lt;</span><span class="token class-name">T</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">fn</span> <span class="token function-definition function">x</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token operator">&amp;</span><span class="token class-name">T</span> <span class="token punctuation">{</span>
+        <span class="token operator">&amp;</span><span class="token keyword">self</span><span class="token punctuation">.</span>x
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fn</span> <span class="token function-definition function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> p <span class="token operator">=</span> <span class="token class-name">Point</span> <span class="token punctuation">{</span> x<span class="token punctuation">:</span> <span class="token number">5</span><span class="token punctuation">,</span> y<span class="token punctuation">:</span> <span class="token number">10</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"p.x = {}"</span><span class="token punctuation">,</span> p<span class="token punctuation">.</span><span class="token function">x</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>这个例子中，<code>T,U</code> 是定义在结构体 <code>Point</code> 上的泛型参数，<code>V,W</code> 是单独定义在方法 <code>mixup</code> 上的泛型参数，它们并不冲突，说白了，你可以理解为，一个是结构体泛型，一个是函数泛型。</p>
+</blockquote>
+<h3 id="为具体的泛型类型实现方法"><a href="#为具体的泛型类型实现方法" class="headerlink" title="为具体的泛型类型实现方法"></a>为具体的泛型类型实现方法</h3><blockquote>
+<p>对于 <code>Point&lt;T&gt;</code> 类型，你不仅能定义基于 <code>T</code> 的方法，还能针对特定的具体类型，进行方法定义：</p>
+<pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">impl</span> <span class="token class-name">Point</span><span class="token operator">&lt;</span><span class="token keyword">f32</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">fn</span> <span class="token function-definition function">distance_from_origin</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token keyword">f32</span> <span class="token punctuation">{</span>
+        <span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">.</span>x<span class="token punctuation">.</span><span class="token function">powi</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token keyword">self</span><span class="token punctuation">.</span>y<span class="token punctuation">.</span><span class="token function">powi</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sqrt</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这段代码意味着 <code>Point&lt;f32&gt;</code> 类型会有一个方法 <code>distance_from_origin</code>，而其他 <code>T</code> 不是 <code>f32</code> 类型的 <code>Point&lt;T&gt; </code>实例则没有定义此方法。这个方法计算点实例与坐标<code>(0.0, 0.0)</code> 之间的距离，并使用了只能用于浮点型的数学运算符。</p>
+<p>这样我们就能针对特定的泛型类型实现某个特定的方法，对于其它泛型类型则没有定义该方法。</p>
+</blockquote>
+<h3 id="const-泛型"><a href="#const-泛型" class="headerlink" title="const 泛型"></a>const 泛型</h3><pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">display_array</span><span class="token operator">&lt;</span><span class="token class-name">T</span><span class="token punctuation">:</span> <span class="token namespace">std<span class="token punctuation">::</span>fmt<span class="token punctuation">::</span></span><span class="token class-name">Debug</span><span class="token operator">&gt;</span><span class="token punctuation">(</span>arr<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token punctuation">[</span><span class="token class-name">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"{:?}"</span><span class="token punctuation">,</span> arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">fn</span> <span class="token function-definition function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> arr<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token keyword">i32</span><span class="token punctuation">;</span> <span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">display_array</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">let</span> arr<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token keyword">i32</span><span class="token punctuation">;</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">display_array</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>首先看看这段代码，如果我们想要约束传入切片的大小该怎么做呢</p>
+<p>const泛型其实就是针对常量值的泛型</p>
+<pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">display_array</span><span class="token operator">&lt;</span><span class="token class-name">T</span><span class="token punctuation">:</span> <span class="token namespace">std<span class="token punctuation">::</span>fmt<span class="token punctuation">::</span></span><span class="token class-name">Debug</span><span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token class-name">N</span><span class="token punctuation">:</span> <span class="token keyword">usize</span><span class="token operator">&gt;</span><span class="token punctuation">(</span>arr<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">T</span><span class="token punctuation">;</span> <span class="token class-name">N</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"{:?}"</span><span class="token punctuation">,</span> arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">fn</span> <span class="token function-definition function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> arr<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token keyword">i32</span><span class="token punctuation">;</span> <span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">display_array</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">let</span> arr<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token keyword">i32</span><span class="token punctuation">;</span> <span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">display_array</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里我们声明了一个常量泛型usize，这个usize可以放到入参处切片的类型中去，这便是常量泛型的用法。</p>
+<h3 id="泛型的性能"><a href="#泛型的性能" class="headerlink" title="泛型的性能"></a>泛型的性能</h3><blockquote>
+<p>在 Rust 中泛型是零成本的抽象，意味着你在使用泛型时，完全不用担心性能上的问题。</p>
+<p>但是任何选择都是权衡得失的，既然我们获得了性能上的巨大优势，那么又失去了什么呢？Rust 是在编译期为泛型对应的多个类型，生成各自的代码，因此损失了编译速度和增大了最终生成文件的大小。</p>
+<p>具体来说：</p>
+<p>Rust 通过在编译时进行泛型代码的 <strong>单态化</strong>(<em>monomorphization</em>)来保证效率。单态化是一个通过填充编译时使用的具体类型，将通用代码转换为特定代码的过程。</p>
+<p>编译器所做的工作正好与我们创建泛型函数的步骤相反，编译器寻找所有泛型代码被调用的位置并针对具体类型生成代码。</p>
+</blockquote>
+<h2 id="特征-trait"><a href="#特征-trait" class="headerlink" title="特征(trait)"></a>特征(trait)</h2><p>其实对应的就是java的interface，不过似乎设计得更好</p>
+<h3 id="定义特征"><a href="#定义特征" class="headerlink" title="定义特征"></a>定义特征</h3><pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">pub</span> <span class="token keyword">trait</span> <span class="token class-name">Summary</span> <span class="token punctuation">{</span>
+    <span class="token keyword">fn</span> <span class="token function-definition function">summarize</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token class-name">String</span><span class="token punctuation">;</span>
+    
+    <span class="token comment">// 允许有默认实现</span>
+    <span class="token comment">// 默认实现中允许调用其他方法</span>
+    <span class="token keyword">fn</span> <span class="token function-definition function">summarize1</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token class-name">String</span> <span class="token punctuation">{</span>
+        <span class="token string">"巴拉巴拉"</span> <span class="token operator">+</span> <span class="token keyword">self</span><span class="token punctuation">.</span><span class="token function">summarize</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="为类型实现特征"><a href="#为类型实现特征" class="headerlink" title="为类型实现特征"></a>为类型实现特征</h3><pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">pub</span> <span class="token keyword">trait</span> <span class="token class-name">Summary</span> <span class="token punctuation">{</span>
+    <span class="token keyword">fn</span> <span class="token function-definition function">summarize</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token class-name">String</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">pub</span> <span class="token keyword">struct</span> <span class="token type-definition class-name">Post</span> <span class="token punctuation">{</span>
+    <span class="token keyword">pub</span> title<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token comment">// 标题</span>
+    <span class="token keyword">pub</span> author<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token comment">// 作者</span>
+    <span class="token keyword">pub</span> content<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token comment">// 内容</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">impl</span> <span class="token class-name">Summary</span> <span class="token keyword">for</span> <span class="token class-name">Post</span> <span class="token punctuation">{</span>
+    <span class="token keyword">fn</span> <span class="token function-definition function">summarize</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token class-name">String</span> <span class="token punctuation">{</span>
+        <span class="token macro property">format!</span><span class="token punctuation">(</span><span class="token string">"文章{}, 作者是{}"</span><span class="token punctuation">,</span> <span class="token keyword">self</span><span class="token punctuation">.</span>title<span class="token punctuation">,</span> <span class="token keyword">self</span><span class="token punctuation">.</span>author<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">pub</span> <span class="token keyword">struct</span> <span class="token type-definition class-name">Weibo</span> <span class="token punctuation">{</span>
+    <span class="token keyword">pub</span> username<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span>
+    <span class="token keyword">pub</span> content<span class="token punctuation">:</span> <span class="token class-name">String</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">impl</span> <span class="token class-name">Summary</span> <span class="token keyword">for</span> <span class="token class-name">Weibo</span> <span class="token punctuation">{</span>
+    <span class="token keyword">fn</span> <span class="token function-definition function">summarize</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token class-name">String</span> <span class="token punctuation">{</span>
+        <span class="token macro property">format!</span><span class="token punctuation">(</span><span class="token string">"{}发表了微博{}"</span><span class="token punctuation">,</span> <span class="token keyword">self</span><span class="token punctuation">.</span>username<span class="token punctuation">,</span> <span class="token keyword">self</span><span class="token punctuation">.</span>content<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这样的设计让Rust实现Kotlin那样的拓展函数成为可能。</p>
+<h3 id="孤儿原则"><a href="#孤儿原则" class="headerlink" title="孤儿原则"></a>孤儿原则</h3><blockquote>
+<p>上面我们将 <code>Summary</code> 定义成了 <code>pub</code> 公开的。这样，如果他人想要使用我们的 <code>Summary</code> 特征，则可以引入到他们的包中，然后再进行实现。</p>
+<p>关于特征实现与定义的位置，有一条非常重要的原则：<strong>如果你想要为类型 <code>A</code> 实现特征 <code>T</code>，那么 <code>A</code> 或者 <code>T</code> 至少有一个是在当前作用域中定义的！</strong>。例如我们可以为上面的 <code>Post</code> 类型实现标准库中的 <code>Display</code> 特征，这是因为 <code>Post</code> 类型定义在当前的作用域中。同时，我们也可以在当前包中为 <code>String</code> 类型实现 <code>Summary</code> 特征，因为 <code>Summary</code> 定义在当前作用域中。</p>
+<p>但是你无法在当前作用域中，为 <code>String</code> 类型实现 <code>Display</code> 特征，因为它们俩都定义在标准库中，其定义所在的位置都不在当前作用域，跟你半毛钱关系都没有，看看就行了。</p>
+<p>该规则被称为<strong>孤儿规则</strong>，可以确保其它人编写的代码不会破坏你的代码，也确保了你不会莫名其妙就破坏了风马牛不相及的代码。</p>
+</blockquote>
+<h3 id="形参约束"><a href="#形参约束" class="headerlink" title="形参约束"></a>形参约束</h3><pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">pub</span> <span class="token keyword">fn</span> <span class="token function-definition function">notify</span><span class="token punctuation">(</span>item<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token keyword">impl</span> <span class="token class-name">Summary</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"Breaking news! {}"</span><span class="token punctuation">,</span> item<span class="token punctuation">.</span><span class="token function">summarize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 多重约束</span>
+<span class="token keyword">pub</span> <span class="token keyword">fn</span> <span class="token function-definition function">notify</span><span class="token punctuation">(</span>item<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token punctuation">(</span><span class="token keyword">impl</span> <span class="token class-name">Summary</span> <span class="token operator">+</span> <span class="token class-name">Display</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//...</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 不使用where约束</span>
+<span class="token keyword">fn</span> <span class="token function-definition function">some_function</span><span class="token operator">&lt;</span><span class="token class-name">T</span><span class="token punctuation">:</span> <span class="token class-name">Display</span> <span class="token operator">+</span> <span class="token class-name">Clone</span><span class="token punctuation">,</span> <span class="token class-name">U</span><span class="token punctuation">:</span> <span class="token class-name">Clone</span> <span class="token operator">+</span> <span class="token class-name">Debug</span><span class="token operator">&gt;</span><span class="token punctuation">(</span>t<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token class-name">T</span><span class="token punctuation">,</span> u<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token class-name">U</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token keyword">i32</span> <span class="token punctuation">{</span>
+    <span class="token comment">//...</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 使用where约束</span>
+<span class="token keyword">fn</span> <span class="token function-definition function">some_function</span><span class="token operator">&lt;</span><span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token class-name">U</span><span class="token operator">&gt;</span><span class="token punctuation">(</span>t<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token class-name">T</span><span class="token punctuation">,</span> u<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token class-name">U</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token keyword">i32</span>
+    <span class="token keyword">where</span> <span class="token class-name">T</span><span class="token punctuation">:</span> <span class="token class-name">Display</span> <span class="token operator">+</span> <span class="token class-name">Clone</span><span class="token punctuation">,</span>
+          <span class="token class-name">U</span><span class="token punctuation">:</span> <span class="token class-name">Clone</span> <span class="token operator">+</span> <span class="token class-name">Debug</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">//...</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>虽然 <code>impl Trait</code> 这种语法非常好理解，但是实际上它只是一个语法糖：</p>
+<pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">pub</span> <span class="token keyword">fn</span> <span class="token function-definition function">notify</span><span class="token operator">&lt;</span><span class="token class-name">T</span><span class="token punctuation">:</span> <span class="token class-name">Summary</span><span class="token operator">&gt;</span><span class="token punctuation">(</span>item<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token class-name">T</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">"Breaking news! {}"</span><span class="token punctuation">,</span> item<span class="token punctuation">.</span><span class="token function">summarize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</blockquote>
+<p>// TODO</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">寒雨</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://blog.coldrain.ink/2022/05/24/rust-note-2/">http://blog.coldrain.ink/2022/05/24/rust-note-2/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">寒雨</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Rust/">
+                                    <span class="chip bg-color">Rust</span>
+                                </a>
+                            
+                                <a href="/tags/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                    <span class="chip bg-color">Rust学习笔记</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'Og4DilClNBOBpnojqB8MLjXO-gzGzoHsz',
+        appKey: '4paDbq8iGuH0lqw3BlF91Dbh',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2022/05/24/rust-note-2/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Rust笔记其二">
+                        
+                        <span class="card-title">Rust笔记其二</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            流程控制&模式匹配&方法&泛型&trait
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-24
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    笔记
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Rust/">
+                        <span class="chip bg-color">Rust</span>
+                    </a>
+                    
+                    <a href="/tags/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">Rust学习笔记</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/05/19/rust-note-1/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Rust笔记其一">
+                        
+                        <span class="card-title">Rust笔记其一</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            变量绑定&解构语法&变量遮蔽&类型推导&异常处理
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    笔记
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Rust/">
+                        <span class="chip bg-color">Rust</span>
+                    </a>
+                    
+                    <a href="/tags/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">Rust学习笔记</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2022</span>
+            
+            <a href="/about" target="_blank">寒雨</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">24.5k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/ColdRain-Moro" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:rain@asgard.hk" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1335014319" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1335014319" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+    <a href="https://www.zhihu.com/people/moro-59-3" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/people/moro-59-3" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/"><\/script>');
+            }
+        </script>
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

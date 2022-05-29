@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="初试CompletableFuture, ColdRain&#39;s Blog">
-    <meta name="description" content="初次尝试java的CompletableFuture">
+    <meta name="keywords" content="为Rust写的后端配置docker, ColdRain&#39;s Blog">
+    <meta name="description" content="直到你开始用rust写后端，发现需要在运行平台编译后才能部署，才明白java跨平台的可贵">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>初试CompletableFuture | ColdRain&#39;s Blog</title>
+    <title>为Rust写的后端配置docker | ColdRain&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -248,12 +248,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">初试CompletableFuture</h1>
+                    <h1 class="description center-align post-title">为Rust写的后端配置docker</h1>
                 </div>
             </div>
         </div>
@@ -369,12 +369,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Kotlin/">
-                                <span class="chip bg-color">Kotlin</span>
+                            <a href="/tags/rust/">
+                                <span class="chip bg-color">rust</span>
                             </a>
                         
-                            <a href="/tags/Java/">
-                                <span class="chip bg-color">Java</span>
+                            <a href="/tags/docker/">
+                                <span class="chip bg-color">docker</span>
                             </a>
                         
                     </div>
@@ -398,21 +398,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-08-28
+                    2022-05-29
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-14
+                    2022-05-29
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    429
+                    499
                 </div>
                 
 
@@ -442,73 +442,51 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>这个东西其实是在看了海螺大佬的博客(<a target="_blank" rel="noopener" href="https://izzel.io/2020/02/12/chat-with-future/">如何问玩家“吾与徐公孰美？” | IzzelAliz’s Blog</a>)后才了解的，但在今天之前我其实一直只是在用它的回调函数来确保某些操作在一些耗时动作执行完后执行。</p>
-<p>直到昨天为了做一个玩家按键跳过登入动画的功能，我又去看了这篇文章。不得不说，<strong>海螺是真的牛逼</strong></p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>按照海螺在他博客里提供的思路，我照猫画虎整了一个监听玩家按键的功能。</p>
-<p>在需要与玩家交流时注册一个监听器，交流完或者超时时关闭这个想法真的牛逼。我真想不到</p>
-<p><strong>监听器类</strong></p>
-<pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token keyword">class</span> <span class="token function">AskSkipOrNot</span><span class="token punctuation">(</span><span class="token keyword">private</span> <span class="token keyword">val</span> uuid<span class="token operator">:</span> UUID<span class="token punctuation">,</span>
-                   <span class="token keyword">private</span> <span class="token keyword">val</span> future<span class="token operator">:</span> CompletableFuture<span class="token operator">&lt;</span>Boolean<span class="token operator">&gt;</span><span class="token punctuation">)</span> <span class="token operator">:</span> Listener <span class="token punctuation">{</span>
+                <h1 id="为Rust写的后端配置docker"><a href="#为Rust写的后端配置docker" class="headerlink" title="为Rust写的后端配置docker"></a>为Rust写的后端配置docker</h1><p>最近尝试用rust写了一个后端服务，想部署到服务器上。当然是用docker部署，自从接触了docker，我很快便爱上了它~</p>
+<p>然后我发现rust的docker配置似乎与java不同..?java只需要把编译出来的jar扔到docker里面，然后直接java -jar便可以运行，但rust似乎需要把整个代码全部copy到docker中在编译环境编译然后才能部署，然而rust的编译又极其消耗性能，导致我第一次部署时直接把服务器给卡崩了。</p>
+<p>后来花了50块给服务器升级成了2c4g，再次尝试部署，这次又出现了经典问题</p>
+<p><img src="https://persecution-1301196908.cos.ap-chongqing.myqcloud.com/image_bed/2022052901.png" alt="2022052901"></p>
+<p>怎么办呢，当然是给cargo换镜像源咯。</p>
+<pre class="line-numbers language-dockerfile" data-language="dockerfile"><code class="language-dockerfile">RUN touch /usr/local/cargo/config.toml
 
-    <span class="token annotation builtin">@EventHandler</span>
-    <span class="token keyword">fun</span> <span class="token function">e</span><span class="token punctuation">(</span>e<span class="token operator">:</span> PlayerInteractEvent<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>e<span class="token punctuation">.</span>player<span class="token punctuation">.</span>uniqueId <span class="token operator">!=</span> uuid<span class="token punctuation">)</span> <span class="token keyword">return</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>SacredAuth<span class="token punctuation">.</span>conf<span class="token punctuation">.</span><span class="token function">getString</span><span class="token punctuation">(</span><span class="token string">"auth.display.skip-button"</span><span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">uppercase</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">"RIGHT"</span>
-            <span class="token operator">&amp;&amp;</span> e<span class="token punctuation">.</span>action <span class="token operator">==</span> Action<span class="token punctuation">.</span>RIGHT_CLICK_AIR<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            future<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
-            HandlerList<span class="token punctuation">.</span><span class="token function">unregisterAll</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>SacredAuth<span class="token punctuation">.</span>conf<span class="token punctuation">.</span><span class="token function">getString</span><span class="token punctuation">(</span><span class="token string">"auth.display.skip-button"</span><span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">uppercase</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">"LEFT"</span>
-            <span class="token operator">&amp;&amp;</span> e<span class="token punctuation">.</span>action <span class="token operator">==</span> Action<span class="token punctuation">.</span>LEFT_CLICK_AIR<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            future<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
-            HandlerList<span class="token punctuation">.</span><span class="token function">unregisterAll</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
+# cargo 上海交大镜像源
+RUN sed -e a\[source.crates-io] /usr/local/cargo/config.toml;\
+    sed -e a\registry=\"https://github.com/rust-lang/crates.io-index\" /usr/local/cargo/config.toml; \
+    sed -e a\replace-with=\'sjtu\' /usr/local/cargo/config.toml; \
+    sed -e a\[source.sjtu] /usr/local/cargo/config.toml; \
+    sed -e a\registry=\"https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index/\"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-    <span class="token annotation builtin">@EventHandler</span>
-    <span class="token keyword">fun</span> <span class="token function">e</span><span class="token punctuation">(</span>e<span class="token operator">:</span> PlayerSwapHandItemsEvent<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>e<span class="token punctuation">.</span>player<span class="token punctuation">.</span>uniqueId <span class="token operator">!=</span> uuid<span class="token punctuation">)</span> <span class="token keyword">return</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>SacredAuth<span class="token punctuation">.</span>conf<span class="token punctuation">.</span><span class="token function">getString</span><span class="token punctuation">(</span><span class="token string">"auth.display.skip-button"</span><span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">uppercase</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">"F"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            future<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
-            HandlerList<span class="token punctuation">.</span><span class="token function">unregisterAll</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这下子就部署成功了</p>
+<p>吐槽一下，每次部署都要花大概半个小时，而且cpu占用率能吃到99.75%，编译成功后的镜像大小能达到6个G，实在是不太行。</p>
+<p>全部代码</p>
+<pre class="line-numbers language-dockerfile" data-language="dockerfile"><code class="language-dockerfile">FROM rust
 
-<p><strong>功能</strong></p>
-<pre class="line-numbers language-kotlin" data-language="kotlin"><code class="language-kotlin"><span class="token comment">// 展示登录动画</span>
-<span class="token keyword">fun</span> <span class="token function">toIconDisplayAnimation</span><span class="token punctuation">(</span>player<span class="token operator">:</span> Player<span class="token punctuation">,</span> func<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-&gt;</span> Unit <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    player<span class="token punctuation">.</span><span class="token function">setMetadata</span><span class="token punctuation">(</span><span class="token string">"SacredAuth:icon-display"</span><span class="token punctuation">,</span> <span class="token function">FixedMetadataValue</span><span class="token punctuation">(</span>SacredAuth<span class="token punctuation">.</span>plugin<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token keyword">val</span> future <span class="token operator">=</span> CompletableFuture<span class="token operator">&lt;</span>Boolean<span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">val</span> time <span class="token operator">=</span> conf<span class="token punctuation">.</span><span class="token function">getLong</span><span class="token punctuation">(</span><span class="token string">"auth.display.time"</span><span class="token punctuation">)</span>
-    KetherShell<span class="token punctuation">.</span><span class="token function">eval</span><span class="token punctuation">(</span>conf<span class="token punctuation">.</span><span class="token function">getString</span><span class="token punctuation">(</span><span class="token string">"auth.display.script.display"</span><span class="token punctuation">)</span><span class="token operator">!!</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        sender <span class="token operator">=</span> player
-    <span class="token punctuation">}</span>
-    <span class="token comment">// 方法</span>
-    <span class="token keyword">fun</span> <span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        player<span class="token punctuation">.</span><span class="token function">removeMetadata</span><span class="token punctuation">(</span><span class="token string">"SacredAuth:icon-display"</span><span class="token punctuation">,</span> SacredAuth<span class="token punctuation">.</span>plugin<span class="token punctuation">)</span>
-        KetherShell<span class="token punctuation">.</span><span class="token function">eval</span><span class="token punctuation">(</span>conf<span class="token punctuation">.</span><span class="token function">getString</span><span class="token punctuation">(</span><span class="token string">"auth.display.script.after-display"</span><span class="token punctuation">)</span><span class="token operator">!!</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            sender <span class="token operator">=</span> player
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    future<span class="token punctuation">.</span><span class="token function">thenRun</span> <span class="token punctuation">{</span>
-        <span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        func<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">val</span> listener <span class="token operator">=</span> <span class="token function">AskSkipOrNot</span><span class="token punctuation">(</span>player<span class="token punctuation">.</span>uniqueId<span class="token punctuation">,</span> future<span class="token punctuation">)</span>
-    Bukkit<span class="token punctuation">.</span><span class="token function">getPluginManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">registerEvents</span><span class="token punctuation">(</span>listener<span class="token punctuation">,</span> SacredAuth<span class="token punctuation">.</span>plugin<span class="token punctuation">)</span>
-    Tasks<span class="token punctuation">.</span><span class="token function">task</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">try</span> <span class="token punctuation">{</span>
-            future<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>time <span class="token operator">*</span> <span class="token number">50L</span><span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>MILLISECONDS<span class="token punctuation">)</span>
-        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>ignored<span class="token operator">:</span> TimeoutException<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token comment">// 这里貌似future已经被中断了，因为超时了，所以future即使complete也不会执行他的回调函数</span>
-            <span class="token comment">// future.complete(true)</span>
-            <span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-            func<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+WORKDIR /usr/src/collection-api
+COPY . .
 
+RUN touch /usr/local/cargo/config.toml
+
+# cargo 上海交大镜像源
+RUN sed -e a\[source.crates-io] /usr/local/cargo/config.toml;\
+    sed -e a\registry=\"https://github.com/rust-lang/crates.io-index\" /usr/local/cargo/config.toml; \
+    sed -e a\replace-with=\'sjtu\' /usr/local/cargo/config.toml; \
+    sed -e a\[source.sjtu] /usr/local/cargo/config.toml; \
+    sed -e a\registry=\"https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index/\"
+
+# Rustup 清华镜像源
+ENV RUSTUP_DIST_SERVER https://mirrors.tuna.tsinghua.edu.cn/rustup
+
+ENV DATABASE_URL *
+
+RUN cargo install --path .
+
+CMD ["collection-api"]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="交叉编译"><a href="#交叉编译" class="headerlink" title="交叉编译"></a>交叉编译</h2><blockquote>
+<p>在本地编译对应目标系统的产品</p>
+</blockquote>
+<p>如果能用这个的话，那就只需要把产品扔到docker里面，docker源也只需要用最小的airplane了吧。</p>
+<p>下次研究。</p>
 
                 
             </div>
@@ -535,7 +513,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://blog.coldrain.ink/2021/08/28/try-completablefuture/">http://blog.coldrain.ink/2021/08/28/try-completablefuture/</a>
+                    <a href="http://blog.coldrain.ink/2022/05/29/docker-configuration-for-rust-server/">http://blog.coldrain.ink/2022/05/29/docker-configuration-for-rust-server/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -573,12 +551,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Kotlin/">
-                                    <span class="chip bg-color">Kotlin</span>
+                                <a href="/tags/rust/">
+                                    <span class="chip bg-color">rust</span>
                                 </a>
                             
-                                <a href="/tags/Java/">
-                                    <span class="chip bg-color">Java</span>
+                                <a href="/tags/docker/">
+                                    <span class="chip bg-color">docker</span>
                                 </a>
                             
                         </div>
@@ -890,29 +868,30 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/09/06/gitee-maven/">
+                <a href="/2022/05/29/docker-configuration-for-rust-server/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="利用Gitee搭建了自己的Maven仓库">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="为Rust写的后端配置docker">
                         
-                        <span class="card-title">利用Gitee搭建了自己的Maven仓库</span>
+                        <span class="card-title">为Rust写的后端配置docker</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            使用gitee搭建了一个自用maven仓库
+                            直到你开始用rust写后端，发现需要在运行平台编译后才能部署，才明白java跨平台的可贵
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-06
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-29
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -925,11 +904,16 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/maven/">
-                        <span class="chip bg-color">maven</span>
+                    <a href="/tags/rust/">
+                        <span class="chip bg-color">rust</span>
+                    </a>
+                    
+                    <a href="/tags/docker/">
+                        <span class="chip bg-color">docker</span>
                     </a>
                     
                 </div>
@@ -943,24 +927,24 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/08/15/learn-kotlin-coroutine/">
+                <a href="/2022/05/24/rust-note-2/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="了解了一下Kotlin的协程">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Rust笔记其二">
                         
-                        <span class="card-title">了解了一下Kotlin的协程</span>
+                        <span class="card-title">Rust笔记其二</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            简单的了解了一下协程，写了篇比较浅薄的协程笔记
+                            流程控制&模式匹配&方法&泛型&trait
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-15
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-24
                             </span>
                         <span class="publish-author">
                             
@@ -977,12 +961,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Kotlin/">
-                        <span class="chip bg-color">Kotlin</span>
+                    <a href="/tags/Rust/">
+                        <span class="chip bg-color">Rust</span>
                     </a>
                     
-                    <a href="/tags/Coroutine/">
-                        <span class="chip bg-color">Coroutine</span>
+                    <a href="/tags/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">Rust学习笔记</span>
                     </a>
                     
                 </div>
